@@ -7,7 +7,7 @@
 
     <body>
         <?php
-            if ($handle = opendir('.')) {
+            if ($handle = opendir('..')) {
             while (false !== ($file = readdir($handle)))
             {
                 if ($file != "." && $file != "..")
