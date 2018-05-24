@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <link rel="shortcut icon" href="/~vvaezian/Pic/memory.ico">
+    <title>Computer Memory</title>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <link rel="stylesheet" href="/~vvaezian/styles.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato'     rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<img src="/~vvaezian/Pic/memory-logo.png" alt="memory-logo" height="200"><br>
+<em>* Most of the material is taken from <a href="https://brilliant.org/courses/memory/" target="_blank">this</a> course on Brilliant. </em><br>
+<details class="details">
+<summary><h3>Hexadecimal Representation</h3></summary>
+<div class="content">
+<ul><li>Base 16 is reffered to as <b>hexadecimal</b> or hex for short.
+<li>Convention: Prefix binary numbers with 0b and hexadecimal numbers with 0x (e.x. 45 is 0b101101 in binary and 0x2D in hexadecimal)
+<li>By Concatenating numbers in binary or hex we get the same result (given that hex numbers have same number of digits and we write all zeros in the binary representation)
+</ul></div>
+</details>
+
+<details class="details">
+<summary><h3>Linear Memory Model</h3></summary>
+<div class="content">
+<ul><li>Memory can be understood as a long tape of cells, and the program can read from or write to cells.
+<li>We need two concepts: 1) <b>Address</b>, an integer that specifies a place on the tape, 2) <b>Data</b>, the information stored in each cell
+<li> In modern computer architectures, one memory address points to one byte (i.e. each cell can contain 1 byte of information).
+<li>The beginning address of memory is determined by the OS.
+<li>When working with memory, often sizes that are powers of 2 are used (e.x. MiB, GiB instead of MB and GB).
+<li>If a computer has 1 MiB of memory and the beginning address of the memory is 0xC00000, the address of the last byte of memory is 0xCFFFFF 
+(0xC00000 + 0x100000 = 0xD00000 and we have 0xD00000 - 1 = 0xCFFFFF).
+<li> Since one byte can hold values no larger than 255, we often work with integers that span multiple bytes to hold larger numbers. 
+For example, we need at least 2 bytes of memory to represent the number 43690, which is 0xABCD in hexadecimal (i.e. 0xAB in one byte and 0xCD in another consecutive one).
+<li>The order in which multi-byte integers are stores depends on the computer's architecture. Storing the most-significant byte first is called big-endian. Storing the least-significant byte first is called little-endian.
+<li>The entire memory can be considered as a giant 1-dimensional tape of bytes. However, to make it easy to work with, it is often wraped across multiple lines such that there are many bytes per line (often 16), 
+and the memory address of the first byte on each line will be specified in a column to the left of the resulting table. 
+This method of displaying memory is called a <i>hex dump</i> and is quite common in debuggers, packet sniffers, hex editors and the like.
+</ul>
+</details>
+
+<details class="details">
+<summary><h3>Memory of Programs</h3></summary>
+<div class="content">
+<ul><li>The compiler reads source files, compiles them, and outputs a file called an <i>executable file</i> which contains instructions and information that are specific to both the OS and the CPU architecture.
+<li>There are two essential pieces of information that are stored in the executable file: <B>machine code</b> and <b>data</b>.<br> 
+Machine code is the compiled version of functions together with arguments and local variables defined in the function. It is a set of instructions that will be executed by the CPU. Each instruction is a basic operation like reading from, and writing to, memory, adding and subtracting numbers, etc. <br>
+Data is the compiled version of global variables together with their initial values (0 if not initialized, at least in C) and constants.
+<li>Memory segments
+<ul><li><b>stack</b>: Allocated memory for local variables. One type of stack is the <b>call stack</b>, where each stack element is a <b>stack frame</b>. A stack frame contains information for one function call. It consists of arguments, local variables, and return address. Stack frames are allocated before the function runs, and removed from the call stack after the function call finishes.
+<li><b>heap</b>: Dynamically allocated memory by <samp>malloc</samp> and similar functions. When we want to have a dynamically resizable data structure or to free unused memory before the function exits, etc we use <samp>malloc</samp> and <samp>free</samp> to do this. <br>
+<samp>malloc</samp> is a function that allocates a certain amount of memory that we specify. E.x. <samp>int *x = (int *)malloc(sizeof(int) * 100);</samp> This allocates a continuous chunk of memory of (100 time size of int) bytes and assigns the address to the pointer variable x.
+<li><b>static</b>: Allocated memory for global variables. This segment cannot be resized and the memory cannot be freed while the program runs.
+<li><b>code</b>: Allocated memory for machine code that corresponds to functions.
+</ul>
+</ul>
+</details>
+
+<details class="details">
+<summary><h3>Virtual Memory</h3></summary>
+<div class="content">
+(assuming one CPU core)
+<ul><li>Each time an executable file is executed, the OS creates a process, allocates memory, and lets the process run. 
+Suppose you are typing in the text editor and the music player is playing.  
+It looks like the text editor and music player are running at the same time in parallel. 
+However, they are actually being switched back and forth very frequently. 
+The OS gives each process a certain amount of time to run, then pauses it and switches to another process. This feature is called multitasking.
+<li>Each process has a <b>virtual memory space</b>. This is a memory address space that is isolated from other processes. 
+This means that a process can access its own virtual memory space, but not the memory space of another process. 
+Each virtual memory space contains the four segments we learned about: code, stack, static, and heap. 
+Memory addresses for virtual memory spaces are called virtual addresses. Physical addresses are accessible to the OS but not to processes. 
+When processes access memory, the memory management unit (<b>MMU</b>) does the virtual-to-physical memory address mapping.
+<li>A memory page is a chunk of memory that has a fixed size (most common size is 4 KiB).
+</ul>
+</details>
+
+<details class="details">
+<summary><h3>Techniques for Performance</summary>
+<div class="content">
+<ul><li>It is often the case that files which have been accessed recently will be accessed again. Therefore, keeping those files in RAM will improve performance, since memory access is faster than disk access.
+<li>In order to keep the recently accessed files in memory, the OS uses the <b>page cache</b>, which is an in-memory copy of files.
+<li>Each file in the page cache is managed in pages, which are 4096-byte chunks of memory.
+</ul>
+</details>
+
+<details class="details">
+<summary><h3>Caching</summary>
+<div class="content">
+<ul><li>There are two basic types of memory units that are used in integrated circuits: <b>SRAM</b> (static random access memory) and <b>DRAM</b> (dynamic random access memory). 
+Typically, one SRAM cell uses six transistors to store one bit of data. One DRAM cell uses one transistor and one capacitor to store one bit of data.
+SRAM is faster, but more expensive, so DRAM is used as the backing store and SRAM as the cache.
+<li>Instead of having one large caching layer, modern CPUs have multiple layers of caches (L1 cache and L2 cache). <br>
+The memory address translation (performed by MMU) is done at the L1 cache. Therefore the L2 cache can simply work with physical addresses directly.<br>
+The L1 cache is usually separated into two parts: I-cache which stands for “instruction cache”, and D-cache which stands for “data cache”. 
+Machine code instructions are accessed sequentially, while data around the top of the stack segment are accessed repeatedly, but not sequentially. 
+Therefore, instructions and data have a different locality of reference pattern, and separating the two increases the cache hit ratio. 
+The L2 cache, on the other hand, does not separate the two.
+</details>
+
+</body>

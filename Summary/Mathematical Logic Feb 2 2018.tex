@@ -1,0 +1,445 @@
+\documentclass{article}
+\usepackage[dvips]{color}
+\usepackage{cmll}
+\usepackage{amsmath}
+\usepackage{stmaryrd}
+\usepackage{graphicx}
+\usepackage{anysize}
+\usepackage{amssymb}
+\usepackage{bussproofs}
+\usepackage{esvect}
+\usepackage{mathrsfs}
+\usepackage{ wasysym }
+\usepackage{ textcomp }
+\marginsize{2.8cm}{2.8cm}{2cm}{4cm}
+
+\newtheorem{Theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+\begin{document}
+\EnableBpAbbreviations
+\def\ScoreOverhang{1pt}
+\setlength{\parindent}{0pt}
+
+\begin{center}
+\textbf{{\huge Mathematical Logic}}
+\end{center}
+
+\emph{* I don't take any credit for the material in this file. This is just for my own reference.}
+\tableofcontents
+\section{Propositional Logic}
+A disjunction of literals $L_1\lor\ldots\lor L_m$ is valid iff there are $1\leq i,j\leq m$ such that $L_i$ is $\neg L_j$.\\
+
+Let $\phi$ be a formula of propositional logic. Then $\phi$ is satisfiable iff $\neg\phi$ is not valid.\\
+
+A formula is in \textbf{negation normal form (NNF)} if negation is only applied to variables and $\neg,\land,\lor$ are the only connectives.\\
+
+A clause is a \textbf{Horn clause} if it contains at most one positive literal.
+
+A \textbf{Horn formula} is a conjunction of horn clauses (thus a special case of CNF).
+
+Horn clauses can always be rewritten with exactly one positive literal (and some negative literals), using the constants $\bot,\top$.
+
+Horn clauses can be represented as $(p_1\land\ldots\land p_n)\rightarrow p_{n+1}$.\\
+
+The algorithm for finding the unique minimal satisying truth assignment of a Horn formula $\phi$:
+\begin{itemize}
+ \item Mark all occurences of $T$ true.
+ \item If $p_1\land\ldots\land p_k$ are all marked true and $(p_1\land\ldots\land p_k)\rightarrow p$ is one of the conjuncts in $\phi$, then mark $p$ true. Repeat until a fixpoint is reached (i.e. until there is no more change).
+ \item Make the remaining atoms false.
+
+$\phi$ is satisfiable iff $\bot$ is not marked true. If $\phi$ is satisfiable, the algorithm returns the minimal satisfying truth assignment (in terms of the number of atoms that are set true).
+\end{itemize}
+$\Gamma\nvDash\psi$ is easier to prove than $\Gamma\vDash\psi$ because in the former case we need only one model, while in the latter we potentially have to consider infinitely many.
+
+$\Gamma\vdash\psi$ is easier to prove than $\Gamma\nvdash\psi$ because in the former case we need only a proof of $\psi$ from $\Gamma$, while in the latter we potentially have to consider all proofs using $\Gamma$.
+
+\subsection{Propositional Modal Logic}
+Modal logic is a formalism that extends propositional and first order logic by adding operators to the language to express modalities (epistemic, doxastic, temporal, $\ldots$).  In this report we will focus on propositional modal logic.
+
+Modal logic is more expressive than first-order logic and corresponds to a fragment of second-order logic. For example the so-called McKinsey schema $M:\ \Box\Diamond A\rightarrow \Diamond\Box A$ 
+is not defined by any set of first order sentences.
+
+\subsubsection{Syntax}
+Given a set of modality symbols MOD, the language of (propositional) modal logic ($\mathcal{L}_{M}$) is inductively defined using the following BNF ($m\in $ MOD)\cite{BlackburnEtAl07}:
+\[\varphi ::= p \  |\ \top \ |\ \bot \ |\ \neg \varphi \ |\  (\varphi\land \varphi)\ |\ \square_m\varphi\]
+
+Denotation of $\square_m\varphi$ depends on the context. For example in context of reasoning about beliefs, $\square_m\varphi$ denotes ``agent $m$ believes that $\varphi$".
+The symbol $\Diamond$ is defined as $\Diamond \varphi \equiv \neg \square \neg \varphi$.
+
+\subsubsection{Semantics}
+The semantics of modal logic is based on the concept of possible worlds. These worlds comprise of the actual world and alternative worlds representing different ways the world could have been. The idea of possible worlds dates back to the German philosopher Gottfried Leibniz but its usage in modal logic and development of possible world semantics (described below) is attributed to Saul Kripke.
+
+Given a set $W$ of possible worlds and a set $\{R^m\}_{m\in \text{MOD}}$ of the accessibility relations between worlds, a \emph{frame} is a tuple $\langle W, \{R^m\}_{m\in \text{MOD}}\rangle$. A \emph{(Kripke) model} $M$ is a triple \mbox{$\langle W, \{R^m\}_{m\in \text{MOD}}, V\rangle$} where $V$ is a valuation function mapping each propositional variable to a subset of $W$ of worlds in which $p$ is true. If $|$MOD$|=1$, we  write $R$ instead of $\{R^m\}_{m\in \text{MOD}}$ and $\square$ instead of $\square_m$. \cite{BlackburnEtAl07}\\
+
+Given a model $M = \langle W, \{R^m\}_{m\in \text{MOD}}, V\rangle$ and $w\in W$, definition of $\varphi$ being \emph{true} (or \emph{satisfied}) in $M$ at $w$ is as follows \cite{BlackburnEtAl07}:
+\begin{center}
+	\begin{tabular}{l l l}
+		$M,w \vDash p$ &iff&   $w\in V_p$\\
+		$M,w \vDash \neg p$ &iff&  $M,w \nvDash p$\\
+		$M,w \vDash \varphi\land \psi$ &iff&   $M,w \vDash \varphi$ and $M,w \vDash \psi$\\
+		$M,w \vDash \square_m\varphi$ &iff&   for all $v\in W$ such that $wR^mv$ we have  $M,v\vDash \varphi$\\
+	\end{tabular}
+\end{center}
+A formula $\varphi$ is \emph{true} in $M$ ($M\vDash \varphi$), if $M,w \vDash \varphi$ for all $w\in W$. A formula is \emph{valid} ($\vDash \varphi$) if it is true at every model. \cite{Chellas80}\\
+
+\subsubsection{Proof Theory of Modal Logic}\label{prooftheory}
+Consider the set $V$ of formulas that are valid in all Kripke models. Many of these formulas are ``related" to each other. For example the formulas $p\lor\neg p$ and $\square(p\lor \neg p)$ are both in $V$ and are related in the sense that based on the fact that $p\lor \neg p$ is in $V$ and based on the semantics of $\square$, we expect that $\square(p\lor \neg p)$ must be in $V$ as well. So the question is ``can we come up with a set of formulas $F\subset V$ and a set of rules $R$ of producing new formulas such that $F$ and $R$ together produce $V$?" It turns out the answer is yes, and the following $F$ and $R$ do the job. Define $F$ as the set of all the tautologies of propositional logic plus the following formula (axiom K)
+\begin{align*}
+&K. \quad \square (\varphi \supset \psi)\supset (\square \varphi \supset \square \psi)&\hspace{6cm}
+\end{align*}
+And let $R$ consist of the following rules
+\begin{align*}
+&\text{Modus Ponens. From} \ \varphi \ \text{and} \ \varphi\supset \psi \ \text{infer}\  \psi&\hspace{4cm}\\
+&\text{Necessitation. From} \ \varphi \ \text{infer}\  \square \varphi&
+\end{align*}
+$F$ and $R$ together are called ``the basic modal system $K$" \cite{vanDitmarschEtAl07}.\\
+
+There are some formulas that are not valid in all Kripke models but we expect them to be among valid formulas in specific modal systems. For example if we use $\square \varphi$ to denote ``$\varphi$ is known", we want the formula $\square \varphi\supset \varphi$ always hold. Or if $\square \varphi$ denotes ``$\varphi$ is believed" then we want the formula $\neg \square \bot$ always hold. The question is ``if we add these formulas (axioms) to the set $F$ defined above (call the resulting set $F'$), can we apply some restrictions on Kripke model so that the set $V'$ of valid formulas in the restricted Kripke models is the same as the set of formulas produced by $F'$ and $R$?" It turns out this is possible. Consider the following formulas/axioms (these are the axioms that are related to the subject of this report):
+\begin{align*}
+&T.\ \square \varphi\supset \varphi\hspace{10.5cm}\\
+&4.\ \square \varphi\supset \square \square \varphi\\
+&5.\ \neg \square \varphi\supset \square \neg \square \varphi\\
+&D.\ \neg \square \bot
+\end{align*}
+%The axiom $T$ is sometimes called the Axiom of Necessity \cite{HughesCresswell96}.\\
+Adding axiom $T$ to $F$ corresponds to setting the restriction on Kripke models that their accessibility relation be reflexive. $4$ corresponds to transitive relations, $5$ corresponds to euclidean relations and $D$ corresponds to serial relations. 
+
+Two modal axiom systems which are relevant to the subject of this report are $KT45$\footnote{This is the basic modal system $K$ extended by adding the axioms $T$, $4$, and $5$.} which is called $S_5$ and is regarded as logic of knowledge (epistemic logic), and $KD45$ which is regarded as logic of belief. $S_5$ captures the class of Kripke models with equivalence relations (reflexive/euclidean/transitive or equivalently reflexive/symmetric/transitive) and $KD45$ captures the class of serial transitive Euclidean models. \cite{vanDitmarschEtAl07}
+
+An \emph{epistemic model} is a (Kripke) model where the relation is an equivalence relation. Also it is common to use $S$ (set of states) instead of $W$ (set of worlds). So an epistemic model is represented as $M = \langle S, \{\sim_a\}_{a\in \text{A}}, V\rangle$, where $A$ is the set of agents. It is common to use the operator $K_m$ instead of $\square_m$ and $\hat{K}_m$ for $\Diamond_m$. The formula $K_a \varphi$ denotes ``agent $a$ knows that $\varphi$'' and $\hat{K}_a \varphi$ denotes ``$\varphi$ is consistent with $a$'s knowledge''. Similarly for logic of belief we use $B_a \varphi$ and $\hat{B}_a \varphi$ with natural denotations.\\
+
+\subsubsection{Temporal Logic of Concurrency}
+Given a language based on a countable set $\Phi$ of atomic formulae, a \textbf{logic} is defined to be any set $\Lambda\subseteq Fma(\Phi)$\footnote{The set of all formulae generated from $\Phi$.} such that
+
+\vspace{-2mm}
+\begin{itemize}
+	\itemsep-.3em
+	\item $\Lambda$ includes all tautologies
+	\item $\Lambda$ is closed under the rule of detachmennt, i.e, if $A,A\rightarrow B\in\Lambda$ then $B\in \Lambda$.
+\end{itemize}
+
+A logic is \textbf{normal} if it contains the schema $K:\ \Box(A\rightarrow B)\rightarrow(\Box A\rightarrow\Box B)$, and is closed under the rule of Necessitation, i.e, if
+$\vdash_\Lambda A$ then $\vdash_\Lambda\Box A$.\footnote{$\vdash_\Lambda A$ iff $A\in \Lambda$}\\
+
+Consider a propositional language with two modal connectives $[F]$ and $[P]$. A \textbf{frame} for this language has the form $(S,R_F,R_P)$ with the modelling:
+\begin{align*}
+\mathcal{M}\vDash_s[F]A \quad \text{iff} \quad sR_Ft \quad \text{implies} \quad \mathcal{M}\vDash_tA\\
+\mathcal{M}\vDash_s[P]A \quad \text{iff} \quad sR_Pt \quad \text{implies} \quad \mathcal{M}\vDash_tA
+\end{align*}
+We want $sR_Pt$ iff $tR_Fs$ so that $[F]$ and $[P]$ express properties of the same time-orderig. We can capture this property by the following schemata:
+\begin{align*}
+C_P:A\rightarrow[P]\langle F\rangle A\\
+C_F:A\rightarrow[F]\langle P\rangle A
+\end{align*}
+With this property $R_F$ and $R_P$ are interdefinable, so we may take one relation as primitive, and use frames $\mathcal{F}=(S,R)$, where $R\subseteq S\times S$, with the modelling:
+\begin{align*}
+\mathcal{M}\vDash_s[F]A \quad \text{iff} \quad sRt \quad \text{implies} \quad \mathcal{M}\vDash_tA\\
+\mathcal{M}\vDash_s[P]A \quad \text{iff} \quad tRs \quad \text{implies} \quad \mathcal{M}\vDash_tA
+\end{align*}
+It is also natural to require a temporal ordering to be transitive. This property can be captured by the following schemata:
+\begin{align*}
+4_P:[P]A\rightarrow[P][P]A\\
+4_F:[F]A\rightarrow[F][F]A
+\end{align*}
+So we define a \textbf{time-frame} to be any structure $\mathcal{F}=(S,R)$ with $R$ a transitive relation on $S$ and with the modelling just given.\\
+
+A \textbf{temporal logic} is any normal logic in the language of $[F]$ and $[P]$ that contains the schemata: $C_P, C_F, 4_P, 4_F$.\\
+
+The smallest temporal logic which is $K_{\{P,F\}}C_PC_F4_P4_F$ is commonly known as $K_t$ in the literature (only one of $4_P$ and $4_F$ is required in the definition of $K_t$; the other one is derivable from the remaining axioms).\\
+
+It is useful to introduce the connective $\square$ by
+\[\square A := [P]A\land A\land [F]A\]
+The connective $\square$ behaves like a $S_5$ modality in connected frames\footnote{A frame is \textbf{connected} if it satisfies $\forall s\forall t (sRt\lor s=t\lor tRs)$.
+	There is no schema that is valid in precisely the connected frames.}.\\
+
+A \textbf{linear temporal logic} is any normal logic in the language of $[F]-[P]$ that contains the smallest temporal logic $K_t$, and also the schemata
+\begin{align*}
+\square A\rightarrow [P][F]A\\
+\square A\rightarrow [F][P]A
+\end{align*}
+
+\textbf{Temporal Logic of Concurrency}\\
+
+Syntax: \[A::=p\ |\ \bot\ |\ A_1\rightarrow A_2\ |\ \square A\ |\ \fullmoon A\ |\ A_1\mathcal{U}A_2\]
+
+A \emph{state sequence} is a pair $\mathcal{F}=(S,\sigma)$, where $\sigma$ is a surjective function $\omega\rightarrow S$ enumerating $S$ as a sequence $\sigma_0,\sigma_1,\ldots,\sigma_n,\ldots$ possibly with repitition (for example 
+when $S$ is finite).\\
+
+A \emph{model} $\mathcal{M}=(S,\sigma,V)$ on a state sequence is defined in the usual way.\\
+
+The relation $\mathcal{M}\vDash_j A$ meaning ``$A$ is true at the $j$th state $\sigma_j$ in $\mathcal{M}$'' is defined by
+\begin{center}
+\begin{tabular}{r @{ } l c l}
+ &$\mathcal{M}\vDash_jp$ &iff& $\sigma_j\in V(p)$\\
+ &$\mathcal{M}\vDash_j\fullmoon A$ &iff& $\mathcal{M}\vDash_{j+1}A$\\
+ &$\mathcal{M}\vDash_j\square A$ &iff& for all $k\geq j,\ \mathcal{M}\vDash_k A$
+\end{tabular}
+\end{center}
+The definitions of $\mathcal{M}\vDash A$ and $\mathcal{F}\vDash A$ are as usual.
+
+\subsubsection{Linear-time Temporal Logic (LTL)}
+Syntax: \[\phi::\top\ |\ \bot\ |\ Classical\ |\ X\phi\ |\ F\phi\ |\ G\phi\ |\ \phi U\phi\]
+
+A \textbf{transition system} $\mathcal{M}=(S,\rightarrow,L)$ is a set of states $S$ endowed with a transition relation $\rightarrow$ (a binary relation on $S$), such that every $s\in S$ has some $s'\in S$ with $s\rightarrow s'$,
+and a labelling function $L:S\rightarrow \mathcal{P}(Atoms)$. Transition systems are also called \textbf{models}.\\
+
+A \textbf{path} $\pi$ in a model $\mathcal{M}=(S,\rightarrow,L)$ is an infinite sequence of states $s_1,s_2,\ldots$ in $S$ such that for all $i\geq 1, s_i\rightarrow s_{i+1}$. 
+We write the path as $s_1\rightarrow s_2\rightarrow\ldots$. We write $\pi^i$ for the path starting at $s_i$.\\
+
+Let $\mathcal{M}=(S,\rightarrow,L)$ be a model and $\pi = s_1,s_2,\ldots$ be a path in $\mathcal{M}$. Whether $\pi$ satisfies an LTL formula is defined by the satisfaction relation as follows:
+\begin{center}
+\begin{tabular}{r @{ } l c l}
+ &$\pi\vDash\top$&&\\
+ &$\pi\nvDash\bot$&&\\
+ &$\pi\vDash p$ &iff& $p\in L(s_1)$\\
+ &$\vdots$ (classical)&&\\
+ &$\pi\vDash X\phi$ &iff& $\pi^2\vDash\phi$\\
+ &$\pi\vDash G\phi$ &iff& for all $i\geq 1 \ \ \pi^i\vDash\phi$\\
+ &$\pi\vDash F\phi$ &iff& there exists $i\geq 1$ s.t. $\pi^i\vDash\phi$ ($F\phi\equiv\top U\phi$)\\
+ &$\pi\vDash \phi U\psi$ &iff& there exists $i\geq 1$ s.t. $\pi^i\vDash\psi$ and for all $j\in\{1,\ldots,i-1\} \ \ \pi^j\vDash\phi$
+\end{tabular}
+\end{center}
+Suppose $\mathcal{M}=(S,\rightarrow,L)$ is a model, $s\in S$, and $\phi$ an LTL formula. We write $\mathcal{M},s\vDash\phi$ if for any execution path $\pi$ of $\mathcal{M}$ starting at $s$, we have $\pi\vDash\phi$.
+
+\subsubsection{Computation Tree Logic(CTL)}
+Syntax: \[\phi::Classical\ |\ AX\phi\ |\ EX\phi\ |\ AF\phi\ |\ EF\phi\ |\ AG\phi\ |\ EG\phi\ |\ A[\phi U\phi]\ |\ E[\phi U\phi]\]
+
+\textbf{Safety}: Only one process is in its critical section at any time.\\
+LTL: $G(\neg(c_1\land c_2))$\\
+CTL: $AG(\neg(c_1\land c_2))$\\
+
+\textbf{Liveness}: Whenever a process requests to enter its critical section, it will eventually be permitted to do so.\\
+LTL: $G(t_1\rightarrow Fc_1)\land G(t_2\rightarrow Fc_2)$\\
+CTL: $AG(t_1\rightarrow AFc_1)\land AG(t_2\rightarrow AFc_2)$\\
+
+\textbf{Non-blocking} A process can always request to enter its critical section.\\
+LTL: ---\\
+CTL: $AG(n_1\rightarrow EXt_1)\land AG(n_2\rightarrow EXt_2)$\\
+
+\textbf{No strict sequencing}: Processes need not enter their critical section in strict sequence.\\
+LTL: $\neg[G(c_1\rightarrow c_1W(\neg c_1\land\neg c_1Wc_2))]$\\
+CTL: $EF(c_1\land E[c_1 U(\neg c_1\land E[\neg c_2 Uc_1])])$\\
+
+\textbf{Fairness constraint}: Under certain conditions an event will occur (or fail to occur) infinitely often.
+
+\subsubsection{CTL*}
+The LTL formula $\phi$ equal to the CTL$^*$ formula $A[\phi]$.\\
+
+$E[\phi\lor\psi]=E[\phi]\lor E[\psi]$\\
+$A[\phi\land\psi]=A[\phi]\land A[\psi]$
+
+\subsubsection{Epistemic Logic}
+Given a countable set of atomic propositions $P$ and a finite set of agents $A$,
+
+\noindent an \textbf{epistemic model} is a structure $M = \langle S, \{\sim_a\}_{a\in \text{A}}, V\rangle$, where
+\begin{itemize}
+\setlength\itemsep{.1em}
+  \item $S$ is a set of states.
+  \item $\sim_a$ is a function, yielding for every $a\in A$ an equivalence relation $\sim_a\subseteq S\times S$.
+  \item $V:P\rightarrow2^S$ is a valuation function that for every $p\in P$ yields the set $V(p)\subseteq S$ of states in which $p$ is true.
+\end{itemize}
+The language of epistemic logic ($L_K$) is inductively defined by the BNF
+\[\varphi ::= p \mid \neg\varphi \mid (\varphi\land\varphi) \mid K_a\varphi \]
+
+\noindent The semantics of epistemic logic is as follows:
+\begin{center}
+\begin{tabular}{r @{ } l c l}
+$M,s$&$\vDash p$ &iff& $s\in V_p$\\
+$M,s$&$\vDash\neg\varphi$ &iff& $M,s\nvDash\varphi$\\
+$M,s$&$\vDash\varphi\land\psi$ &iff& $M,s\vDash\varphi$ and $M,s\vDash\psi$\\
+$M,s$&$\vDash K_a\varphi$ &iff& for all $t\in S: s\sim_a t$ implies $M,t\vDash\varphi$\\
+\end{tabular}
+\end{center}
+We say that $\varphi$ is true in $M$ (written $M\vDash\varphi$), if $M,s\vDash\varphi$ for all $s\in S$.\\
+Formula $K_a\varphi$ stands for `agent $a$ know that $\varphi$'.
+
+\subsubsection{Public Announcement Logic}
+Given an epistemic model $M = \langle S,\sim,V\rangle$, \\
+
+\noindent The language of the public announcement logic ($L_{K[]}$) is inductively defined by the BNF
+\[\varphi ::= p \mid \neg\varphi \mid (\varphi\land\varphi) \mid K_a\varphi \mid [\varphi]\varphi\]
+
+\noindent The semantics of the public announcement logic is as follows:
+\begin{center}
+\begin{tabular}{r @{ } l c l}
+$M,s$&$\vDash p$ &iff& $s\in V_p$\\
+$M,s$&$\vDash\neg\varphi$ &iff& $M,s\nvDash\varphi$\\
+$M,s$&$\vDash\varphi\land\psi$ &iff& $M,s\vDash\varphi$ and $M,s\vDash\psi$\\
+$M,s$&$\vDash K_a\varphi$ &iff& for all $t\in S: s\sim_a t$ implies $M,t\vDash\varphi$\\
+$M,s$&$\vDash [\varphi]\psi$ &iff&$ M,s\vDash\varphi$ implies $M|\varphi,s\vDash\psi$
+\end{tabular}
+\end{center}
+Where $M|\varphi=\langle S',\sim',V'\rangle$ is defined as follows: ($\llbracket\varphi\rrbracket_M = \{s\in S\mid M,s\vDash\varphi\}$)
+\begin{center}
+\begin{tabular}{r @{ } c @{ } l}
+$S'$&=&$\llbracket\varphi\rrbracket_M$\\
+$\sim'_a$&=&$\sim_a\cap\,(\llbracket\varphi\rrbracket_M\times \llbracket\varphi\rrbracket_M)$\\
+$V'_p$&=&$V_p\cap \llbracket\varphi\rrbracket_M$
+\end{tabular}
+\end{center}
+That is to say, those states which announcement formula is false in them are excluded from model as a result of announcement, because after announcement it is commonly known that these states are no longer possible.\\
+
+Formula $[\varphi]\psi$ stands for `after announcement of $\varphi$, it holds that $\psi$'. It is assumed that announcements are \emph{truthful} and \emph{public}. That the announcement is public, means that all agents can hear the announcement, that they know that the other agent can hear the announcement, that they know that the other agents know that the other agents can hear the announcement, etc., ad infinitum.
+\subsection{Natural Deduction}
+\subsubsection{Natural Deduction in Sequent Form}
+\subsection{Sequent Calculus}
+\section{First Order Logic}
+\subsection{Syntax}
+A first-order language with equality is specified by two disjoint sets of symbols, called the
+\mbox{\textbf{vocabulary}} of the language:\\
+\begin{enumerate}
+ \item Logical symbols: The interpretation of these is fixed by the rules of first-order logic.
+\begin{itemize}
+ \item Parentheses of all shapes and sizes
+ \item Logical connectives: $\supset,\neg$
+ \item Variables (infinitely many): $x, y, z, x_1, y_1, z_1, \ldots$
+ \item Equality symbol: $=$
+\end{itemize}
+\item Non-logical symbols (parameters/\textbf{signature}): These vary with the interpretation.
+\begin{itemize}
+ \item  Quantifier symbol: $\forall$.
+ \item Predicate symbols: For each $n \geq 0$, a set (possibly empty) of symbols, called $n$-place or $n$-ary predicate symbols.
+ \item Function symbols: For each $n \geq 0$, a set (possibly empty) of symbols, called $n$-place or $n$-ary function symbols. $0$-ary function symbols are called constant symbols.
+\end{itemize}
+\end{enumerate}
+There are two types of legal syntactic expressions in FOL: terms and
+formulas. Intuitively, a term will be used to refer to something in the
+world, and a formula will be used to express a proposition.\\
+The set of \textbf{terms} of FOL is the least set satisfying these conditions:
+\begin{itemize}
+ \item Every variable is a term;
+ \item If $t_1, \ldots , t_n$ are terms, and $f$ is a function symbol of arity $n$,
+then $f(t_1, \ldots , t_n)$ is a term.
+\end{itemize}
+The set of \textbf{formulas} of FOL is the least set satisfying these constraints:
+\begin{itemize}
+ \item If $t_1, \ldots , t_n$ are terms, and P is a predicate symbol of arity n, then $P(t_1, \ldots , t_n)$ is a formula;
+ \item If $t_1$ and $t_2$ are terms, then $t_1 = t_2$ is a formula;
+ \item If $\alpha$ and $\beta$ are formulas, and $x$ is a variable, then $\neg\alpha, (\alpha\land\beta)$ and $\forall x.\alpha$ are formulas.
+\end{itemize}
+\subsection{Semantics}
+a structure (or interpretation) $\mathcal{S}$ for a given first-order language is a function whose domain is the set of parameters of the language, and is defined by:
+\begin{itemize}
+ \item $\forall^{\mathcal{S}}$ is a nonempty set, called the universe or the domain of the structure $\mathcal{S}$. The universe is usually written $|\mathcal{S}|$.
+ \item For each $n$-ary predicate symbol $P$ of the language, $P^{\mathcal{S}} \subseteq |\mathcal{S}|^n$. This is called the extension of P in the structure S.
+ \item For each $n$-ary function symbol $f$ of the language, $f^{\mathcal{S}}$ is an $n$-ary function on $|\mathcal{S}|$, i.e. \mbox{$f^\mathcal{S}:|\mathcal{S}|^n \rightarrow |\mathcal{S}|$}. In particular,
+ when $n = 0$, so that $f$ is a constant symbol, $f^\mathcal{S}$ is simply some element of the universe.
+\end{itemize}
+It is sometimes useful to think of the interpretation of predicates in terms of their characteristic functions. In this case, when $P$ is a predicate
+of arity $n$, we view $P^{\mathcal{S}}$ as an $n$-ary function to $\{0, 1\}$.\\
+This characteristic function allows us to see more clearly how predicates of arity $0$ (i.e., the propositional
+symbols) are handled. In this case, $P^\mathcal{S}$ will be either $0$ or $1$. We can think of the first one as meaning ``false'' and the second ``true''.
+For the propositional subset of FOL, then, we can ignore D completely, and think of an interpretation as simply being a mapping, from the propositional symbols to either $0$ or $1$.
+
+\subsubsection*{Truth in a Structure}
+
+Suppose $s:V\rightarrow |\mathcal{S}|$ called a \textbf{variable assignment}, is defined on the set $V$ of variables.\\
+Define an extension $\bar{s}:T\rightarrow |\mathcal{S}|$ of the function $s$, on the set $T$ of all terms as follows
+\begin{itemize}
+ \item For each variable $v$, $\bar{s}(v)=s(v)$
+ \item If $t_1,\ldots,t_n$ are terms and $f$ is an $n$-ary function symbol, then\\
+       $\bar{s}(f(t_1,\ldots,t_n))=f^{\mathcal{S}}(\bar{s}(t_1),\ldots,\bar{s}(t_n))$.
+\end{itemize}
+We can now define $\vDash_\mathcal{S} \phi[s]$, meaning that the formula $\phi$ is true in the structure $\mathcal{S}$ when its variables are given the values specified by $s$:\\
+
+\begin{tabular}{l l l}
+ $\qquad$ $\vDash_\mathcal{S} t_1=t_2[s]$            &iff& $\bar{s}(t_1)=\bar{s}(t_2)$\\
+ $\qquad$ $\vDash_\mathcal{S} P(t_1,\ldots,t_n)[s]$  &iff& $\langle \bar{s}(t_1),\ldots,\bar{s}(t_n)\rangle\in P^\mathcal{S}$\\
+ $\qquad$ $\vDash_\mathcal{S} \neg \phi[s]$          &iff& not $\vDash_\mathcal{S} \phi[s]$\\
+ $\qquad$ $\vDash_\mathcal{S} (\phi\supset \psi)[s]$ &iff& $\vDash_\mathcal{S} \neg \phi[s]$ or $\vDash_\mathcal{S} \psi[s]$\\
+ $\qquad$ $\vDash_\mathcal{S} (\forall x) \phi[s]$   &iff& for every $d\in |\mathcal{S}|$, $\vDash_\mathcal{S} \phi[s(x|d)]$\\
+\end{tabular}\\
+
+ Here, $s(x|d)$ is the function that is exactly like $s$ except that for the variable $x$ it assigns the value $d$.
+
+
+\subsection{Many-Sorted Logic}
+\section{Second Order Logic}
+- Informally, a relation R will be second-order (but not first-order) definable whenever, it is defined inductively using the pattern:\\
+\emph{``R is the smallest set such that ...''} or\\
+\emph{``R is the intersection of all sets such that ...''}
+\section{Special Topics}
+\subsection[Negation as Failure]{Negation as Failure\footnote{Keith C. Clark, \emph{Negation as Failure}, Logic and Databases, 1978}}
+A relation instance is false if we \emph{fail} to prove that it is true. To show that $P$ is false we do an exhaustive search for a proof of $P$. If every possible proof fails\footnote{This has a special meaning defined later}, ${\sim} P$ is `infered`. This is the way both PLANNAR (Hewwitt[1972]) and PROLOG (Roussel[1975], Warren et al.[1977]) handle negation.\\
+
+So it is basically a proof rule:
+\[\vdash ({\sim}\vdash P) \quad \text{infer} \quad \vdash {\sim} P\]
+where the proof that $P$ is not provable is always the exhaustive but unsuccessful (i.e. failed) search for a proof of $P$. \\
+
+Note that to assume that a relation instance is false if it is not implied, is to assume that the database gives complete information about the true instances of its relations. This is the closed world assumption reffered to by Reiter[1978] and Nicolas and Gallaire[1978].\\
+
+The Query Evaluation Process is essentially a linear resolution proof procedure with negated literals `evaluated' by a failure proof. However we shall view the alternate derivations of the search space as different paths of a non-deterministic evaluation which can SUCCEED, FAIL or not terminate. A path terminates with SUCCESS if its terminal query is the empty query. A path terminates with FAILURE if the selected literal of its terminal query does not unify with the consequent literal of the selected database clause. The subsequent selection of a database clause, and the attempted unification is a non-deterministic step of the evaluation. Finally a non-terminating evaluation path comprises an infinite sequence of queries each of which is derived from the initial query as described below.\\
+
+\textbf{Evaluation Algorithm:} Until an empty query is derived, which the evaluation succeeds, proceed as follows: 
+Select a literal $L_i$ from the current query $\leftarrow L_1\&\ldots\&L_n$. The selection rule is constrained so that a negative literal is only selected if it contains no variables.
+\begin{itemize}
+	\item Case 1: $L_i$ is a positive literal $R(\vec{t})$.\\
+	Non-deterministically choose a database clause about $R$\\
+	\[R(\vec{t'})\leftarrow L_1'\&\ldots\&L_m'\]
+	and try to unify $L_i$ with $R(\vec{t'})$. If $L_i$ doesn't unify with $R(\vec{t'})$, FAIL (this path). If $L_i$ does unify, replace the current query with the derived query
+	\[\leftarrow \{L_1\&\ldots\&L_{i-1}\ \& \ L_1'\ldots\&L_m'\ \& \ L_{i+1}\&\ldots\&L_n\}\theta\]
+	If there is no database clause about the relation of the selected clause, FAIL.
+	\item Case 2: $L_i$ is a negative ground literal ${\sim} P$.\\
+	Attempt to discover whether ${\sim} P$ can be assumed as a lemma, i.e. recursively enter the query evaluation with $\leftarrow P$ as a query. If the evaluation of $\leftarrow P$ SUCCEEDS, FAIL. If the evaluation of $\leftarrow P$ FAILS for every path of its non-deterministic evaluation, assume ${\sim} P$ as a lemma. Hence replace the current query by
+	\[ \leftarrow L_1\&\ldots\&L_{i-1}\ \& \ L_{i+1}\&\ldots\&L_n\]
+\end{itemize}
+Examples (propositional for simplicity):\\
+$KB: \{a\leftarrow b\}$\\
+$Query: a$\\
+We resolve $\leftarrow a$ with $a\leftarrow b$, and we get $\leftarrow b$ (new query after replacement). There is no rule in KB with $b$ in the head so FAIL this path. There is no other path so, FAIL.\\
+
+$KB: \{a\leftarrow b, b\leftarrow a\}$\\
+$Query: a$\\
+We resolve $\leftarrow a$ with $a\leftarrow b$, and we get $\leftarrow b$. Then we resolve $\leftarrow b$ with $b\leftarrow a$, and we get $\leftarrow a$. Again resolve with  $a\leftarrow b$. This is a non-terminating path. So we cannot decide whether $a$ is inferred.\\
+
+$KB: \{a\leftarrow {\sim}b\}$\\
+$Query: a$\\
+We resolve $\leftarrow a$ with $a\leftarrow b$, and we get $\leftarrow {\sim}b$. Now the query is ${\sim}b$ (second case in the algorithm). We continue with $\leftarrow b$. There is no rule in KB with $b$ in the head so this path FAILS. There is no other path so, FAIL for every path. Hence we get empty query, so SUCCEED.
+
+\subsection{Answer Set Programming}
+\begin{itemize}
+\item Inference-based approach (e.g. resolution in logic, top-down rule-based reasoning, Prolog):\\
+Provide a specification of the problem. A solution is given by a derivation of an appropriate query.
+
+\item Model-based approach (e.g. ASP, also SAT):\\
+Provide a specification of the problem. A solution is given by a model of the specification.
+
+\item Rules represent constraints on the program.
+
+\item A \textbf{(normal) rule}, $r$ , is of the form \[a_0\leftarrow a_1,\ldots,a_m, not \ a_{m+1}, \ldots, not \ a_n. \]
+\item A \textbf{(normal) logic program} is a finite set of rules.
+
+\item Given a set of atoms X from $\Pi$, $\Pi^X$ is obtained from $\Pi$ by deleting each rule having a $not A$ in its body with $A \in X$
+and then all negative atoms of the form $not A$ in the bodies of the remaining rules. Then X is an \textbf{answer set} of $\Pi$ just if $\Pi^X$ ``generates" $X$, i.e.  $Cn(\Pi^X)= X$. An answer set is a minimal set of atoms satisfying the rules.\\
+
+\item The program $\{p \leftarrow not \ p \}$ has no answer sets.
+\item An \textbf{integrity constraint} is of the form \[\leftarrow a_1,\ldots,a_m, not \ a_{m+1}, \ldots, not \ a_n.\]
+It can be translated into a normal rule by mapping to to ($x$ a new symbol) \[x\leftarrow a_1,\ldots,a_m, not \ a_{m+1}, \ldots, not \ a_n, not \ x.\]
+
+\item A \textbf{choice rule} is of the form \[\{a_1,\ldots,a_m\}\leftarrow a_{m+1},\ldots,a_n, not \ a_{n+1}, \ldots, not \ a_o \]
+The idea of a choice rule is to express choices over subsets of atoms. Any subset of its head
+atoms can be included in a stable model, provided the body literals are satisfied. Thus, for instance,
+the program $P = \{ a \leftarrow, \{b\} \leftarrow a\}$ has two stable models, $\{a\}$ and $\{a, b\}$. For another example, at
+a grocery store you may or may not buy pizza, wine, or corn.\\
+\texttt{ \{buy(pizza), buy(wine), buy(corn)\} :- at(grocery).}
+
+\item A \textbf{cardinality rule} is of the form \[a_0\leftarrow l\{a_1,\ldots,a_m, not \ a_{m+1}, \ldots, not \ a_n\}u. \]
+Cardinality rules allow for controlling the cardinality of subsets of atoms via the lower bound $l$ and upper bound $u$.
+
+\item A \textbf{conditional literal} is of the form \[l:l_1:\ldots:l_n\]
+The purpose of this construct is to govern the instantiation of the “head literal” $l$ through the literals $l_1,\ldots,l_n$. In this respect, a conditional literal $l:l_1:\ldots:l_n$ can be regarded as the list of elements in the set $\{l | l_1,\ldots,l_n\}$.\\
+For example, given three facts \texttt{color(red)}, \texttt{color(green)}, and \texttt{color(blue)}, the integrity constraint
+\[\texttt{:- color(v42,C) : color(C).}\] results in \[\texttt{:- color(v42,red), color(v42,green), color(v42,blue).}\]
+
+\item Classical negation: We can add classical negation to ASP (for atoms only) but it does not add to its expressive power.\\
+we extend our set of atoms $\mathcal{A}$ by $\overline{\mathcal{A}}=\{\neg a|a\in \mathcal{A}\}$ such that $ \mathcal{A}\cap  \overline{\mathcal{A}}= \varnothing$. That is, $\neg a$ is the classical negation of $a$ and vice versa. The semantics of classical negation is enforced by the addition of the following set of rules
+\[P^\neg=\{\leftarrow b,\neg b \ |\  b\in \mathcal{A} \}\]
+\end{itemize}
+\bibliography{references} 
+\bibliographystyle{apalike}
+
+\begin{flushright}
+	\small{Vahid Vaezian (vvaezian [at] sfu.ca), \today}
+\end{flushright}
+\end{document}

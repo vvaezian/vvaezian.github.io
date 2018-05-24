@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Shell Scripting</title>
+  <link rel="shortcut icon" href="/~vvaezian/Pic/terminal.ico">
+  <link rel="stylesheet" href="/~vvaezian/styles.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+</head>
+
+<body>
+<img src="/~vvaezian/Pic/shell-scripting.png" alt="Logo" height="128"> <br><br>
+
+<em>"Graphical user interfaces make easy tasks easier, while command line interfaces make difficult tasks possible."</em><br>
+<br><br>
+<em>* Most of the material is taken from <a href="https://www.amazon.com/Linux-Shell-Scripting-Bash-Burtch/dp/0672326426">this</a> book.</em>
+<br><br>
+
+<h2>Shell Scripting</h2>
+
+<h4>A Simple Shell Script</h4>
+	
+<pre class="prettyprint">#!/bin/bash
+clear
+echo "Hello world!"
+</pre><br>
+The first line tells the operating system what shell to use to interpret the script and the location of the shell.</br>
+We need the following command to make the file <a href="http://en.wikipedia.org/wiki/File_system_permissions#Numeric_notation">executable</a>: <kbd>$ chmod 755 script_name</kbd> (or <kbd>$ chmod +x script_name</kbd>).</br>
+We can then run the script by <kbd>$ ./script_name</kbd>.<br>
+Alternatively, we could use <kbd>$ bash script_name</kbd>. In This method we don't need to make the file executable.<br>
+<br>
+All shell commands and scripts generate a return value upon finishing execution; the value can be set with the exit statement (default 0). The return value is always stored in the <kbd>$?</kbd> variable.
+
+<details class="details">
+	<summary><div class="wrapper"><h4>Variables</h4></div></summary>
+	<div class="content">
+		<ul>
+			<li>Variables can be created and assigned text using an equals sign. 
+			Surround the text with double quotes (although it is not necessary unless there is space in the name):<br>
+			<code>$ FILENAME="info.txt"<br>
+			$ printf “%s\n” “$FILENAME”<br>
+			info.txt</code><br>
+			<li>The <kbd>declare</kbd> command, in addition to creation of variable and assigning values, can add attributes to variables as well 
+			(using + instead of - turns of the attribute).<br>
+			<samp>declare -r x=5</samp><br>
+			(<kbd>-r</kbd> option makes the variable read-only)<br>
+			<br>
+			The <samp>declare</samp> command without any options list all pre-defined variables of system.<br>
+			<li>The results of a command can be assigned to a variable using backquotes.<br>
+			<code>$ Date=`date`<br>
+			$ printf "%s\n" "$Date"<br>
+			Thu Apr 13 08:02:19 UTC 2017 </code><br>
+			<li>Double quotes do not prevent Bash from interpreting the special characters $, ‘, and \,
+			but single quotes leave all characters unchanged.
+			<li>Variable names can be enclosed in curly braces to make it clear where the variable’s name begins and ends.<br>
+			<smap>$ TAX_MESSAGE="The tax is ${TAX}%"</samp>
+			<li>Shell variables exist in the script or interactive sessions only, where they were
+			declared. In order to make shell variables available outside of their place of origin, they have to be declared as exportable with <kbd>-x</kbd> option.<br>
+			Although Linux has provisions for exporting environment variables, there is no way to assign any attributes to them.<br>
+			The variables shared with a new program are copies of the original. If a script
+			declares an exported variable and runs a second script, any changes made to the variable by the second script are invisible to the first.There is no way for a second script to assign a new value to a variable that the first script will see. Unlike other programming languages, exporting shell variables is a one-way street.<br>
+			The only way to return a value to the calling program is to write it to a file (or standard output) and have the calling program read (or assign) the value back into a variable.
+			<li>Before a command is executed, Bash searches the command for all dollar signs and inserts the value of variables before the command is carried out. Bash performs this substitution once. <kbd>eval</kbd> command do this another time:<br>
+			<code>#!/bin/bash<br>
+				VAR1=25<br>
+				VAR2='$VAR1'<br>
+				VAR3='$VAR2'<br>
+				echo "$VAR3"<br>
+				eval echo "$VAR3"<br>
+				eval eval echo "$VAR3"
+			</code><br>
+			Output of the script above:<br>
+			<code>$VAR2<br>
+				$VAR1<br>
+				25</code>
+		</ul>
+		<table class="EveryOtherOne">
+					<tr>
+						<td><samp>$RANDOM</samp>
+						<td>Generates a random integer number (0 - 32767)
+					</tr>
+		</table>
+	</div>
+</details>
+
+
+<details class="details">
+	<summary><div class="wrapper"><h4>Reading Keyboard Input</h4></div></summary>
+	<div class="content">
+		<pre class="prettyprint">read -p "Please enter your name: " USER_NAME</pre><br>
+		With <samp>-p</samp> option we can provide a message before the user input.<br>
+		<samp>read -t 5 FILENAME # wait up to 5 seconds to read a filename </samp><br>
+		<samp>-n 10 FILENAME # read no more than 10 characters</samp><br>
+		The <samp>-r</samp> (raw input) option disables the backslash escaping of special characters. 
+	</div>
+</details>
+
+
+<details class="details">
+	<summary><div class="wrapper"><h4>printf</h4></div></summary>
+	<div class="content">
+		<kbd>printf</kbd> is very similar to the C standard I/O <samp>printf()</samp> function, but they are not
+		identical. In particular, single- and double-quoted strings are treated differently in shell scripts than in C programs.<br>
+		The first parameter is a format string describing how the items being printed will be represented. 
+		For example, the special formatting code “%d” represents an integer number, and the code “%f” represents a floating-point number:<br>
+		<pre>$ printf "%d and %f\n" 5 5
+		5 and 5.000000</pre><br>
+	</div>
+</details>
+
+
+<details class="details">
+	<summary><div class="wrapper"><h4><samp>if</samp> command</h4></div></summary>
+	<div class="content">
+		<code>
+			if test Condition; then<br>
+			&emsp; Expression1<br>
+			else<br>
+			&emsp; Expression2<br>
+			fi<br>
+		</code><br>
+		We can use square brackets instead of <samp>test</samp>:<br> 
+		<code>
+			if [ Condition ]; then<br>
+			&emsp; ...<br>
+			fi<br>
+		</code><br>
+		We can use carriage return instead of semi-colon <samp>(;)</samp> :<br>
+		<code>
+			if [ Condition ]<br>
+			then<br>
+			&emsp; Expression1<br>
+			else<br>
+			&emsp; Expression2<br>
+			fi<br>
+		</code><br>
+		Make richer Conditions by using <kbd>-a</kbd> <samp>(and)</samp>, <kbd>-o</kbd> <samp>(or)</samp>, <kbd>!</kbd> <samp>(not)</samp>.<br>
+		Unlike most programming languages, in BASH the "not" operator doesn't take precedence over "and" and "or". So use parenthesis if needed.<br>
+		<code>
+			if [ \( ! -f "$TMP1" \) -a -f "$TMP2" ]<br>
+		</code><br>
+		Alternatively we can use <samp>&&, ||</samp> for 'and', 'or'.<br>
+		<code>
+			if [ \( ! -f "$TMP1" \) ] && [ -f "$TMP2" ]<br>
+		</code><br>
+		* <kbd>help test</kbd> gives useful options.<br>
+		Writing <samp>if</samp> commands in terminal:<br>
+		<code>if [ condition ]; then &ltrest of code&gt ; fi
+		</code><br>
+		Alternatively,<br>
+		<code>$ if [ condition ]; then<br>
+			> &ltrest of code&gt <br>
+			> fi<br>
+		</code>
+	</div>
+</details>
+
+
+
+<details class="details">
+	<summary><div class="wrapper"><h4>Arrays</h4></div></summary>
+	<div class="content">
+		<ul><li>Array is like a variable. So it is created using declare, with <kbd>-a</kbd> option or just direct assignment:<br>
+		<samp>$ declare -a ARRAY0$</samp><br>
+		<samp>$ ARRAY1=(0 1 2)</samp><br>
+		<samp>$ ARRAY2=([3]='cat' [5]='dog' [12]='cow')</samp> #indicating indeces
+		<li>Bash arrays differ from arrays in other computer languages in that they are open-ended. Arrays can be any length and are initially filled with empty strings for items.
+		<li>Use curly braces to supercede the shell's pathname matching process:<br>
+			<samp>$ echo "${ MYARRAY [2] }"</samp>
+		<li>If no index is given, index zero is assumed:<br>
+			<samp>$ echo "$ARRAY1"</samp><br>
+			2<br>
+			<samp>$ ARRAY1 = "a"</samp><br>
+			['a', 1, 2]
+		<li>Accessing all elements of an array can be done using index <kbd>*</kbd> or <kbd>@</kbd>. The difference (for <kbd>printf</kbd> not <kbd>echo</kbd>) is that <kbd>*</kbd> puts an space (actually the first character of IFS variable) in between elements but <kbd>@</kbd> doesn't:<br>
+		<samp>$ echo "${ARRAY1[*]}"</samp><br>
+		a 1 2
+		<li>Individual array values can be removed with the command. Erasing a value by <kbd>unset</kbd> assigning the array position an empty string doesn’t destroy it:The empty string is still treated as an array item whenever the items are counted.
+		<li>The <kbd>read</kbd> command can read a list into an array using an <kbd>-a</kbd> switch. When this switch is used, each item on the line of input is read into a separate array position.
+	</div>
+</details>
+
+
+<details class="details">
+	<summary><div class="wrapper"><h4>Command History</h4></div></summary>
+	<div class="content">
+		<p>The easiest way to browse the command history is with the Up and Down arrow
+		keys. The history can also be searched with an exclamation mark (<kbd>!</kbd>). This denotes the
+		start of a command name to be completed by Bash. Bash executes the most recent command
+		that matches. For example,<br>
+		<code>
+			$ !d<br>
+			date<br>
+			Thu Apr 13 08:24:51 UTC 2017  
+		</code><br>
+		<kbd>!!</kbd>repeats the last command. A negative number indicates the relative line number. That is, it indicates the number
+		of commands to move back in the history to find the one to execute. <kbd>!!</kbd> is the same as <kbd>!-1</kbd>.<br>
+		<br>
+		The <kbd>!#</kbd> repeats the content of the current command line. (Don’t confuse this with <kbd>#!</kbd>) 
+		Use this to run a set of commands twice.<br>
+		<br>
+		<kbd>history n</kbd> lists the last n commands.
+		</p>
+
+		<ul>
+		<li>Running <kbd>stty</kbd> shows the common command keys as well as other information about your session. (has -a option)
+		<li> Use <kbd>\</kbd> for using the next line in long commands
+		<li> Two commands separated by a semicolon (<kbd>;</kbd>), are executed consecutively, one after another. 
+		Two commands separated by <kbd>&&</kbd>, are executed until one of them fails or until all the commands are executed. Similarly for <kbd>||</kbd>.
+		<li> <kbd>sleep n</kbd> makes a n second delay.
+		<li> Using the minus sign (–) with <kbd>cd</kbd>, you can switch between the current directory and the last directory. 
+		(~ and - are features of Bash and only work with Bash and Bash scripts.)
+		</ul>
+	</div>
+</details>
+
+<details class="details">
+	<summary><div class="wrapper"><h4>Looping Constructs</h4></div></summary>
+	<div class="content">
+<pre>
+for i in list
+do
+	something
+done</pre>
+<pre class="prettyprint">
+sum=0
+for i in 1 2 3 4
+do
+	sum=$(($sum+$i))
+done
+echo "The sum of $i numbers is: $sum"
+</pre><br>
+		<code>
+			while condition is true<br>
+			do<br>
+				&emsp; something<br>
+			done
+		</code><br>
+		<code>
+			until condition is false<br>
+			do<br>
+			    &emsp; something<br>
+			done
+		</code><br>
+	</div>
+</details>
+
+
+
+<details class="details">
+	<summary><div class="wrapper"><h4>Security</h4></div></summary>
+	<div class="content">
+        Create random and unpredictable filenames for temporary storage with the <kbd>mktemp</kbd> utility:<br>
+        <code>
+        	TEMP=$(mktemp /tmp/tempfile.XXXXXXXX)  # To create a temporary file<br>
+			TEMPDIR=$(mktemp -d /tmp/tempdir.XXXXXXXX)  # To create a temporary directory
+		</code><br>
+		The <samp>XXXXXXXX</samp> is replaced with random characters by the <samp>mktemp</samp> utility.
+	</div>
+</details>
+
+
+
+<details class="details">
+	<summary><div class="wrapper"><h4>Misc.</h4></div></summary>
+	<div class="content">
+		<details class="details">
+			<summary><div class="wrapper"><h4>Debugging</h4></div></summary>
+			<div class="content">
+				We can run a script in debug mode by <kbd>bash –x ./script_file</kbd>.<br>
+				Inside a sccript we can do it by<br>
+				<code>
+					set -x    # turns on debugging<br>
+					...<br>
+					set +x    # turns off debugging<br>
+				</code>
+			</div>
+		</details>	
+		<details class="details">
+			<summary><div class="wrapper"><h4>Quick Refference Table</h4></div></summary>
+			<div class="content">
+				<table class="EveryOtherOne">
+					<tr>
+						<td><samp>${#str}</samp>
+						<td>Length of the string <samp>str</samp>
+					</tr>
+					<tr> 
+						<td> <samp>${str:i:j}</samp>
+						<td> String Slicing. i: start, j: length
+					</tr>
+					<tr> 
+						<td> <samp>${str#*i}</samp>
+						<td> String Slicing. The part of <samp>str</samp> after character i.
+					</tr>
+					<tr> 
+						<td> <samp>$n</samp>
+						<td> Referring to the nth argument that is given alongside the command
+					</tr>
+				</table>
+			</div>
+		</details>
+	</div>
+</details>
+</body>
+</html>

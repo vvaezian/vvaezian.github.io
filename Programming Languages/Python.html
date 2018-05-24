@@ -1,0 +1,771 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  <title>Python Quick Reference</title>
+  <link rel="shortcut icon" href="/~vvaezian/Pic/python.ico">
+  <link rel="stylesheet" href="/~vvaezian/styles.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<img src="/~vvaezian/Pic/Python-logo.png" alt="Logo" height="200"><br>
+<em>* Most of the material is taken from <a href="https://courses.edx.org/courses/course-v1:MITx+6.00.1x_9+2T2016/info" target="_blank">this</a> online course and <a href="https://www.amazon.com/Data-Science-Scratch-Principles-Python/dp/149190142X" target="_blank">this</a> book.</em><br>
+
+
+<details class="details">
+    <summary><div class="wrapper"><h4>Strings "123"</h4></div></summary>
+    <div class="content">
+String Methods<br>
+<pre>s = 'abcabc'
+s.upper()
+s.isupper()
+s.capitalize()
+s.index('b')
+s.index('z')
+s.find('b')
+s.find('z')
+s.count('c')
+s = s.replace('b','z')
+s = s.replace('b','z',1)
+t = 'abc def ghi'
+t.split(' ')
+output = ''.join(i for i in list1)</pre>
+
+<pre>"ABCABC"
+False
+"Abc"
+1
+error
+1
+-1
+2
+"azcazc"
+"azcabc"
+
+['abc', 'def', 'ghi']
+
+</pre><br>
+
+String Slicing<br>
+<pre>s = 'abcd'
+s[0]
+s[-1]
+s[1:3]
+s[::-1]</pre>
+<pre>a
+d
+bc
+dcba</pre><br>
+
+Since strings are immutable, there is no method to replace an arbitrary character of a string 
+(e.x. replacing the second 'o' in 'foo'). But we can use the following function
+(taken from <a href="http://stackoverflow.com/a/9188460/2445273" target="_blank"> here </a>):<br>
+<pre class = "prettyprint">
+    def arbit_replace(s, i, c):
+        return s[:i] + c + s[i + 1:]
+
+    print arbit_replace('foo', 2, 'z')</pre>
+<pre>foz</pre><br>
+</div>
+</details>
+
+
+<details class="details">
+    <summary><div class="wrapper"><h4>Lists [1, 2, 3]</h4></div></summary>
+    <div class="content">
+<pre>
+list1 = ['a', 'b', 'c']
+list1.remove('b')
+del list1[-1]
+list1.append('z')
+list1.insert(1,63)
+</pre>
+<pre>
+['a','c']
+['a']
+['a', 'z']
+['a', 63, 'z']
+</pre><br>
+
+<b>Enueration</b><br>
+<pre class="prettyprint">
+for index, item in my_list:
+    do_something(index, item)
+</pre><br>
+If we just want the indexes:<br>
+<pre class="prettyprint">
+for i in range(len(documents)):  # not Pythonic
+    do_something(i) 
+for i, _ in enumerate(documents):  # Pythonic
+    do_something(i) 
+</pre><br>
+
+<b>List Comprehension</b>:<br>
+<pre class="prettyprint">
+list1 = [i for i in range(100) if i not in range(30, 50)]
+list2 = [(x, y)
+         for x in range(10)
+         for y in range(10)]
+list3 = [(x, y) 
+         for x in range(10)
+         for y in range(x + 1, 10)]
+list4 = [0 for _ in range(5)]
+</pre><br>
+<br>
+Concatenating lists:<br>
+<pre class=prettyprint>
+x = [1, 2]
+x.extend([3, 4])  # x is [1, 2, 3, 4]</pre><br>
+If you don't want to modify x use list addition:<br>
+<pre class=prettyprint>
+x = [1, 2]
+y = x + [3, 4] # y is [1, 2, 3, 4]; x is unchanged</pre><br>
+Appending to lists one item at a time:<br>
+<pre class=prettyprint>
+x = [1, 2]
+x.append(0) # x is now [1, 2, 0]</pre>
+</div>
+</details>
+
+
+
+<details class="details">
+    <summary><div class="wrapper"><h4>Tuples (1, 2, 3)</h4></div></summary>
+    <div class="content">
+Tuples are lists' immutable cousins. Pretty much anything you can do to a list that doesn't involve modifying it, you can do to a tuple.<br>
+<pre>
+tuple1 = (3)
+print tuple1
+type(tuple1)
+tup2 = (3,)
+print tuple2
+type(tuple2)
+</pre>
+<pre>
+3
+&lt;type 'int'&gt;<br>
+(3,)
+&lt;type 'tuple'&gt;
+</pre><br>
+</div>
+</details>
+
+
+<details class="details">
+    <summary><div class="wrapper"><h4>Dictionaries {1:'a', 2:'b', 3:'c'}</h4></div></summary>
+    <div class="content">
+<pre>
+dic={'a':'cat', 'b':'bear', 'c':'cow'}
+dic.keys()
+dic.values()
+dic['b']
+'a' in dic
+'cat' in dic
+'cat' in dic.values()
+del dic['b']
+dic['d'] = 'dog'
+dic['z']
+dic.get('z')
+dic.get('z', 'nothing')
+</pre>
+<pre>
+
+['a', 'b', 'c']
+['cat, 'bear', 'cow']
+'bear'
+True
+False
+True
+{'a':'cat', 'c':'cow'}
+{'a':'cat', 'c':'cow', 'd':'dog'}
+KeyError
+None
+nothing
+</pre><br>
+<pre>
+for key, value in aDict.iteritems():
+    print "letter: {} Animal: {}".format(key,value)</pre><br>
+<pre>
+a = ''.join('{}{}'.format(key, str(val)) for key, val in dict1.items())</pre><br>
+
+<kbd>iteritems()</kbd> to <kbd>items()</kbd> is like <kbd>xrange</kbd> to <kbd>range</kbd>.<br>
+<br>
+<b>defaultdict</b><br>
+A defaultdict is like a regular dictionary, except that when you try to look up a key it doesn't contain, it first adds a value for it using a zero-argument function you provided when you created it.<br>
+
+<pre class=prettyprint>
+from collections import defaultdict
+
+a = defaultdict(int)
+b = defaultdict(str)
+c = defaultdict(list)
+d = defaultdict(tuple)
+e = defaultdict(set)
+f = defaultdict(dict)
+
+g = defaultdict(lambda: [0, 0])
+g[2][1] = 1
+
+print(a[1])
+print(b[1])
+print(c[1])
+print(d[1])
+print(e[1])
+print(f[1])
+print(g[1])
+print(g.items())</pre>
+<pre>
+0
+
+[]
+()
+set([])
+{}
+[0, 0]
+[(1, [0, 0]), (2, [0, 1])]
+</pre><br>
+<br>
+
+<b>Counter</b><br>
+<ul>
+<li>A Counter turns a sequence of values into a defaultdict(int)-like object, mapping keys to counts.<br>
+<pre class="prettyprint">
+from collections import Counter
+c = Counter([0, 1, 2, 0])   # c is (basically) { 0 : 2, 1 : 1, 2 : 1 }
+</pre><br>
+<li>A useful method of <samp>Counter</samp> is <samp>most_common</samp>.<br>
+<pre class="prettyprint">
+# print the 10 most common words and their counts
+for word, count in word_counts.most_common(10):
+    print word, count
+</pre><br>
+<li>Counting occurances of words/letters/symbols in a text:<br>
+First approach<br>
+<pre class="prettyprint">
+word_counts = {}
+    for word in document:
+        if word in word_counts:
+            word_counts[word] += 1
+        else:
+            word_counts[word] = 1
+</pre><br>
+Second approach:<br>
+<pre class="prettyprint">
+word_counts = {}
+for word in document:
+    try:
+        word_counts[word] += 1
+    except KeyError:
+        word_counts[word] = 1
+</pre><br>
+Third approach:<br>
+<pre class="prettyprint">
+word_counts = {}
+for word in document:
+    previous_count = word_counts.get(word, 0)
+    word_counts[word] = previous_count + 1
+</pre><br>
+Fourth approach:<br>
+<pre class="prettyprint">
+word_counts = defaultdict(int)
+for word in document:
+    word_counts[word] += 1
+</pre><br>
+Fifth approach:<br>
+<pre class="prettyprint">
+word_counts = Counter(document)
+</pre><br>
+</div>
+</details>
+
+
+
+<details class="details">
+    <summary><div class="wrapper"><h4>Sets {1, 2, 3}</h4></div></summary>
+    <div class="content">
+Set is like list but repetition doesn't matter. {1,1,2} = {1,2}<br>
+</div>
+</details>
+
+
+
+<details class="details">
+    <summary><div class="wrapper"><h4>Array and Matrix</h4></div></summary>
+    <div class="content">
+<pre>a = [1] * 3
+</pre>
+<pre>[1, 1, 1]
+</pre><br>
+The following functions do the same thing (making a zero matrix of m by n)<br>
+<pre class="prettyprint">
+def matrix1(m,n):
+    M = []
+    for i in xrange(m):
+        M.append([])
+        for j in xrange(n):
+            M[i].append(0)
+    return M
+    
+def matrix2(m,n):
+    M = []
+    for i in xrange(m):
+        M.append([0]*n)
+    return M
+
+def matrix3(m,n):
+    return [[0] * (n) for i in xrange(m)]
+</pre><br>
+</div>
+</details>
+
+
+
+<details class="details">
+    <summary><div class="wrapper"><h4>Exceptions</h4></div></summary>
+    <div class="content">
+<pre class="prettyprint">
+def listDivision(l1,l2):
+    '''Assumes: l1 and l2 are lists of same size
+    Returns a list containing the meaningful
+    values of l1[i]/l2[i]'''
+    result=[]
+    for n in range(len(l1)):
+        try:
+            result.append(l1[n]/float(l2[n]))
+        except ZeroDivisionError, e:
+            result.append(float('NaN'))
+            print e
+        except: #For all other kinds of exceptions
+            result.append('Bad Arg')
+            print 'listDivision called with bad arg'
+    return result</pre>
+<code>
+>>> listDivision([1,2,3],[4,5,6])<br>
+<span style="color:blue">[0.25, 0.4, 0.5]</span><br>
+>>> listDivision([1,2,3],[4,5,0])<br>
+<span style="color:blue">float division by zero<br>
+[0.25, 0.4, 'NaN']</span><br>
+>>> listDivision([1,2,3],[4,5,'a'])<br>
+<span style="color:blue">listDivision called with bad arg<br>
+[0.25, 0.4, 'Bad Arg']</span>
+</code><br>
+</div>
+</details>
+
+
+
+<details class="details">
+    <summary><div class="wrapper"><h4>Classes</h4></div></summary>
+    <div class="content">
+<pre class=prettyprint>
+class Coordinate(object):
+    def __init__(self, x0, y0):
+        self.x = x0
+        self.y = y0
+
+c = Coordinate(3,4)
+Origin = Coordinate(0,0)
+</pre><br>
+<img src="Pic/frame.png" alt="frame" height="300"><br>
+<pre>isinstance(c, Coordinate)
+</pre>
+<pre>True
+</pre><br>
+<pre class=prettyprint>
+class Coordinate(object):
+    def __init__(self, x0, y0):
+        self.x = x0
+        self.y = y0
+    def __str__(self):
+        return "<"+str(self.x)+","+str(self.y)+">"
+    def xDifference(self,other):
+        return (self.x - other.x)
+</pre><br>
+<ul>
+<li>The <kbd>__init__()</kbd> method (AKA initialization method or class constructor) is called immediately after an instance of the class is created.</br>
+<li>In all class methods, <kbd>self</kbd> refers to the instance whose method was called. But in the specific case of the <kbd>__init__()</kbd> method, the instance whose method was called is also the newly created object.
+<li>Python interpreter translates <kbd>obj1 &lt obj2</kbd> into a method call on <kbd>obj1</kbd> (namely <kbd>obj1.__lt__(obj2)</kbd>). 
+To enable sort operation on instances of a class we should implement the <em>__lt__</em> special method. e.x.:<br>
+<pre class=prettyprint>
+def __lt__(self, other):
+    """return True if self's name is lexicographically
+       less than other's name, and False otherwise"""
+    if self.lastName == other.lastName:
+        return self.name < other.name
+    return self.lastName < other.lastName</pre><br>
+<li>Assume we have a class which defines operations on a set. If we want <kbd>len(s)</kbd> return the number of members of s, then we need to define <em>len</em> using underscores:<br>
+<pre class=prettyprint>
+def __len__(self):
+    count = 0
+    for i in self.vals:
+        count += 1
+    return count
+</pre><br>
+If we don't use underscores, we have to get the length using <kbd>s.len()</kbd></li>
+<li><b>Inheritance</b><br>
+<pre class='prettyprint'>
+class Person(object):
+    def __init__(self, name):
+        self.name = name
+    def getName(self):
+        return self.name
+
+class MITPerson(Person):
+    nextIdNum = 0 # next ID number to assign
+    def __init__(self, name):
+        Person.__init__(self, name) # initialize Person attributes
+        self.idNum = MITPerson.nextIdNum
+        MITPerson.nextIdNum += 1
+    def getIdNum(self):
+        return self.idNum
+
+class UG(MITPerson):
+    def __init__(self, name, classYear):
+        MITPerson.__init__(self, name)
+        self.year = classYear
+    def getClass(self):
+        return self.year
+
+class Grad(MITPerson):
+    pass
+
+def isStudent(obj):
+    return isinstance(obj,UG) or isinstance(obj,Grad)</pre><br>
+</ul>
+</div>
+</details>
+
+
+<details class="details">
+    <summary><div class="wrapper"><h4>Generators</h4></div></summary>
+    <div class="content">
+<pre class="prettyprint">
+def genTest():
+    yield 1
+    yield 2
+foo = genTest()
+print foo.next()
+print foo.next()
+print foo.next()
+#---------- alternatively
+for n in foo:
+    print n</pre>
+<pre>
+1
+2
+StopIteration Exception
+
+1
+2</pre><br>
+<pre class="prettyprint">
+def genFib():
+    fibn_1 = 1 #fib(n-1)
+    fibn_2 = 0 #fib(n-2)
+    while True:
+        next = fibn_1 + fibn_2
+        yield next
+	fibn_2 = fibn_1
+	fibn_1 = next
+fib = genFib()
+for i in range(5):
+    print fib.next()</pre>
+<pre>1 2 3 5 8</pre><br>
+<b>Generator Expressions</b> (alternative of list comprehention to save memory)<br>
+The first example above can be written as follows<br>
+<pre class="prettyprint">
+foo = (i for i in xrange(2))
+</pre><br>
+
+<pre class="prettyprint">
+a = xrange(3)
+print list(a)
+print tuple(a)
+print set(a)
+b=['a','b','c']
+print dict(zip(a,b))</pre>
+
+<pre>[0, 1, 2]
+(0, 1, 2)
+set([0, 1, 2])
+
+{0: 'a', 1: 'b', 2: 'c'}
+</pre><br>
+    </div>
+</details>
+
+
+
+<details class="details">
+    <summary><div class="wrapper"><h4>Misc.</h4></div></summary>
+    <div class="content">
+
+    <details class="details">
+        <summary><div class="wrapper"><b>print</b></div></summary>
+        <div class="content">
+<pre class="prettyprint">
+a=['a', 'b', 'c']
+for index, item in enumerate(a):
+    print '%d. %s' % (index, item)
+
+
+</pre>
+<pre>
+0. a
+1. b
+2. c</pre><br>
+
+<pre class="prettyprint">
+print "Case #{}: {}".format(1, 2)
+</pre>
+<pre>case #1: 2</pre><br>
+</div>
+</details>
+
+<details class="details">
+    <summary><div class="wrapper"><b>Input</b></div></summary>
+    <div class="content">
+<pre class=prettyprint>
+f = open('pathToFile', [option])
+for line in data:
+    print(line.rstrip('\n'))  # rstrip('\n') is for ignoring newline symbols
+                              # which causes to print an empty line between lines</pre><br>
+[option] can be <samp>'r'</samp> (read) [default], <samp>'w'</samp> (write), <samp>'r+'</samp> (read and write) and <samp>'a'</samp> (append).<br>
+<br>
+Using <samp>with</samp> block, closes the file automatically afterwards:<br>
+<pre class="prettyprint">
+with open('pathToFile', [option]) as f:
+    do something
+</pre><br>
+
+<pre class=prettyprint>guess = 50
+x = raw_input('Is your number ' + str(guess) + '?' + '\n Enter \'Yes\' or \'No\': ')
+
+</pre>
+<pre>Is your number 50?
+Enter 'Yes' or 'No':</pre><br>
+</div>
+</details>
+
+<details class="details">
+    <summary><div class="wrapper"><b>copying</b></div></summary>
+    <div class="content">
+<a href="https://stackoverflow.com/a/3975388/2445273">This</a> explains the difference between reference assignment, shallow copying and deep copying.<br>
+<kbd>[:]</kbd> makes a shallow copy of a string or list.
+<kbd>dic.copy()</kbd> do the same for dictionaries.<br>
+If our list is a list of lists or list of objects (similar for dictionaries), then we need to do deep copying so that altering the copy doesn't alter the original:<br>
+<pre class="prettyprint">
+import copy
+list2 = copy.deepcopy(list1)</pre><br>
+</div>
+</details>
+
+<details class="details">
+    <summary><div class="wrapper"><b>Divisions</b></div></summary>
+    <div class="content">
+<pre>9%2
+9/2
+-9/2
+9.0/2
+9/2.0
+9.0/2.0</pre>
+<pre>1
+4
+5
+4.5
+4.5
+4.5</pre><br>
+*In Python 3.x 9/2 = 4.5. We can achieve this in Python 2.2+ with <kbd>from __future__ import division;</kbd>
+</div>
+</details>
+
+<details class="details">
+    <summary><div class="wrapper"><b>Difference between <kbd>==</kbd> and <kbd>is</kbd></b></div></summary>
+    <div class="content">
+    The equality operator (<kbd>x == y</kbd>) tests the values of x and y for equality, while the identity operators (<kbd>is</kbd>) tests two objects to see whether they refer to the same object in memory. 
+    In general, it may be the case that <kbd>x == y</kbd>, but <kbd>x is not y</kbd>.<br>
+<code>
+>>> a = [1, 2, 3]<br>
+>>> b = a<br>
+>>> b is a <br>
+<span style="color:blue">True</span><br>
+>>> b == a<br>
+<span style="color:blue">True</span><br>
+</code>
+<code>
+>>> a = [1, 2, 3]<br>
+>>> b = a[:]<br>
+>>> b is a<br>
+<span style="color:blue">False</span><br>
+>>> b == a<br>
+<span style="color:blue">True</span>
+</code></li>
+</div>
+</details>
+
+<details class="details">
+    <summary><div class="wrapper"><b>Sorting a list with two rules</b></div></summary>
+    <div class="content">
+<pre>l=[(4,'mouse'),(1,'cat'),(3,'horse'),(2,'pog'),(3,'cow'),(2,'dog')]
+l.sort(key=lambda x: (-x[0], x[1]))</pre>
+<pre>[(4, 'mouse'), (3, 'cow'), (3, 'horse'), (2, 'dog'), (2, 'pog'), (1, 'cat')]</pre><br>
+If an element is a calss instance, we need to use dot notation. E.x.<br>
+<pre>l.sort(key=lambda, x: (x[0].name, x[1].age))</pre>
+</div>
+</details>
+
+<details class="details">
+    <summary><div class="wrapper">Measure the <b>runtime</b> of a program</div></summary>
+    <div class="content">
+<pre class="prettprint">
+import time
+start = time.time()
+[body]
+end = time.time()
+print end - start
+</pre><br>
+Another way is from shell: <kbd>time python [py file]</kbd><br>
+<br>
+For small bits of Python code we can use <samp>timeit</samp> (it can be run from <a href="https://docs.python.org/2/library/timeit.html#python-interface">python interface</a> as well): <br>
+<kbd>python -m timeit [-n N] [-r N] [statement ...]</kbd><br>
+where 
+<samp>-n N, (--number=N)</samp> denotes how many times to execute ‘statement’, and <samp>-r N, (--repeat=N)</samp> denotes how many times to repeat the timer (default 3).
+</div>
+</details>
+
+<details class="details">
+    <summary><div class="wrapper">Reference to the <b>current time</b></div></summary>
+    <div class="content">
+<pre class="prettyprint">import time
+print time.strftime("%Y-%m-%d %H:%M:%S")</pre><br>
+If we don't care about the representation, <kbd>time.time()</kbd> is good enough. It returns the value of time in seconds since the Epoch.
+</div>
+</details>
+
+<details class="details">
+    <summary><div class="wrapper"><b>Random Numbers</b></div></summary>
+    <div class="content">
+<pre class="prettyprint">
+import random
+
+r_num1 = random.random()  # random number between 0 and 1
+r_num2 = random.randrange(3, 9)  # random integer number between 3 and 8
+shuffled_list = random.shuffle(my_list)  # shuffles the list
+chosen_member = random.chice(my_list)  # chooses a member of the list
+chosen_members = random.sample(my_list, 4)  # chooses 4 member of the list without replacement 
+chosen_members_with_replacement = [random.choice(my_list) for _ in range(3)]
+
+# use random.seed to get reproducible results
+random.seed(5)
+print random.random()  # 0.62290169489
+random.seed(5)
+print random.random()  # 0.62290169489
+</pre><br>
+</div>
+</details>
+
+<details class="details">
+    <summary><div class="wrapper"><b>zip</b></div></summary>
+    <div class="content">
+<pre class="prettyprint">
+zip(['a', 'b', 'c'], [1, 2, 3])  # [('a', 1), ('b', 2), ('c', 3)]
+zip(('a', 1), ('b', 2), ('c', 3))  # [('a', 'b', 'c'), (1, 2, 3)]
+data = [('a', 1), ('b', 2), ('c', 3)]
+zip(*data)  # [('a', 'b', 'c'), (1, 2, 3)]
+</pre><br>
+</div>
+</details>
+
+<details class="details">
+    <summary><div class="wrapper"><b>*args and **kwargs</b></div></summary>
+    <div class="content">
+The general use of these is to produce higher-order functions whose inputs can accept arbitrary arguments.<br>
+When we define a function using *args and **kwargs, args is a tuple of its unnamed arguments
+and kwargs is a dict of its named arguments:<br>
+<pre class="prettyprint">
+def test(*args, **kwargs):
+    print "unnamed args:", args
+    print "keyword args:", kwargs
+
+test(1, 2, key="word", key2="word2")  # unnamed args: (1, 2)
+                                      # keyword args: {'key2': 'word2', 'key': 'word'}
+</pre><br>
+It works the other way too:<br>
+<pre class="prettyprint">
+def test2(x, y, z):
+    return x + y + z
+
+x_y_list = [1, 2]
+z_dict = { "z" : 3 }
+print test2(*x_y_list, **z_dict)  # 6
+</pre><br>
+</div></details>
+<details class="details">
+    <summary><div class="wrapper"><b>matplotlib</b></div></summary>
+    <div class="content">
+<pre class="prettyprint">
+import matplotlib.pyplot as plt
+
+plt.axis([x_start, x_end, y_start, y_end])
+plt.xticks(tick_list)
+plt.xlabel("x_Label")
+plt.ylabel("y_label")
+plt.title("Title")
+plt.legend(loc=9)  # assuming 'label' is defined. 9 means top-center
+plt.show()
+</pre><br>
+
+<b>Types of plots</b>
+<pre class="prettyprint">
+#--- Line Chart ---
+plt.plot(x_list, y_list, color='green', marker='o', linestyle='solid', label='my_label', linewidth=2)  
+# The arguments color/marker/linestyle can be shortened, e.g. 'go-'. 
+# full list of arguments can be found <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html">here</a>.
+
+#--- Bar Chart ---
+plt.bar(x_list, y_list, bar_width)
+# full list of arguments can be found <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.bar.html">here</a>.
+
+#--- Scatterplots ---
+plt.scatter(x_list, y_list)
+</pre><br>
+
+<b>Annotation</b><br>
+<pre class="prettyprint">
+x_list = [...]
+y_list = [...]
+labels = [...]
+
+plt.scatter(x_list, y_list)
+
+# label each point
+for label, x_item, y_item in zip(labels, x_list, y_list):
+    plt.annotate(label,
+        xy=(x_item, y_item),  # put the label with its point
+        xytext=(5, -10),  # but slightly offset
+        textcoords='offset points')
+
+# full list of arguments can be found <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.annotate.html">here</a>.
+</pre><br>
+<b>Misc.</b><br>
+<pre class="prettyprint">
+plt.axis("scaled")  # Equal scaling by changing box dimensions
+# full list of arguments can be found <a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.axis.html#matplotlib.axes.Axes.axis">here</a>.
+</pre><br>
+</div>
+</details>
+
+
+<details class="details">
+    <summary><div class="wrapper"><h4><samp>sys</samp></h4></div></summary>
+    <div class="content">
+        <kbd>sys.argv</kbd> is the list of command-line arguments. So <samp>sys.argv[0]</samp> is the name of the program itself
+    </div>
+</details>
+
+    </div>
+</details>
+
+</body>
+</html>

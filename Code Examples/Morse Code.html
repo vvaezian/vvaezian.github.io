@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <link rel="shortcut icon" href="../Pic/python.ico">
+    <title>Morse Code Decoder</title>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+    <link rel="stylesheet" href="../styles.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato'     rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<h5>Morse Code Decoder</h5>
+<pre class = "prettyprint linenums">
+def interpret(s):
+    return interpret2(s,[]) #Calls another fucntion with an extra argument
+
+def interpret2(s, interpreted):
+    """s is a morse code. The function return all valid interpretations of the code.
+       It uses backtracking for this task (implemented using recursion)."""
+ 
+    if s == "":
+        print interpreted
+
+    for j in xrange(len(s)):
+        if s[:j + 1] in dict1:
+            interpreted.append(dict1[s[:j + 1]])
+            interpret2(s[j + 1:], interpreted)
+
+    if len(interpreted) > 0: 
+        interpreted.pop()     #when the program gets here, either it has failed to find a valid interpretation, or have 
+			      #found one already and printed it; in both cases it needs to backtrack.
+    return
+
+dict1 = {'---': 'o', '--.': 'g', '-...': 'b', '-..-': 'x', '.-.': 'r', '--.-': 'q', '--..': 'z', '.--': 'w', '.-': 'a',
+         '..': 'i', '-.-.': 'c', '..-.': 'f', '-.--': 'y', '-': 't', '.': 'e', '.-..': 'l', '...': 's', '..-': 'u',
+         '-.-': 'k', '-..': 'd', '.---': 'j', '.--.': 'p', '--': 'm', '-.': 'n', '....': 'h', '...-': 'v'}
+
+interpret(".-..---")
+</pre>
+</body>

@@ -1,0 +1,96 @@
+
+body {
+  background-image: url(Pic/background.png);
+  background-size: 1% 100%; 
+  margin-left:15%;
+  margin-right:15%;
+  margin-bottom:100px;
+  font-family: 'Lato', sans-serif;
+  font-size:16px
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 5px;
+}
+
+table.EveryOtherOne tr:nth-child(even) {
+    background-color: #eee;
+}
+
+table.EveryOtherOne tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+code {
+  margin-bottom:5px;
+  margin-top:5px;
+  padding: 5px;
+  display: inline-block;
+  border: solid 1px #5882FA;
+	border-radius: 5px;
+  font-size:14px;
+  background-color: #E8E8E8;
+}
+
+pre {
+  overflow:auto;
+  padding: 2px;
+  display: inline-block;
+  border: solid 1px #5882FA;
+	border-radius: 3px;
+  font-size:14px;
+  background-color: #E8E8E8;
+}
+
+ul.a {list-style-type: circle;}
+ul.b {list-style-type: square;}
+ul.c {list-style-type: disc;}
+
+kbd  {
+  font-size:15px;
+  background-color: #D1FFBA;
+}
+
+li   {
+  margin-bottom:5px;
+}
+
+h1, h2, h3, h4, h5, h6{
+  margin-top:15px;
+  margin-bottom:5px;
+}
+
+h3  {
+  border-bottom: 1px solid #000;
+  display: inline-block;
+  padding-bottom: 1px;
+}
+
+samp {font-size:15px}
+
+summary .wrapper {display: inline-block;}
+
+@keyframes invisiblyGrowFontSize {
+  0% {
+    font-size: 0;
+    opacity: 0;}
+  100% {
+    font-size: 1em;
+    opacity: 0;}
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.details[open] .content {
+  animation-name: invisiblyGrowFontSize, fadeIn;
+  animation-duration: 500ms, 200ms;
+  animation-delay: 0ms, 500ms;
+}

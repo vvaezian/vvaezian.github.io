@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  <title>PHP Quick Reference</title>
+  <link rel="shortcut icon" href="/~vvaezian/Pic/php.ico">
+  <link rel="stylesheet" href="/~vvaezian/styles.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<br><p><img src="/~vvaezian/Pic/php-logo.png" alt="Logo" height="150"></p>
+<em>* Most of the material is taken from <a href="http://php.net/manual/en/langref.php">this</a> online course.<br>
+
+<pre class="prettyprint">
+&lt;?php
+  echo '&lt;p>Hello World!&lt;/p>'; // this is a comment                      
+  phpinfo(); # this is also a comment. Multi-line comments with /* */
+  error_reporting(E_ALL);
+  ini_set("display_errors", 1);
+  $a = 4;  # variables have $
+  echo "value of a is:".$a  # dot is the string concatenation operator
+?>
+</pre><br>
+<details class="details">
+  <summary><div class="wrapper"><h4>Arrays</h4></div></summary>
+  <div class="content">
+    - An array in PHP is actually an ordered map. It can be treated as a list, dictionary and more.<br>
+    - An array can be created as<br>
+<pre class="prettyprint">
+array(
+  key1 => value1,
+  key2 => value2,
+  key3 => value3,
+  ...
+)
+</pre><br>
+    - As of PHP 5.4, we can use [] instead of array().<br>
+    - The key can either be an integer or a string.<br>
+    - In the keys, Floats, Bools and Strings containing valid decimal integers are cast to integers.<br>
+    - Same keys overwrite previous ones.<br>
+<pre class="prettyprint">
+$array = array(
+    1    => "a",
+    "1"  => "b",
+    1.5  => "c",
+    true => "d",
+);
+print_r($array);  # Array ( [1] => d )
+var_dump$array);  # array(1) { [1]=> string(1) "d" } 
+</pre><br>
+    - The key is optional. If it is not specified, PHP will use the increment of the largest previously used integer key.<br>
+    - To change a certain value, assign a new value to that element using its key (like list or dict in Python).<br>
+    - To delete element from array use <kbd>unset()</kbd>:<br>
+<pre class="prettyprint">
+$arr = array(5 => 1, 12 => 2, 17 => 6);
+unset($arr[5])  # This removes the first element of array.
+unset($arr)  # This deletes the whole array
+</pre><br>
+    - To reindex after deletting an entry, use <kbd>array_values()</kbd>.<br>
+    - The <kbd>foreach</kbd> control structure exists specifically for arrays and objects:<br>
+<pre class="prettyprint">
+$arr = [1, 3, 5, 7];
+foreach ($arr as $key => $value) {  # If we don't need the key, we can write '$arr as $value'
+  ...
+}
+</pre><br>
+    - Changing the values of an array directly is possible by <a href='http://www.php.net/manual/en/language.references.whatdo.php'> passing them by reference </a>:<br>
+<pre class="prettyprint">
+$colors = ['red', 'blue', 'green', 'yellow'];
+foreach ($colors as &$color) {  # '&' is used to pass by reference.
+    $color = strtoupper($color);
+}
+unset($color); /* ensuring that following writes to $color
+                  will not modify the last array element. */
+</pre><br>
+    - Array assignment always involves value copying. Use assignment by reference to change both items involved:<br>
+<pre class="prettyprint">
+$arr1 = [2, 3];
+$arr2 = $arr1;
+$arr2[0] = 4; # $arr2 is changed to [4, 3],
+              # $arr1 is still [2, 3]
+             
+$arr3 = &$arr1;
+$arr3[0] = 4; // now $arr1 and $arr3 are the same
+</pre><br>
+  </div>
+</details>
+
+
+<details class="details">
+  <summary><div class="wrapper"><h4>Strings</h4></div></summary>
+  <div class="content">
+    <ul>
+      <li><kbd>strpos()</kbd> is a built-in function which searches a string for another string and returns the position of the string. -->
+  </div>
+</details>
+
+<details class="details">
+  <summary><div class="wrapper"><h4>Input</h4></div></summary>
+  <div class="content">
+<pre class="prettyprint">
+# fill an array with all items from a directory
+$handle = opendir('.');
+while (false !== ($file = readdir($handle))) {
+  $files[] = $file;
+}
+closedir($handle); 
+print_r($files);
+</pre><br>
+  </div>
+</details>
+
+
+<details class="details">
+  <summary><div class="wrapper"><h4>Functions</h4></div></summary>
+  <div class="content">
+<pre class="prettyprint">
+function ($arg1, ...) {}
+  ...;
+  return ...;
+}
+</pre><br>
+    For a global variable we can use either <samp>global</samp> (like python), or <samp>GLOBALS</samp> (The <samp>$GLOBALS</samp> array is an associative array with the name of the global variable being the key and the contents of that variable being the value of the array element):<br>
+<pre class="prettyprint">
+$a = 1;
+function sum_a($b) {
+  global $a;
+  return $a + $b;
+}
+</pre>
+<pre class="prettyprint">
+$a = 1;
+function sum_a($b) {
+  return $GLOBALS['a'] + $b;
+}
+</pre><br>
+ A <b>static</b> variable exists only in a local function scope, but it does not lose its value when program execution leaves this scope:<br>
+ <pre class="prettyprint">
+ function test() {
+  static $a = 0;
+  echo $a;
+  $a++;
+}
+</pre><br>
+ Now, <samp>$a</samp> is initialized only in first call of function and every time the test() function is called it will print the value of $a and increment it.<br>
+ Static declarations are resolved in compile-time. 
+  </div>
+</details>
+
+
+
+<details class="details">
+  <summary><div class="wrapper"><h4>Forms</h4></div></summary>
+  <div class="content">
+<pre class="prettyprint">
+&lt;form action="action.php" method="post">
+  &lt;p>Your name: &lt;input type="text" name="name" />&lt;/p>
+  &lt;p>Your age: &lt;input type="text" name="age" />&lt;/p>
+  &lt;p>&lt;input type="submit" value="Submit!" />&lt;/p>
+&lt;/form>    
+</pre><br>    
+Then we need an <samp>action.php</samp> page to show the page that appears after pressing submit button:<br>
+<pre class="prettyprint">
+Hi &lt;?php echo htmlspecialchars($_POST['name']); ?>. 
+# htmlspecialchars is to avoid injecting HTML tags or javascript into the page
+You are &lt;?php echo (int)$_POST['age']; ?> years old.
+# (int) conversion gets rid of any stray characters.
+</pre><br>
+To use an image as the submit button:<br>
+<pre class="prettyprint">
+&lt;input type="image" src="image.gif" name="sub" />
+</pre><br>
+When the user clicks somewhere on the image, the accompanying form will be transmitted to the server with two additional variables, sub_x and sub_y. These contain the coordinates of the user click within the image.
+  </div>
+</details>
+
+
+<details class="details">
+  <summary><div class="wrapper"><h4>Misc.</h4></div></summary>
+  <div class="content">
+    <ul>
+      <li><samp>&lt;?= 'testing echo with =' ?> </samp> is equivalent to <samp> &lt;?php 'testing echo with =' ?></samp>.
+      <li>Unlike the double-quoted and <samp>heredoc</samp> syntaxes <kbd>("&lt;&lt;&lt;EOD")</kbd>, variables and escape sequences for special characters will not be expanded when they occur in single quoted strings or <samp>nowdocs</samp><kbd>("<<<'EOD'")</kbd>.
+      <li>inside a double-quoted string, it's valid to not surround array indexes with quotes so <samp>"$foo[bar]"</samp> is valid.
+      <li>The type of a variable is not usually set by the programmer; rather, it is decided at runtime by PHP depending on the context in which that variable is used.
+  </div>
+</details>
+</body>
+</html>

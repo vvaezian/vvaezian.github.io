@@ -1,0 +1,250 @@
+\documentclass[fleqn]{report}
+\usepackage[dvips]{color}
+\usepackage{cmll}
+\usepackage{amsmath}
+\setlength{\mathindent}{1cm}
+\usepackage{stmaryrd}
+\usepackage[dvips]{graphicx}
+\usepackage{anysize}
+\usepackage{amssymb}
+\usepackage{bussproofs}
+\usepackage{esvect}
+\marginsize{2.9cm}{2.9cm}{2cm}{4cm}
+
+\newtheorem{Theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+\begin{document}
+\EnableBpAbbreviations
+\def\ScoreOverhang{1pt}
+\setlength{\parindent}{0pt}
+
+\begin{flushleft}
+{\Large Summary of ``Knowledge in Action: Logical Foundations for Specifying and Implementing Dynamical Systems" (2001)} \newline{\large Book's Author: Raymond Reiter}\\
+\end{flushleft}
+
+\emph{* Obviously, I don't take any credit for the material in this file. This is just for my own reference.}
+
+\section*{Chapter 6: Complex Actions, Procedures, and Golog}
+Intuitively, $Do(\delta, s, s')$ says that \emph{it is possible to reach situation $s'$ from situation $s$ by executing a sequence of actions specified by $\delta$}.\\
+Note that complex actions may be nondeterministic, that is, may have several different executions terminating in different situations.\\
+
+$Do$ is defined inductively on the structure of its first argument as follows:
+
+\begin{itemize}
+ \item Primitive actions:\\
+$Do(a,s,s')\stackrel{def}{=}Poss(a[s]\footnote{The notation $a[s]$ means the result of restoring the situation argument $s$ to all functional
+fluents mentioned by the action term $a$. For example, if $a$ is $goTo(location(Sam))$, and if $location$ is a functional fluent, then $a[s]$ is $goTo(location(Sam, s))$.},s)\land s'=do(a[s],s)$.
+ \item Test actions:\\
+$Do(\phi?,s,s')\stackrel{def}{=}\phi[s]\footnote{Here, $\phi$ is a situation-suppressed expression (not a situation calculus
+formula) consisting of a formula in the language of the situation calculus, but with all
+situation arguments suppressed. $\phi[s]$ denotes the situation calculus formula obtained
+from $\phi$ by restoring situation variable $s$ into all fluent names (relational and functional) mentioned in $\phi$.}\land s'=s$.
+ \item Sequence:\\
+$Do(\delta_1;\delta_2,s,s')\stackrel{def}{=}(\exists s'').Do(\delta_1,s,s'')\land Do(\delta_2,s'',s')$.
+ \item Nondeterministic choice of two actions:\\
+$Do(\delta_1|\delta_2,s,s')\stackrel{def}{=}Do(\delta_1,s,s')\lor Do(\delta_2,s,s')$.
+\item Nondeterministic choice of action argument:\\
+$Do((\pi x)\delta(x),s,s')\stackrel{def}{=}(\exists x)Do(\delta(x),s,s')$.
+\item Nondeterministic iteration: Execute $\delta$ zero or more times.
+\begin{align*}
+Do(&\delta^*,s,s')\stackrel{def}{=}\\
+&(\forall P).\{(\forall s_1)P(s_1,s_1)\land(\forall s_1,s_2,s_3)[Do(\delta,s_1,s_2)\land P(s_2,s_3)\supset P(s_1,s_3)]\}\supset P(s,s'). 
+\end{align*}
+\end{itemize}
+Conditionals and while-loops can be defined in terms of the previous constructs as follows:
+\begin{align*}
+&\textbf{if}  \ \phi \ \textbf{then} \ \delta_1 \ \textbf{else} \ \delta_2 \ \textbf{endIf} \stackrel{def}{=} [\phi?;\delta_1]|[\neg\phi?;\delta_2]\\
+&\textbf{while} \ \phi \ \textbf{do} \ \delta \ \textbf{endWhile} \stackrel{def}{=} [\phi?;\delta]^*;\neg\phi?
+\end{align*}
+
+
+\newpage
+\section*{Chapter 7: Time, Concurrency, and Processes\footnote{Part of the content is from ``J. Pinto, R. Reiter, \emph{Time in the Situation Calculus}. 1995''.}}
+Insofar as actions are currently represented in the situation calculus, they occur sequentially, and atemporally. But real actions (1) normally have \textbf{duration}s, (2) they occur in \textbf{time}, and 
+(3) frequently they occur together, i.e., \textbf{concurrent}ly.\\
+
+\textbf{Modelling Actions with duration}
+
+- For each action with duration, introduce two instantaneous actions $start$ and $end$ and a relational fluent. 
+For example for the action $press$, define $startPress$ and $endPress$ and the fluent $pressing(s)$. \\
+- The successor state axiom for the fluent will be:\vspace{-.3cm}
+\[pressing(do(a,s))\equiv a=startPress \lor (pressing(s) \land a\neq endPress) \]
+
+\textbf{Modelling Time (explicitly)}
+
+The situation calculus axioms capture a purely qualitative notion of time. Sequential action occurrence is the only temporal concept captured by the axioms; an action occurs \emph{before} or \emph{after} another. 
+It may occur one millisecond or one year before its successor; the axioms are neutral on this question. So a situation $do([A_1, A_2, \ldots , A_n], S_0)$ must be understood as a world history
+in which, after a nondeterministic period of time, $A_1$ occurs, then, after a nondeterministic period of time, A$_2$ occurs, etc.\\
+
+- Add a new temporal argument to all instantaneous actions, denoting the actual time at which that action occurs. So we have actions $A(\vec{x},t)$ \\
+
+- Define a new function symbol $time:action\to reals$\footnote{we could use integers, rationals, or anything else on which a binary relation $<$ is defined.} . $time(a)$ denotes the time of occurrence of action $a$. 
+This means that in any application involving a particular
+action $A(\vec{x},t)$, we shall need an axiom specifying the occurrence time of the action $A$: $time(A(\vec{x},t))=t$.\\
+
+- It is convinient to have a new function symbol $start:situation\to reals$.\\ $start(s)$ denotes the start time of situation $s$. This requires the new foundational axiom: (defining the start time of 
+$S_0$ is arbitrary).\vspace{-.2cm} \[(\forall s,a) \ start(do(a,s))=time(a)\]
+
+- We may also define a new function symbol $end:situation\times action\to reals$.\\ $end(s,a)$ denotes the ending time of situation $s$ which is marked by occurance of action $a$. We have\vspace{-.2cm} \[(\forall s,a) \ end(s,a)=start(do(a,s))\]
+
+- We need to modify the definition of $executable$ by ruling out the possibility of prior actions having later times:\vspace{-.3cm}
+\[executable(s) \stackrel{def}{=} (\forall a,s').do(a,s')\sqsubseteq s \ \supset \ Poss(a,s')\land start(s')\leq time(a). \]
+This ensures that $(\forall a,s) \ start(s)\leq end(s,a)$\\
+ 
+For Golog semantics, we just need to change the definition of the $Do$ macro for primitive actions:\vspace{-.3cm}
+\[Do(a,s,s')\stackrel{def}{=}Poss(a[s],s) \ \land \ start(s)\leq time(a[s]) \ \land \ s'=do(a[s],s)\]
+
+\textbf{Modelling Concurrency}
+
+There are two types of concurrency:
+\vspace{-.1cm} 
+\begin{itemize}
+\itemsep-.3em
+ \item \emph{Interleaved Concurrency}: Two actions are interleaved when one of them is the next action to occur after the other 
+ \item \emph{True Concurrency}: When two or more actions start and end at exactly the same times.
+\end{itemize}
+\vspace{-.1cm}
+
+In computer science, concurrency is most often modeled via interleaving. Interleaved concurrency can be expressed within the sequential situation calculus, provided
+we appeal to instantaneous start and end actions, as defined above. We define true concurrency in two stages; first a non-temporal account and then a temporal account.\\
+
+\underline{The Concurrent, Non-Temporal SitCalc}\\
+
+- Concurrent actions are sets of simple actions, we can use the notation $a \in c$ to mean that simple action $a$ is one of the actions of the concurrent action $c$.\\
+
+- To distinguish the sorts \emph{action} of simple actions and \emph{concurrent}, we use variables $a, a', \ldots , \ \text{and} \ c, c', \ldots,$ respectively.\\
+
+- We extend the function symbol $do$ to take concurrent actions as an argument. Then we have situation terms like $do(\{startMeeting(Sue), collide(A, B)\}, S_0)$.\\
+
+- We need to simply replace each $action$ variable in the foundational axioms by a variable of sort $concurrent \ action$.\\
+
+- The abbreviation for $executable(s)$ becomes:\vspace{-.3cm} \[executable(s)\stackrel{def}{=}(\forall c,s').do(c,s')\sqsubseteq s \ \supset \ Poss(c,s')\]
+
+- We need to add two more axioms to complete the foundational axioms of the concurrent, non-temporal SitCalc:\\
+$Poss(a,s)\supset Poss(\{a\},s),$\\
+$Poss(c,s)\supset (\exists a)a\in c\land (\forall a)[a\in c\supset Poss(a,s)]$\\
+(the converse need not hold because of the \emph{precondition interaction pronlem})\\
+
+\underline{The Concurrent, Temporal SitCalc}\\
+
+- A concurrent action makes no intuitive sense if it is empty, or if it contains two or more simple actions whose occurrence times are different. 
+Accordingly, define the notion of a \emph{coherent} concurrent action to be one for which there is at least one action in the collection, and for which all of the (instantaneous) actions in the collection occur at the same time:
+\vspace{-.3cm}
+\[coherent(c)\stackrel{def}{=}(\exists a)a\in c\land (\exists t)(\forall a')[a'\in c \supset time(a')=t]\]
+
+- Extend the function $time$ from simple actions to concurrent ones:\vspace{-.3cm}
+\[coherent(c)\supset [time(c)=t \equiv (\exists a)(a\in c \land time(a)=t)]\]
+
+- $start(do(c,s))=time(c)$\\
+
+- $executable(s) \stackrel{def}{=} (\forall c,s').do(c,s')\sqsubseteq s \ \supset \ Poss(c,s')\land start(s')\leq time(c).$\\
+
+- We keep all the foundational axioms of the concurrent, non-temporal SitCalc, we just need to generalize the last one: $Poss(c,s)\supset coherent(c) \land (\forall a)[a\in c\supset Poss(a,s)]$\\
+
+- For Golog semantics, we need only change the definition of the Do macro for sequential, temporal Golog to apply to concurrent actions instead of simple actions:
+\vspace{-.3cm}
+\[Do(c,s,s')\stackrel{def}{=}Poss(c[s],s) \ \land \ start(s)\leq time(c[s]) \ \land \ s'=do(c[s],s)\]
+
+\newpage
+\section*{Chapter 11: Sensing and Knowledge\footnote{Part of the content is from ``R. B. Scherl and H. J. Levesque. \emph{Knowledge, Action, and the Frame Problem}. Artificial Intelligence, 144(1-2):1–39, 2003.''}}
+- $K(s',s)$ denotes ``$s'$ is accessible from $s$''.\\
+
+- $\textbf{Knows}(\phi,s)\stackrel{def}{=}(\forall s'). K(s',s) \supset \phi[s']$\\
+Where $\phi$ is a situation suppressed expression. $\phi[s]$ denotes the formula obtained from $\phi$ by restoring situation variable $s$ into all fluent names mentioned in $\phi$.\\
+
+- $\textbf{KWhether}(\phi,s)\stackrel{def}{=}\textbf{Knows}(\phi,s)\lor\textbf{Knows}(\neg\phi,s)$\\
+
+- $\textbf{KRef}(t,s)\stackrel{def}{=}(\exists x)\textbf{Knows}(x=t,s)$ \qquad  \qquad ($t$ is a term that does not mention $x$)\\
+
+-There are two kinds of actions:
+\vspace{-.1cm} 
+\begin{itemize}
+\itemsep-.3em
+ \item Ordinary/Physical actions that change the state of the world
+ \item \emph{Knowledge-producing actions} that change the state of the knowledge of an agent
+\end{itemize}
+
+- Knowledge-producing actions can be divided into two groups:
+\vspace{-.1cm} 
+\begin{itemize}
+\itemsep-.3em
+ \item Actions of $sense$ type, which make known the truth value of a relational fluent. For each relational fluent, there is a $sense$ action. We have that $\textbf{KWhether}(P,do(sense_P,s))$ holds. Which means:\\
+$(\forall \vec{x},s).\phi(\vec{x},s)\supset \textbf{Knows}(\phi(\vec{x}),do(sense_\phi(\vec{x}),s)),$\\
+$(\forall \vec{x},s).\neg\phi(\vec{x},s)\supset \textbf{Knows}(\neg\phi(\vec{x}),do(sense_\phi(\vec{x}),s)).$
+ \item Actions of $read$ type, which make known the denotation of a functional fluent. For each functional fluent, there is a $read$ action. We have that $\textbf{KRef}(t, do(read_t,s))$ holds.\\
+$(\forall \vec{x},s)\textbf{KRef}(f(\vec{x}),do(read_f(\vec{x}),s)).$
+\end{itemize}
+
+- Successor state axiom for $K$:\\
+$K(s'',do(a,s))\equiv(\exists s').s''=do(a,s')\land K(s',s)\land Poss(a,s')\land \textsc{sr}(a,s)=\textsc{sr}(a,s')$\\
+
+Where \textsc{sr} is called \emph{sensing result function} and is defined as follows:\\
+
+$\textsc{sr}(sense_Q,s)=r\equiv(r=\text{``Yes''}\land Q(s))\lor(r=\text{``No''}\land \neg Q(s))$\\
+$\textsc{sr}(read_t,s)=r\equiv r=t(s)$\\
+For ordinary actions, the result is always the same, with the specific result not being significant. So for an ordinary action $a$, we could have\\
+$\textsc{sr}(a,s)=r\equiv r=\text{``ok''}$\\
+
+- For simplicity we assume that all actions are to be axiomatized as affecting only either the $K$ fluent or other fluents (Knowldge-producing actions only affect the $K$ fluent, this is called the \emph{no-side-effect assumption}).
+ This ensures a sharp division between knowledge-producing actions and ordinary actions.
+ Without this policy there is nothing to prevent us from having an action such as $OpenBag$ which causes the bag to be open and makes the agent aware of the content of the bag. But this policy does not restrict 
+the capabilities of the agents that we model as we can always follow an open action (which only causes the bag to be open) by a sense action (which causes the agent to know what the contents of the bag are).\\
+
+- Knowledge-producing actions do not change the state of the world. The only fluent whose truth value is altered by a knowledge-producing action is $K$.\\
+\textbf{Theorem 1}. Suppose $a$ is a knowledge-producing action. Then $\forall s\forall P(\neq K)$ if $P(s)$ then $P(do(a,s))$.\\
+
+- Actions only affect knowledge in the appropriate way. There are no unwanted increases in knowledge.\\
+\textbf{Theorem 2}. Let $a$ be an action that doesn't affect fluent $P$ (i.e. $\forall s P(s)\equiv P(do(a,s)$). Then
+\[\underbrace{(\exists s').K(s',s)\land \neg P[s']}_{\neg\textbf{Knows}(P,s)}\land Poss(a,s') \land \textsc{sr}(a,s)=\textsc{sr}(a,s') \qquad \text{iff} \qquad \neg\textbf{Knows}(P,do(a,s))\]
+
+- Agents never forget. Informally speaking, if the agent knows $P$ at $s$, then $P$ is also known at $do(a,s)$ as long as the effect of $a$ is not to make $P$ false.\\
+\textbf{Theorem 3}. $\forall P,s$ if $\textbf{Knows}(P,s)$ holds then $\textbf{Knows}(P,do(a,s))$ holds as long as the axiomatization entails $(\forall s).P(s)\equiv P(do(a,s))$.\\
+
+- The notation $\textbf{Knows}(a,s)$ suffers from one limitation: $\phi$ must be a situation-suppressed expression, and therefore, its situation restored version $\phi[s]$ must be
+uniform in $s$. Therefore, the $\textbf{Knows}$ notation can only express knowledge about uniform formulas. Accordingly, we expand the class of expressions $\phi$ by introducing a special symbol $now$, and we allow $\phi(now)$ to
+be any situation-suppressed expression that may also mention the special term $now$:\\
+
+$\textbf{Knows}(\phi(now),s)\stackrel{def}{=}(\forall s'). K(s',s) \supset \phi(s')$\\
+
+E.g. $\textbf{Knows}((\exists s^*)now=do(a,s^*),do(a,s))$ expands to $(\forall s').K(s',do(a,s))\supset(\exists s^*)s'=do(a,s^*).$\\
+
+\underline{New Foundational Axioms for Situations}\\
+The following five axioms form the new set of foundational axioms. We have the following axioms from before:
+\begin{align}
+&do(a_1,s_1)=do(a_2,s_2) \supset a_1=a_2\land s_1=s_2,\\
+&\neg s \sqsubset S_0,\\
+& s\sqsubset do(a,s')\equiv s\sqsubset s'.
+\end{align}
+
+- The sort $Init$ contains $S_0$ and the situations which are $K$-accessible from an $Init$ situation. Nothing else is in $Init$:\\
+$Init(s)\stackrel{def}{=}\neg(\exists a,s')s=do(a,s').$\\
+we need a weaker version of the old induction axiom:
+\begin{equation}
+ (\forall P).(\forall s)[Init(s)\supset P(s)]\land(\forall a,s)[P(s)\supset P(do(a,s))]\supset(\forall s)P(s).
+\end{equation}
+
+Finally, insist that only initial situations can be $K$-related to an initial situation:
+\begin{align}K(s,s')\supset[Init(s)\equiv Init(s')]\end{align}
+- To provide inductive proofs of properties that are not about the K fluent, we must now prove \mbox{$(\forall s).S_0\sqsubset s\supset \phi(s)$} instead of proving $(\forall s) \phi(s)$.\\
+
+- provided any one of the reflexive, transitive, symmetry and Euclidean properties on accessibility relation $K$ is true in all initial situations, then it will be true in all situations.\\
+
+\newpage
+\section*{Some Definitions}
+The \textbf{planning} problem\\ Given an axiomatized initial situation, and a goal statement, find an action sequence that will lead to a state in which the goal will be true.\\
+
+The \textbf{ramification} problem\\ Solving the frame problem in presence of state constraints as initial data.\\
+
+The \textbf{qualification} problem\\ Determining action preconditions when given a set of qualifications for an action together with a set of state constraints.\\
+
+The \textbf{projection} problem\\ Given a sequence of ground action terms, and a formula $G$, determine whether $G$ is true in the situation resulting from performing these actions.
+                                 In other words, we are interested in answering queries of the form: Would $G$ be true in the world resulting from the performance of the given sequence of actions?
+
+\hfill
+%\vfill
+\begin{flushright}
+\small{Vahid Vaezian (vvaezian [at] sfu.ca), \today}
+\end{flushright}
+
+\end{document}

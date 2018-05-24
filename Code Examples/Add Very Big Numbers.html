@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <link rel="shortcut icon" href="../Pic/python.ico">
+    <title>Subsets</title>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+    <link rel="stylesheet" href="../styles.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato'     rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<h5>Add Two Very Big Numbers (say 100 digits)</h5>
+<pre class = "prettyprint linenums">
+def sumBig(s,t):
+    """s and t are two numbers represented as lists"
+
+    n = len(s) - 1
+    m = len(t) - 1
+    carry = 0
+    o = [] #output
+
+    while True:
+        o.append((s[n] + t[m] + carry) % 10)
+        carry = (s[n] + t[m] + carry) / 10
+        n -= 1
+        m -= 1
+        if n == -1 or m == -1:
+            break
+    
+    while m > -1:
+        o.append((t[m] + carry) % 10)
+        carry = (t[m] + carry) / 10
+        m- = 1
+        
+    while n > -1:
+        o.append((t[n] + carry) % 10)
+        carry = (t[n] + carry) / 10
+        n -= 1
+
+    if carry == 1: #checks to see if at the end of adding digits there is a carry over left
+	o.append(1) 
+
+    o.reverse()    
+    return o
+        
+print sumBig([4,2,3],[9,9,6,6,8])
+</pre>
+
+</body>

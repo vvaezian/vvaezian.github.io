@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <link rel="shortcut icon" href="../Pic/python.ico">
+    <title>Subsets</title>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+    <link rel="stylesheet" href="../styles.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato'     rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<h5> A contiguous subsequence of largest sum</h5>
+*idea from Leonid Chindelevitch<br>
+<pre class = "prettyprint linenums">
+def largest_sum_contiguous_subsequence(l):
+    """l is a list of numbers;
+    The function returns a contiguous subsequence of largest sum"""
+    u=[l[0]] #u[i] denotes the best sum of a contiguous subsequence ending at l[i] that does include l[i]
+    v=[0] #v[i] denotes the best sum of a contiguous subsequence ending at l[i] that doesn't include l[i]
+    for i in range(1,len(l)):
+        u.append(max(u[i-1],0)+l[i])
+        v.append(max(u[i-1],v[i-1]))
+    return max(u[-1],v[-1])
+</pre><br>
+
+A simpler algorithm is as follows (idea from Axel Andersson)<br>
+<pre class = "prettyprint linenums">
+def subseq(A):
+    max1 = 0
+    sum1 = 0
+    curAr = []
+    maxAr = []
+    for i in range(len(A)):
+        sum1 += A[i]
+        curAr.append(A[i])
+        if sum1 > max1:
+            max1 = sum1
+            maxAr = curAr[:]
+        elif sum1 <= 0:
+            sum1 = 0
+            curAr = []
+    return maxAr
+</pre><br>
+
+</body>

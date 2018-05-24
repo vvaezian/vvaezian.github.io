@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+  <title>p5.js Quick Reference</title>
+  <link rel="shortcut icon" href="/~vvaezian/Pic/p5.js.ico">
+  <link rel="stylesheet" href="/~vvaezian/styles.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Hind' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<img src="/~vvaezian/Pic/p5.png" alt="Logo" height="200"><br><br>
+<em>* Most of the material is taken from <a href="https://www.youtube.com/user/shiffman/playlists?view=50&shelf_id=14&sort=dd" target="_blank">these</a> Daniel Shiffman tutorials</em><br>
+
+<h3>HelloWorld Example</h3><br>
+    <pre class="prettyprint">
+
+function setup() {		//this built-in function executes once
+  createCanvas(600, 400);
+}
+
+function draw() {		//this built-in function loops forever
+  background(0);		//shorthand for background(0,0,0) in RGB color
+  fill(255);
+  textSize(32);
+  text("Hello World!",100,100);
+}
+
+function mousePressed() {	//built-in function represent the "event" of pressing the mouse button
+  x = 16;
+}</pre><br>
+
+
+<h3>BouncyBall Example</h3><br>
+    <pre class="prettyprint">
+var ball = {       //defining an object (it is better to use a constructor function, explained below)
+  x: 300, 
+  y: 200, 
+  xspeed: 4, 
+  yspeed: -3
+}
+
+function setup() {          
+  createCanvas(600, 400);
+}
+
+function draw() {           
+  background(0);            
+  move();
+  bounce();
+  display();
+}
+
+function bounce() {
+  print(ball.x);			//(for debugging) prints to the console
+  if (ball.x > width || ball.x < 0) {   //width is a keyword referring to the width of canvas
+    ball.xspeed = ball.xspeed * -1;
+  }
+  if (ball.y > height || ball.y < 0) {  //height is a keyword referring to the height of canvas
+    ball.yspeed = ball.yspeed * -1;
+  }
+}
+
+function display() {
+  stroke(255);                          //stroke draws line around objects
+  strokeWeight(4);                      //thickness
+  fill(200, 0, 200);
+  ellipse(ball.x, ball.y, 24, 24);
+}
+
+function move() {
+  ball.x = ball.x + ball.xspeed;
+  ball.y = ball.y + ball.yspeed;
+}</pre><br>
+
+
+<h3>Constructor Function</h3><br>
+    <pre class="prettyprint">
+var bubbles = [];		//creating an empty array
+
+function setup() {
+  createCanvas(600, 400);
+  for (var i = 0; i < 4; i++) {
+    bubbles[i] = new Bubble();	//creating an object
+  }
+}
+
+function draw() {
+  background(0);
+  for (var i = 0; i < bubbles.length; i++) {
+    bubbles[i].move();
+    bubbles[i].display();
+  }
+}
+
+function Bubble() {		//defining the object; note the capitalization
+  this.x = random(0, width);
+  this.y = random(0, height);
+
+  this.display = function() {	//a function is embedded inside an object.
+    stroke(255);
+    noFill();
+    ellipse(this.x, this.y, 24, 24);
+  }
+
+  this.move = function() {
+    this.x = this.x + random(-1, 1);
+    this.y = this.y + random(-1, 1);
+
+  }
+}</pre><br>
+
+
+
+<h3>Modifying the previous example</h3><br>
+    <pre class="prettyprint">
+var bubbles = [];
+
+function setup() {
+  createCanvas(600, 400);
+}
+
+function mouseDragged() {			//built-in function
+  bubbles.push(new Bubble(mouseX, mouseY)); 	//adds a new object to the end of the array
+}
+
+function draw() {
+  background(0);
+  for (var i = 0; i < bubbles.length; i++) {
+    bubbles[i].move();
+    bubbles[i].display();
+
+    if (bubbles.length > 50) {
+      bubbles.splice(0, 1);	//delets the first element of the array ("1" refers to how
+    }				//many items we want to delete starting from position "0")
+    
+  }
+}
+
+function Bubble(x, y) {
+  this.x = x;
+  this.y = y;
+
+  this.display = function() {
+    stroke(255);
+    fill(255, 0, 150, 50);
+    ellipse(this.x, this.y, 24, 24);
+  }
+
+  this.move = function() {
+    this.x = this.x + random(-1, 1);
+    this.y = this.y + random(-1, 1);
+
+  }
+}</pre><br>
+
+<h3>Another Modification</h3><br>
+    <pre class="prettyprint">
+function setup() {
+  createCanvas(600, 400);
+  for (var i = 0; i < 5; i++) {
+    bubbles[i] = new Bubble(random(width), random(height));
+  }
+}
+
+function draw() {
+  background(0);
+  for (var i = 0; i < bubbles.length; i++) {
+    bubbles[i].update();
+    bubbles[i].display();
+    for (var j = 0; j < bubbles.length; j++) {
+      if (i != j && bubbles[i].intersects(bubbles[j])) {
+        bubbles[i].changeColor();
+        bubbles[j].changeColor();
+      }
+    }
+  }
+}
+
+function Bubble(x, y) {
+  this.x = x;
+  this.y = y;
+  this.r = 48;
+  this.col = color(255);
+
+  this.changeColor = function() {
+    this.col = color(random(255), random(255), random(255))
+  }
+  this.display = function() {
+    stroke(255);
+    fill(this.col);
+    ellipse(this.x, this.y, this.r * 2, this.r * 2);
+  }
+
+  this.intersects = function(other) {
+    var d = dist(this.x, this.y, other.x, other.y);
+    if (d < this.r + other.r) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  this.update = function() {
+    this.x = this.x + random(-1, 1);
+    this.y = this.y + random(-1, 1);
+  }
+}</pre><br>
+
+* We can move the constructor function to a new file and refer to it in the <em>index.html</em> file.<br>
+
+<h3>Misc</h3><br>
+<ul><li><kbd>dist(x1,y1,x2,y2)</kbd> is a built in function for distance of two points.</li>
+</ul>
+
+</body>
+</html>

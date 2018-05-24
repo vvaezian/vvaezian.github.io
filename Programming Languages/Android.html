@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <link rel="shortcut icon" href="/~vvaezian/Pic/Android.ico">
+    <title>Android Developement Quick Reference</title>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+    <link rel="stylesheet" href="/~vvaezian/styles.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato'     rel='stylesheet' type='text/css'>    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+<img src="/~vvaezian/Pic/Android-logo.png" alt="Android-Logo" height="200"><br>
+<p><em>* Most of the material is taken from <a href="https://www.youtube.com/playlist?list=PL7AVKPxfsCp7lEWVKmNm_96XZeRc35OR5">these</a> youtube videos.</em><br>
+Official Documentation can be found <a href="https://developer.android.com/guide/index.html">here</a>.</p>
+
+<h3>Keywords and Concepts</h3><br>
+<ul>
+<li><kbd>View</kbd>s are kind of the generic term for any item we put into our apps layout.
+<li><b>Activity</b> means a page in the app.
+<li><kbd>Intent</kbd>s are for activities talking to each other.
+<li><kbd>R</kbd> refers to resource class
+<li> <b>Broadcasts</b> send systemwide messages and can be used for communication between different apps.
+<li><b>Threads</b> enable parallel execution of code in contrast to the default sequential execution (e.x. if there is long calculations which causes the app to hang)
+<li><b>Services</b> are chunks of code that run in the background (e.x. social network app that checks for notifications, or for a download). Services don't have user interface. 
+</ul>
+
+
+<h3>Options</h3><br>
+<ul>
+<li><kbd>layout:weight</kbd> sets what proportion of the screen the layout gets (between 0 and 1)
+<li><kbd>id</kbd> is used for refering to things in the code layer
+</ul>
+
+
+<h3>Databases</h3>
+<ul>
+<li>Each row in a database file need to be represented by an object in java
+</ul>
+<h3>Misc.</h3><br>
+<ul>
+<li>Use dp or sp for size unit.
+<li>Put images in drawable folder.
+<li>Disable "Code Folding" and  add "Auto Import" in the preferences.
+<li>To delete action bar (the bar at the top by default) change styles.xml in <i>values</i> folder (.NoActionBar)
+</ul>
+
+
+<h3>Examples</h3><br>
+When button "about" (id) is clicked, show the page "aboutPage"<br>
+<pre class="prettyprint">
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button aboutBtn = (Button) findViewById(R.id.about);
+
+        aboutBtn.setOnClickListener(new View.OnClickListener() {  //event handling
+            @Override
+            public void onClick(View v) {
+                gotoAbout();					  //CallBack method
+            }
+        });
+    }
+
+    private void gotoAbout() {
+        Intent intent = new Intent(this, aboutPage.class);
+        startActivity(intent);
+    }
+}
+</pre><br>
+An easier approach is to add <kbd>android:onClick="clickBtn"</kbd> to the button attributes in the xml file, and define the <samp>clickBtn</samp> in java code as follows:<br>
+<pre class="prettyprint">
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+    public void clickBtn(View view) {
+        Intent intent = new Intent(this, aboutPage.class);
+    	startActivity(intent);
+    }
+}
+</pre><br>
+To pass information along with transition to the new page: (suppose we have a text field (id: <samp>textField</samp>) in the main page where user enters his name. when he presses the button we want to go to about page and show his name in a <samp>TextView</samp> element (id: <samp>aboutPageText</samp>))<br>
+<br>
+We need to extend <samp>clickBtn</samp> as follows<br>
+<pre class="prettyprint">
+    public void clickBtn(View view) {
+        Intent intent = new Intent(this, aboutPage.class);
+
+        final EditText textField1 = (EditText) findViewById(R.id.textField); //referrence to input field
+        String userMsg = textField1.getText().toString();
+        intent.putExtra("Msg", userMsg);
+
+    	startActivity(intent);
+    }
+</pre><br>
+and add the following to <samp>aboutPage.java</samp> in the <kbd>onCreate</kbd> method:<br>
+<pre class="prettyprint">
+    Bundle comingInfo = getIntent().getExtras();
+    if (comingInfo==null) {
+	return;
+    }
+    String MsgContent = comingInfo.getString("Msg");
+    final TextView newPageText = (TextView) findViewById(R.id.aboutPageText);
+    newPageText.setText(MsgContent);
+</pre><br>
+
+
+</body>
+</html>

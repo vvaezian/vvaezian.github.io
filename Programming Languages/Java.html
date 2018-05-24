@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <link rel="shortcut icon" href="/~vvaezian/Pic/java.ico">
+    <title>Java Quick Reference</title>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+    <link rel="stylesheet" href="/~vvaezian/styles.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato'     rel='stylesheet' type='text/css'>    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+<img src="/~vvaezian/Pic/Java-logo.png" alt="Java-Logo" height="200"><br>
+<em>* Most of the material is taken from <a href="https://www.amazon.com/Java-Illuminated-Active-Learning-Approach/dp/0763716677">this</a> book 
+and <a href="https://www.coursera.org/learn/object-oriented-java/home/week/1">this</a> online course.</em><br>
+
+<p>Java source code is stored in a file with the extension <em>.java</em>. 
+Compiling the code creates one or more <em>.class</em> files, which contain processor-independent byte codes. 
+The Java Virtual Machine (JVM) translates the byte code into machine-level instructions for the processor on which the Java application is running.
+</p>
+
+<h3>Running Codes in Java</h3><br>
+To compile the code, invoke the Java compiler:</br>
+
+<kbd>$javac SourceCode.java</kbd></br>
+
+this will create a new file <kbd>SourceCode.class</kbd></br>
+
+To run the application, invoke the JVM:</br>
+
+<kbd>$java SourceCode</kbd><br>
+
+<h3>Structure</h3><br>
+<pre class="prettyprint">
+/* Comments
+   Comments
+*/
+public class ClassName {
+    public static void main(String [] args) {
+        System.out.println("Hello World!");
+    }
+}
+</pre><br>
+
+Java has two fundamentally different kinds of data. It has <b>primitive data types</b> (boolean, byte, short, int, long, float, double, and char), everything else is an <b>object</b>, whether it's an array or a user-defined class, 
+or a class that you find in a library.<br>
+
+<h3>Classes and Objects</h3><br>
+Every Java program consists of at least one class. A class is a generic description and an object is a specific item of that class.<br>
+
+<pre>ClassName ObjectReference;
+objectReference = new ClassName(argument list);</pre><br>
+Can be unified in one command:<br>
+<pre>ClassName ObjectReference = new ClassName(argument list);</pre><br>
+
+For example <pre>Date birthday = new Date(12, 6, 1985);</pre><br>
+Here <em>Date(12, 6, 1985)</em> is the object, <em>birthday</em> is the object reference, and 12, 6, 1985 are object data.<br>
+<br>
+Example: (the first code is stored in SimpleLocation.java and the second one in LocationTester.java)<br>
+<pre class="prettyprint">
+public class SimpleLocation{
+  public double latitude;	/* member variables */
+  public double longitude;
+  public SimpleLocation(double lat, double lon){ /* Constructor */
+    this.latitude = lat;
+    this.longitude = lon;
+  }
+  public double distance(SimpleLocation other){		
+    return Math.sqrt(Math.pow((this.latitude - other.latitude),2)
+	            +Math.pow((this.longitude - other.longitude),2));
+  }
+} 
+</pre><br>
+<pre class="prettyprint">
+public class LocationTester{
+    public static void main(String[] args){
+        SimpleLocation place1 = new SimpleLocation(1, 2);
+        SimpleLocation place2 = new SimpleLocation(4, 8);
+        System.out.println(place1.distance(place2));
+    }
+}
+</pre><br>
+<b>Methods</b> are the things that a class can do (like <samp>SimpleLocation</samp> and <samp>distance</samp> above).<br>
+A <b>Constructor</b> is a special method that gets called when an objects gets created. 
+It doesn't have a return type, so it simply says <samp>public</samp> and then next word in the declaration of this method is just the name of the class.<br>
+we can <b>oveload methods</b> by defining a method with the same name but different number of arguments (different return type is not enough for overloading).<br>
+<br>
+A <b>private</b> variable or method means that it is only accessible in the enclosing class, <b>public</b> means it is accessible from anywhere.
+ More details <a href="http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html"> here</a>.<br>
+We should make member variables private and use getter and setter methods to access and change them.<br>
+<pre class="prettyprint">
+public class SimpleLocation {
+    private double latitude;
+    private double longitude;
+
+    public double getLatitude() {
+        return this.latitude;
+    } 
+    public void setLatitude(double lat) {
+	if (lat>100) {
+	    System.out.println("Illegal value");
+	}
+	else {
+            this.latitude = lat;
+	}
+    }
+}
+</pre><br>
+<h3>Packages</h3><br>
+Java provides many classes for use in programs. They are grouped into packages:<br>
+<kbd>java.lang</kbd> (including String and Math class)<br>
+<kbd>java.awt</kbd> (including Graphics classes, old-style user interface)<br>
+<kbd>java.swing</kbd> (including Graphics classes, new-style user interface)<br>
+<kbd>java.text</kbd> (Classes for formatting numeric outputs)<br> ... <br>
+
+Classes in the <kbd>java.lang</kbd> package are automatically available to programs, the other packages need to be imported:<br>
+
+<pre class="prettyprint">
+import java.text.DecimalFormat;
+import java.text.*;
+</pre>
+<pre>
+imports the class DecimalFormat
+imports all classes in the package</pre><br>
+
+<h3>String Class</h3><br>
+<pre class="prettyprint">
+String s1 = new String("Hello");
+String s2 = "World!";
+System.out.println(s1 + " " + s2);
+int lens1 = s1.length();
+System.out.println(lens1 + s2.length());
+int indexw = s2.indexOf('W');
+System.out.println(s1.substring(0,2));
+System.out.println(s1.charAt(4));
+</pre>
+<pre>
+Hello World!
+
+11
+(0)
+He
+o
+</pre><br>
+
+<h3>Input/Output</h3><br>
+Programs can get the user input in several ways:
+<ul>
+<li>Fram a dialog box (<kbd>import javax.swing.JOptionPane;</kbd>)
+<li>From the Java console (<kbd>import java.util.Scanner;</kbd>)
+<li>From a Graphical User Interface (GUI)
+<li>From a file
+</ul>
+<h5>Dialog Box</h5>
+<pre class="prettyprint">
+import javax.swing.JOptionPane;
+
+public class DialogBoxDemo {
+    public static void main(String[] args) {
+        String name = JOptionPane.showInputDialog(null, "Please enter your name");
+        JOptionPane.showMessageDialog(null, "Hello, " + name);
+	String yearStr = JOptionPane.showInputDialog(null, "At which year you were born?");
+	int yearInt = Integer.parseInt(yearStr);
+        JOptionPane.showMessageDialog(null, "You are " + (2016 - yearInt) + " years old");
+    }
+}
+</pre>
+
+<h5>Java Console</h5>
+<pre class="prettyprint">
+import java.util.Scanner;
+
+public class JavaConsoleDemo {
+    public static void main( String [] args ) {
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Enter your first name: ");
+        String firstName = scan.next();
+	System.out.println("Hello " + firstName);
+        System.out.print("At which year you were born? ");
+    	int birthYear = scan.nextInt();
+        System.out.println("You are " + (2016 - birthYear) + " years old");
+    }	
+}
+</pre><br>
+
+
+<h5>Reading Data From a Text File</h5>
+<pre class="prettyprint">
+import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+
+public class EchoFileData {
+    public static void main( String [] args ) throws IOException {
+	int number;
+	File inputFile = new File("input.txt");
+	Scanner scan = new Scanner(inputFile);
+	while (scan.hasNext()) {
+	    number = scan.nextInt();
+	    System.out.println(number);
+	}
+	System.out.println("End of File Detected");
+    }
+}</pre><br>
+- We use the <kbd>File</kbd> class to convert the filename, <em>input.txt</em>, to a platform-independent filename. 
+If the file is not in the same directory, we need to give the full path. Note that we need to use an escape sequence of two backslashes (e.x. c:\\input.txt).<br>
+- <kbd>scan.hasNext()</kbd> returns true iff there is another token in the input stream.<br>
+
+
+<h3>Applets</h3><br>
+Java applets are run by internet browser or an applet viewer. 
+The <em>JApplet</em> class, an existing Java class of the <em>swing</em> package, provides the basic functionality of an applet.
+An applet class that we write is an extension of the <em>JApplet</em> class. The <em>main</em> method is not used in applets.<br>
+
+<pre class="prettyprint">
+import java.swing.JApplet;
+import java.awt.Graphics;
+
+public class ShellApplet extends JApplet {
+    public void init() {
+    }
+    public void paint(Graphics g) {
+	super.paint(g);
+    }
+}</pre><br>
+The statement <kbd>super.paint(g)</kbd> calls the <em>paint</em> method of the superclass (<em>JApplet</em> class).<br>
+<pre class="prettyprint">
+import java.swing.JApplet;
+import java.awt.Graphics;
+
+public class AppletDemo extends JApplet {
+    public void paint(Graphics g) {
+	super.paint(g);
+	g.drawString("Hello World!", 140, 100);
+	g.drawLine(100,150,100,250); // a vertical line
+	g.setColor(Color.RED); // From now on the color of drawigs will be red
+    }
+}</pre><br>
+
+We tell the browser to launch an applet by including an APPLET tag as part of the HTML code.<br>
+<pre class="prettyprint">
+&ltAPPLET CODE="ClassName.class" CODEBASE="Path to the directory of class file" WIDTH=w HEIGHT=h&gt&lt/APPLET&gt</pre><br>
+
+
+<h3>Flow of Control (if, if/else, (?:). switch)</h3><br>
+<pre class="prettyprint">
+if (condition) {
+    block }</pre><br>
+If block has only one statement we can write as:<br>
+<pre class="prettyprint">
+if (condition) 
+    statement;</pre><br>
+The equality operator (<kbd>==</kbd>) checks whether the object references point to the same object. 
+To compare the object data, we need to use <kbd>equals</kbd> (also <kbd>equalsIgnoreCase</kbd>) method.<br>
+<pre>
+Date d1 = new Date(12, 6, 1985);
+Date d2 = new Date(12, 6, 1985);
+Date d3 = d1;
+if (d1 == d2)
+    System.out.println('yes');
+if (d1 == d3)
+    System.out.println('yes');
+if (d1.equals(d2))
+    System.out.println('yes');
+if (d1.equals(d3))
+    System.out.println('yes');</pre>
+<pre>
+
+yes
+
+yes
+
+yes
+</pre><br>
+The conditional operator <kbd>(?:)</kbd> while not a statement in itself, can be used as a shoter version of <kbd>if/else</kbd><br>
+<pre>variable = (condition ? expression1 : expression2);</pre><br>
+is equivalent to <br>
+<pre>if (condition)
+    variable = expression1;
+else
+    variable = expression2;</pre><br>
+
+<pre>int door;
+if (inputNum == 2)
+    door = inputNum;
+else door =1;</pre> is equivalent to 
+<pre>int door = (inputNum == 2 ? inputNum : 1)</pre><br>
+
+The <b>switch</b> Statement can be used instead of an <em>if/else if</em> statement when the condition consists of comparing the value of an 
+expression to constant integers or characters.<br>
+<pre class="prettyprint">
+operationS = scan.next();
+operation = operationS.charAt(0); 
+switch (operation) {
+    case 'a':
+    case 'A':
+    	// perform the addition
+    	break;
+    case 's':
+    case 'S':
+	// perform the subtraction
+        break;
+    default:
+	// print "invalid input" }</pre><br>
+
+
+<h3>Misc.</h3><br>
+<h5>DecimalFormat Class</h5>
+<pre class="prettyprint">
+import java.text.DecimalFormat;
+
+public class DecimalFormatDemo {
+    public static void main(String[] args) {
+        DecimalFormat myPattern = new DecimalFormat("0.00%");
+	double percent = 0.374;
+	System.out.println(myPattern.format(percent));
+    }
+}
+</pre>
+<pre>
+37.40%
+
+
+</pre>
+<h5> Random Numbers</h5>
+The <em>random</em> method returns a <em>double</em> value between 0 and 1 (not including 1).<br>
+<pre class = "prettyprint">
+double rand = Math.random()</pre><br>
+Generate a random integer between 6 and 20:<br>
+<pre class = "prettyprint">
+int rand = 6 + (int) (Math.random() * 20);</pre>
+
+<h5>Processing Library</h5>
+<pre class = "prettyprint">
+import processing.core.*;
+
+public class processingDemo extends PApplet {
+    private String URL = "https://...";
+    private PImage backgroundImg;
+    public void setup() {
+       size(300,300);
+       backgroundImg = loadImage(URL,"jpg");
+       backgroundImg.resize(0, height);
+    }
+    public void draw()  {
+         image(backgroundImg,0,0);
+         fill(255,209,0);
+         ellipse(width/4,height/4,width/4,height/4);
+    }
+}
+</pre>
+</body>
+</html>

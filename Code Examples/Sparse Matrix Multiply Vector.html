@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <link rel="shortcut icon" href="../Pic/python.ico">
+    <title>Subsets</title>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+    <link rel="stylesheet" href="../styles.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato'     rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<h5> Sparse Matrix Multiplied by a Vector</h5>
+
+<pre class = "prettyprint linenums">
+#Using numpy probably make it easier to implement
+aDict={(1,2):3, (1,3):5 } #A Sparse Matrix, Keys are tuples of rows and columns, Values are numbers in the matrix
+class sparse:
+    def __init__(self,n,m):
+        self.size=(n,m)
+        self.nzValues={} #nzValues denotes None Zero Values
+
+def mult(spaMat,vec):
+    res=spaMat.size[0]*[0]
+    for e,f in spaMat.nzValues.items(): #e chooses tuples in the dict, f chooses values
+        res[e[0]] = vec[e[1]]*f + res[e[0]] #e[0] denotes the column part in the tuple e (first element of the tuple)
+    return res
+
+s1= sparse(3,5)
+s1.nzValues=aDict
+print mult(s1,[1,2,3,4,5])
+</pre>
+
+</body>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <link rel="shortcut icon" href="../Pic/python.ico">
+    <title>LHC</title>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+    <link rel="stylesheet" href="../styles.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato'     rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<h5> Lognest Common Substring (code from Wikipedia)</h5>
+<pre class = "prettyprint linenums">
+def lcs(s1, s2):
+   M = [[0] * (len(s2) + 1) for i in xrange(len(s1) + 1)] #create a matrix M with len(s1)+1 rows and len(s2)+1 columns.
+							  #The extra row and column is for conveniece, to avoid "index out of range"
+							  #later when we use M[x][y] = M[x-1][y-1] + 1 as the last step.
+   longest, x_longest = 0, 0		#"longest" keeps track of the length of the lcs found so far.
+					#"x_longest" keeps track of the index (in s1) of beggining of lcs found so far. 
+   for x in xrange(1, len(s1) + 1):
+       for y in xrange(1, len(s2) + 1):
+           if s1[x - 1] == s2[y - 1]:
+               M[x][y] = M[x - 1][y - 1] + 1
+               if M[x][y] > longest:
+                   longest = M[x][y]
+                   x_longest = x
+           else:
+               M[x][y] = 0		 
+   return s1[x_longest - longest: x_longest]
+</pre><br>
+
+Saving memory by keeping only the last and current row of the table:<br>
+<pre class = "prettyprint linenums">
+import numpy as np 				#Needless to say, Using Numpy is not necessary
+
+def lcs(s1, s2):
+    m = np.zeros(2*(len(s2) + 1)).reshape(2,(len(s2) + 1)) 
+    longest, x_longest = 0, 0  
+    for x in xrange(1, len(s1) + 1):
+        for y in xrange(1, len(s2) + 1):
+            if s1[x - 1] == s2[y - 1]:
+                m[1][y] = m[0][y - 1] + 1
+                if m[1][y] > longest:
+                    longest = m[1][y]
+                    x_longest = x
+            else:
+                m[1][y] = 0
+        m[0] = m[1] 				#Marking the "current row" as "last row"
+        m[1] = np.zeros(len(s2) + 1)		#Creating a fresh "current row"
+    return s1[x_longest - longest: x_longest]
+</pre>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>GNU/Linux</title>
+  <link rel="shortcut icon" href="/~vvaezian/Pic/terminal.ico">
+  <link rel="stylesheet" href="/~vvaezian/styles.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Hind' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<img src="/~vvaezian/Pic/GNULinux-logo.png" alt="Logo" height="200"><br><br>
+<em>* Most of the material is taken from <a href="https://courses.edx.org/courses/course-v1:LinuxFoundationX+LFS101x+1T2016/info">this</a> online course.</em><br><br>
+
+<p>
+Linux systems store their important files according to a standard layout called the Filesystem Hierarchy Standard (FHS). 
+The original source documents can be found <a href="http://refspecs.linuxfoundation.org/fhs.shtml">here</a>.
+</p>
+
+<h3>The Boot Process</h3><br>
+<p>
+When an x86-based GNU/Linux system is powered on, the Basic Input/Output System (BIOS) initializes the hardware, including the screen and keyboard, and tests the main memory. 
+This process is also called POST (Power On Self Test). The BIOS software is stored on a ROM chip on the motherboard. After this, the remainder of the boot process is completely controlled by the operating system.
+Once the POST is completed, the system control passes from the BIOS to the boot loader. <br>
+<br>
+The boot loader is usually stored on one of the hard disks in the system, either in the boot sector (for traditional BIOS/MBR systems) or the EFI partition (for more recent (Unified) Extensible Firmware Interface or EFI/UEFI systems). 
+Up to this stage, the machine does not access any mass storage media. Thereafter, information on the date, time, and the most important peripherals are loaded from the CMOS values. 
+For systems using the BIOS/MBR method, the boot loader resides at the first sector of the hard disk also known as the Master Boot Record (MBR). The size of the MBR is just 512 bytes. 
+In this stage, the boot loader examines the partition table and finds a bootable partition. Once it finds a bootable partition, it then searches for the second stage boot loader e.g, GRUB or ISOLINUX, and loads it into RAM.<br>
+
+For systems using the EFI/UEFI method, UEFI firmware reads its Boot Manager data to determine which UEFI application is to be launched and from where (i.e., from which disk and partition the EFI partition can be found). 
+The firmware then launches the UEFI application, for example GRUB, as defined in the boot entry in the firmware's boot manager.<br>
+The second stage boot loader resides under <kbd>/boot</kbd>. A screen is displayed which allows us to choose which OS to boot. After choosing the OS, the boot loader loads the kernel of the selected OS 
+(and an initial RAM–based file system (<a href="https://en.wikipedia.org/wiki/Linux_startup_process#Early_user_space">initramfs</a>) which contains some critical files and device drivers needed to start the system) into RAM and passes control to it.<br>
+<br>
+Kernels are almost always compressed, so its first job is to uncompress itself. After this, it will check and analyze the system hardware and initialize any hardware device drivers built into the kernel. 
+It immediately initializes and configures the computer’s memory and also configures all the hardware attached to the system. 
+This includes all processors, I/O subsystems, storage devices, etc. The kernel also loads some necessary user space applications.<br>
+<br>
+The <i>initramfs</i> filesystem image contains programs and binary files that perform all actions needed to mount the proper root filesystem, like providing kernel functionality for the needed filesystem. 
+After the root filesystem has been found, it is checked for errors and mounted.<br><br>
+
+The mount program instructs the operating system that a filesystem is ready for use, and associates it with a particular point in the overall hierarchy of the filesystem (the mount point). 
+If this is successful, the initramfs is cleared from RAM and the <i>init</i> program on the root filesystem (<kbd>/sbin/init</kbd>) is executed.<br><br>
+
+<i>init</i> handles the mounting and pivoting over to the final real root filesystem. Besides starting the system, <i>init</i> is responsible for keeping the system running and for shutting it down cleanly. 
+It acts as the "manager of last resort" for all non-kernel processes, cleaning up after them when necessary, and restarts user login services as needed when users log in and out. 
+Most processes on the system trace their origin ultimately to <i>init</i>; the exceptions are kernel processes, started by the kernel directly for managing internal operating system details.<br>
+<br>
+Near the end of the boot process,  <i>init</i> starts a number of text-mode login prompts (done by a program called <i>getty</i>). These enable you to type your username, followed by your password, 
+and to eventually get a command shell. Usually, the default command shell is <i>bash</i> (the GNU Bourne Again Shell).<br>
+<br>
+After the login most distributions start six text terminals and one graphics terminal. These are called virtual terminals (VT) because although there can be multiple active terminals, only one terminal remains visible at a time. 
+If the graphical environment is also started, switching to a text console requires pressing CTRL+ALT+ the appropriate function key, otherwise CTRL is not needed. Ubuntu uses VT 7, but CentOS/RHEL and openSUSE use VT 1 for the graphical display.
+You may need to run the <kbd>startx</kbd> command in order to start or restart your graphical desktop after you have been in pure text mode.
+</p>
+
+<h3>Package Management Systems</h3>
+<p>
+There are two broad families of package managers: those based on Debian and those which use RPM as their low-level package manager. 
+Both package management systems provide two tool levels: a low-level tool (such as <b>dpkg</b> or <b>rpm</b>), takes care of the details of unpacking individual packages, 
+running scripts, getting the software installed correctly, while a high-level tool (such as <b>apt</b>, <b>yum</b>, or <b>zypper</b>) works with groups of packages, 
+downloads packages from the vendor, and figures out dependencies.<br>
+The Advanced Packaging Tool (apt) is the underlying package management system that manages software on Debian-based systems. 
+Yellowdog Updater Modified (yum) is an open-source command-line package-management utility for the Fedora family. yum has both command line and graphical user interfaces.
+zypper is a package management system for openSUSE that is based on RPM. zypper also allows you to manage repositories from the command line. zypper resembles yum quite closely. 
+The basic packaging commands can be found <a href="https://d37djvu3ytnwxt.cloudfront.net/assets/courseware/v1/f478e1c28b54f5df1d53ef1bc855b2e3/asset-v1:LinuxFoundationX+LFS101x+1T2016+type@asset+block/Basic_Packagaing_Commands.pdf">here</a>
+</p>
+
+<h3>Profile</h3><br>
+
+The original Bourne shell ran two profile files whenever a user logged on. First, a file
+called <kbd>/etc/profile</kbd> was the general profile file executed for all users. Second, if a file
+named <kbd>.profile</kbd> appeared in the user’s home directory, this contained additional commands
+for each user. Bash mimics this behavior when it is started as <samp>sh</samp> instead of <samp>bash</samp>.<br>
+
+Bash extended the principle to run several profile files depending on the circumstances.
+In addition, Linux distributions often customize the general profile files to run
+additional commands stored in other scripts.<br>
+<br>
+Bash differentiates between a login session and other instances. Bash runs as a login
+shell when a user or program first logs in or when a login is simulated with Bash’s
+<kbd>--login</kbd> (or <samp>-l</samp>) switch. A login shell is not necessarily one that presents a user with a
+prompt. It only indicates that Bash is the top program in the current session, and when
+Bash completes its run, the login session will be over.
+The <samp>login_shell</samp> shell option is turned on when you are in a login shell. This option
+can be used to verify that you are in a login shell.<br>
+<pre>$ shopt login_shell
+login_shell on</pre><br>
+
+Bash runs as an interactive shell when it is started without a script or when the
+<samp>-i</samp> switch is used. An interactive shell presents the user with a command prompt.<br>
+The <samp>/etc/profile</samp> file contains the setup commands and environment changes common to all users. 
+Only the superuser can edit this file.<br>
+ 
+When Bash is used as a <b>login shell</b>, <kbd>/etc/profile</kbd> is executed and then it executes the first file it finds named 
+<kbd>~/.bash_profile</kbd>, <kbd>~/.bash_login</kbd>, or <kbd>~/.profile</kbd>. 
+When a session completes, Bash runs <kbd>~/.bash_logout</kbd>, if it exists.<br>
+Running a new Bash non-login interactive session will not run the profile file:<br>
+<pre>$ bash
+$ logout
+bash: logout: not login shell: use ‘exit’</pre><br>
+
+Scripts will not normally execute the login profile scripts. Bash will load a profile for
+scripts if the <samp>BASH_ENV</samp> environment variable contains a pathname to a file to execute.
+However, you should avoid using <samp>BASH_ENV</samp>. Setting the common environment for a set
+of scripts is usually done with the <samp>source</samp> command. <samp>BASH_ENV</samp> has no effect on interactive sessions.<br>
+You can stop the running of the login profile files by using the <kbd>--noprofile</kbd> switch.<br>
+<br>
+Bash runs a different set of files for <b>non-login interactive</b> sessions.
+Bash looks for a customization script called <kbd>~/.bashrc</kbd> and executes it instead of the login profile files. 
+Aliased functions are only allowed in the resource files. 
+A different resource file can be specified with the <kbd>--init-file</kbd> or <kbd>--rcfile</kbd> switch.<br>
+<samp>rc</samp> files can be suppressed with the <kbd>--norc</kbd> switch.<br>
+<br>
+Some distributions add lines to the login profile to run the commands in <samp>~/.bashrc</samp>
+as well. This is not a feature of Bash, but a change made by Linux distribution.<br>
+
+<h3>Environment Variables</h3><br>
+Environment variables are simply named quantities that have specific values and are understood by the command shell, such as bash. 
+Some of these are pre-set (built-in) by the system, and others are set by the user either at the command line or within startup and other scripts.<br>
+<br>
+Commands <kbd>set</kbd>, <kbd>env</kbd>, or <kbd>export</kbd> show the values of currently set environment variables (<samp>set</samp> is more detailed).<br>
+<br>
+By default, variables created within a script are only available to the current shell; child processes (sub-shells) will not have access to values 
+that have been set or modified. Allowing child processes to see the values, requires use of the <kbd>export</kbd> command.<br>
+<samp>$export VARIABLE=value</samp> (or <samp>$VARIABLE=value; export VARIABLE</samp>)<br>
+To add a variable permanently add <samp>export VARIABLE=value</samp> to <samp>~/.bashrc</samp>.<br>
+<br>
+<kbd>PATH</kbd> is an ordered list of directories (the path) which is scanned to find the appropriate program or script to run. 
+Each directory in the path is separated by colons (:). A null (empty) directory name (or ./) indicates the current directory.<br>
+To prefix the directory <samp>~/MyDir</samp> to your path:<br>
+<samp>$ export PATH=$HOME/MyDir:$PATH</samp> &emsp;(<kbd>HOME</kbd> is an environment variable that represents the home (or login) directory of the user)<br>
+<br>
+<b>Prompt Statement</b> (PS) is used to customize your prompt string in your terminal windows to display the information you want.<br>
+<kbd>PS1</kbd> is the primary prompt variable which controls what your command line prompt looks like. 
+Special characters can be included in <samp>PS1</samp>. For example <br>
+<kbd>\u</kbd> - User name<br>
+<kbd>\h</kbd> - Host name<br>
+<kbd>\w</kbd> - Current working directory &emsp;(<kbd>\$PWD</kbd> shows the full path for the home instead of ~)<br>
+They must be surrounded in quotes: <samp>export PS1='\$PWD: '</samp> &emsp;(<kbd>declare -x</kbd> does the same thing as <samp>export</samp>)<br>
+<br>
+The environment variable <kbd>SHELL</kbd> points to the user's default command shell.<br>
+
+<h3>Text Editors</h3><br>
+<kbd>gedit</kbd> is part of the GNOME desktop system and <kbd>kwrite</kbd> is associated with KDE 
+	(<kbd>kedit</kbd> and <kbd>kate</kbd> are also supported by KDE).<br>
+<kbd>Nano</kbd> is an easy-to-use text-based editor that utilizes on-screen prompts.<br>
+<kbd>vi</kbd> (also <kbd>vim</kbd> for "improved vi") and <kbd>emacs</kbd> are available on all Linux systems. 
+Graphical interfaces for <samp>vi</samp> are <kbd>gvim</kbd> (GNOME) and <kbd>kvim</kbd> (KDE).<br>
+<br>
+<samp>vi</samp> has three modes: Command, Insert, and Line. By default, <samp>vi</samp> starts in Command mode.<br> 
+Type <kbd>i</kbd> to switch to Insert mode from Command mode. Press Esc to return to Command mode.<br>
+Type <kbd>:</kbd> to switch to the Line mode from Command mode. Press Esc to return to Command mode.<br>
+Type <kbd>:x</kbd> or <kbd>:wq</kbd> to exit <samp>vi</samp> and write out modified file.<br>
+Type <kbd>:q!</kbd> to quit <samp>vi</samp> even though modifications have not been saved.<br>
+<br>
+ <samp>emacs</samp> has only one but requires use of special keys such as Control and Escape.
+
+
+<br>
+<h3>Misc.</h3><br>
+- The "init" process is responsible for implementing both restarts and shut downs. On systems using System V init, run level 0 is usually used for shutting down, and run level 6 is used to reboot the system.
+
+    <ul>
+        <li> suspend mode or sleep mode works by keeping your system's s applications, desktop, and so on in system RAM, but turning off all of the other hardware.
+	<li> A terminal emulator program emulates (simulates) a stand alone terminal within a window on the desktop. On GNOME desktop environments, by default the <i>gnome-terminal</i> application is used. Other available terminal programs include:
+	    <i>xterm, rxvt, konsole</i> and <i>terminator</i>.
+	<li> Linux distributions can start and stop the graphical desktop in various ways. For Debian-based systems, the <i>Desktop Manager</i> runs as a service which can be simply stopped. 
+	     For RPM-based systems, the Desktop Manager is run directly by <i>init</i> when set to run level 5; switching to a different runlevel stops the desktop.<br>
+	     Use the <kbd>sudo service gdm stop</kbd> or <kbd>sudo service lightdm stop</kbd> commands, to stop the graphical user interface in Debian-based systems. On RPM-based systems typing <kbd>sudo telinit 3</kbd> may have the same effect of killing the GUI.
+	<li> <b>Pipe files</b> are a special kind of file shared between two programs.The file acts as a buffer
+		for sharing information. One program writes to the pipe file and the other reads from
+		the pipe.When the pipe file reaches a certain size, Linux halts the writing program until
+		the reading program can “catch up”.
+		A similar kind of file is called a Unix domain <b>socket file</b>. A socket file acts like a pipe
+		but works using network sockets.
+    </ul>
+
+</body>
+
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+
+</html> 
+   

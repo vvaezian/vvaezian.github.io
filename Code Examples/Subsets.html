@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <link rel="shortcut icon" href="../Pic/python.ico">
+    <title>Subsets</title>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+    <link rel="stylesheet" href="../styles.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato'     rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<h5> Subsets</h5>
+<pre class = "prettyprint linenums">
+def subsets(s):
+    """s is a list representing a set;
+    the function prints all the subsets of s"""
+    myStr = [""]
+    myStr1 = [""]
+    for i in s:
+        for j in myStr:
+            myStr1.append(str(j)+str(i))
+        myStr = myStr1[:]
+    for c in myStr:
+        print "{" + str(c) + "}"
+
+subsets(["a","b","c","d"])
+</pre>
+
+</body>

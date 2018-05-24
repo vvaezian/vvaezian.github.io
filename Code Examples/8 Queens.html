@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <link rel="shortcut icon" href="../Pic/python.ico">
+    <title>8 Queens</title>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+    <link rel="stylesheet" href="../styles.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato'     rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<br><br><br>
+<h4>8 Queens: Calculate different ways it is possible to put eight queens on a chess board</h4><br>
+Both iterative and recursive implementations are given<br>
+<br>
+
+The recursive version takes 3 times more than iterative version to complete. Let me know in the comments below if the recursive version can be improved.
+<pre class = "prettyprint linenums">
+def possible(row,col): #checks whether placing a queen in the specified row and column is possible
+    for i in xrange(8):
+        if board[row][i] == 1 or board[i][col] == 1:    #check horizontally and vertically
+            return False
+            
+    r, c = row, col             #The rest is for checking diagonally
+    while r <= 7 and c <= 7:
+        if board[r][c] == 1:
+            return False
+        r += 1
+        c += 1
+        
+    r, c = row, col
+    while r >= 0 and c >= 0:
+        if board[r][c] == 1:
+            return False
+        r -= 1
+        c -= 1
+    
+    r, c = row, col
+    while r >= 0 and c <= 7:
+        if board[r][c] == 1:
+            return False
+        r -= 1
+        c += 1
+        
+    r, c = row, col
+    while r <= 7 and c >= 0:
+        if board[r][c] == 1:
+            return False
+        r += 1
+        c -= 1
+    
+    return True
+ 
+###############################################################################
+
+####Iterative Version####
+
+def removeLastQ(count,coor,board):  #remove the last queen off the stack
+    z = coor.pop() 
+    board[z[0]][z[1]] = 0
+    count[0] -= 1
+
+board = [ [ 0 for i in xrange(8)] for i in xrange(8)] #create an 8x8 board. 0 represents no Queen, 1 represents Queen
+coor = []           #stores row and column of queens
+count = [0]         #number of Queens so far (it's represented as an array of length 1 to <a href="https://stackoverflow.com/a/13299557/2445273">allow for modification</a> in the 
+		    #removeLastQ function)
+sol_count =  0      #number of solutions found so far
+r,c = 0, 0          #row, column
+
+while True:
+    if possible(r,c):
+        board[r][c] = 1 #place a queen at row r and column c
+        coor.append((r,c))
+        count[0] += 1
+        if r < 7: #we are not in the last row
+            r += 1
+            c = 0
+        else:   #we are in the last row
+            if count[0] == 8: #A solution has been found
+                for i in board:
+                    print i
+                print   #extra empty line to separate solutions
+                sol_count += 1
+            if c<7: #in the last row but not in the last column
+                removeLastQ(count, coor, board)
+                c += 1
+            else:   #in the last row and last column
+                removeLastQ(count,coor,board)
+                r = coor[-1][0]
+                c = coor[-1][1] + 1 #coor[-1][1] refers to the column part of coor[-1]
+                removeLastQ(count, coor, board)
+                    
+    else:   #not possible to place a Queen
+        if c<7:
+            c+=1
+        else:   #while loop is on the last column
+            row, col = coor[-1][0], coor[-1][1]
+            if col < 7: #col is column of last-put Queen
+                r = row
+                c = col + 1
+            else: #the most recent queen was put in the last column
+                removeLastQ(count, coor, board)
+                if len(coor) == 0: #termination check
+                    break
+                r = coor[-1][0]
+                c = coor[-1][1] + 1
+            
+            removeLastQ(count, coor, board)    
+ 
+print "Number of Solutions Found:", sol_count
+</pre><br>
+<pre class= "prettyprint linenums">
+
+####Recursive Version####
+
+#uses the function 'possible' (defined at the top) with an extra argument for the 'board'
+
+def countQis8(board):   #checks whether number of Queens of the board is 8
+    for row in board:
+        flag = False    #'flag' is added for efficiency, so if a row doesn't have a queen it doesn't continue checking other rows
+        for col in row:
+            if col == 1:
+                flag = True
+                break
+        if not flag:
+            return False
+    return True
+
+def eightQ(board, row):
+    global sol_count
+    if row == 8 and countQis8(board):   # 'row == 8' is added for efficiency
+        sol_count += 1
+        for i in board:
+            print i
+        print
+    for r in range(row, 8):
+        for c in range(8):
+            b = [ k[:] for k in board ] #This makes a copy of the board
+            if possible(r, c, b): 
+                b[r][c] = 1
+                eightQ(b, r+1)
+    return
+
+board = [ [ 0 for i in xrange(8)] for i in xrange(8) ] #create an 8x8 board. 0 represents no Queen, 1 represents Queen
+sol_count =  0
+
+eightQ(board, 0)
+print "Number of Solutions Found:", sol_count
+</pre>
+
+
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'http://www.sfu.ca/~vvaezian/Code%20Examples/8%20Queens.html';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'Code Examples/8 Queens.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://lomaph2020.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</body>

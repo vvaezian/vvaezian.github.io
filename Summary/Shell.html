@@ -1,0 +1,349 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+  <title>Shell Commands</title>
+  <link rel="shortcut icon" href="/~vvaezian/Pic/terminal.ico">
+  <link rel="stylesheet" href="/~vvaezian/styles.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+</head>
+
+<body>
+<img src="/~vvaezian/Pic/Shell-logo.gif" alt="Logo" width="128" height="128"> 
+&emsp; &emsp; <em>"Graphical user interfaces make easy tasks easier, while command line interfaces make difficult tasks possible."</em><br>
+<br>
+<em>* Some of the material is taken from <a href="https://courses.edx.org/courses/course-v1:LinuxFoundationX+LFS101x+1T2016/info">this</a> online course.</em><br>
+
+<p> 
+	A <b>shell</b> is a program that runs operating system commands. 
+	In general, there are two key differences between shell scripts and more complex programs.
+	First, shells are designed to handle short, simple tasks.They lack the rigid structure
+	and semantic checking of a high-level language. Shell scripts can be written quickly
+	because they assume the programmer knows what he or she is doing, and for short
+	scripts, this is usually true. Second, shells always execute their scripts slowly. Although
+	most shells perform some kind of pre-processing to speed up execution, they still interpret
+	and carry out one line at time. High-level languages are faster because they almost
+	always translate a program into machine language to gain the best performance.
+	When tackling any programming problem, it’s essential to choose the right tool for
+	the job. Developing large projects as shell scripts will mean your project will run slowly
+	and be difficult to maintain. Developing scripts in a high-level language will lead to a
+	longer and more costly development time. (<a href="https://www.amazon.com/exec/obidos/ISBN=0672326426/cbbrownecompu-20/" target="_blank">source</a>)
+</p>
+
+<h2>Useful Shell Commands</h2>
+
+<details class="details">
+<summary><div class="wrapper"><h4>Navigation</h4></div></summary>
+<div class="content">
+    <ul class="a">
+	<li>Shortcuts: <kbd>.</kbd> (present directory), <kbd>..</kbd> (parent directory), <kbd>~</kbd> (home directory).
+	<li>The <kbd>tree</kbd> command is a good way to get a bird’s-eye view of the filesystem tree. Use <kbd>tree -d</kbd> to view just the directories and to suppress listing file names.
+    </ul>
+</div></details>
+
+
+<details class="details">
+<summary><div class="wrapper"><h4>Finding files</h4></div></summary>
+<div class="content">
+    <ul class="a">
+	<li>When no arguments are given, <kbd>find</kbd> lists all files in the current directory and all of its subdirectories. 
+	Commonly used options include <kbd>-name</kbd> (only list files with a certain pattern in their name), <kbd>-iname</kbd> (also ignore the case of file names), 
+	and -type (restrict the results to files of a certain type, such as <kbd>d</kbd> for directory, <kbd>l</kbd> for symbolic link or <kbd>f</kbd> for a regular file.<br>
+	<kbd>$ find . -name foo</kbd> &emsp; Search in the current directory and all the subdirectories for the file named "foo".</br>
+	<kbd>$ find /usr -type d -name "*foo"</kbd>  &emsp; Searching only for directories that end in "foo" in <i>/usr</i> onward<br>
+	
+	<br>To run commands on the files that match your search criteria use <kbd>-exec</kbd> option (<kbd>-ok</kbd> is similar but prompts before executing the action):<br>
+	<kbd>$ find -name "*foo" -exec rm {} ’;’</kbd> &emsp; finds and removes all files that end with foo. The {} is a place holder that will be filled with all the file names that result from the find expression, 
+	and the preceding command will be run on each one individually. Note that you have to end the command with either <kbd>‘;’</kbd> or <kbd>\;</kbd><br>
+	
+	<br>Finding based on time: <kbd>$ find / -ctime 3</kbd> &emsp; Here, <kbd>-ctime</kbd> is when the inode meta-data (i.e., file ownership, permissions, etc) last changed; 
+	it is often, but not necessarily when the file was first created. You can also search for last accessed/read (<kbd>-atime</kbd>) or last modified/written (<kbd>-mtime</kbd>) times. 
+	The number is the number of days and can be expressed as either a number (n) that means exactly that value, +n (greater), or -n (less). 
+	There are similar options for times in minutes (as in <kbd>-cmin</kbd>, <kbd>-amin</kbd>, and <kbd>-mmin</kbd>).<br>
+
+	Finding based on sizes: <kbd>$ find / -size 0</kbd> &emsp; Note the size here is in 512-byte blocks, by default; you can also specify bytes (c), kilobytes (k), megabytes (M), etc.<br>
+	<kbd>$ find / -size +10M -exec command {} ’;’</kbd> &emsp; finds files greater than 10 MB in size and runs "command" on those files.
+	<li>One way to locate programs is to employ the <kbd>which</kbd> utility. For example, to find out exactly where the <kbd>diff</kbd> program resides on the filesystem: <kbd>$ which diff</kbd><br>
+	    If which does not find the program, <kbd>whereis</kbd> is a good alternative because it looks for packages in a broader range of system directories: <kbd>$ whereis diff</kbd>
+	<li>WhileCards:<br>
+	<table>
+  	  <tr>  <td>?</td> <td>Matches any single character</td></tr>
+	  <tr>  <td>*</td> <td>Matches any string of characters</td></tr>
+	  <tr>  <td>[set]</td> 	<td>Matches any character in the set of characters, for example [adf] will match any occurrence of "a", "d", or "f"</td></tr>
+	  <tr>  <td>[!set]</td> <td>Matches any character not in the set of characters</td></tr>
+	</table>
+    </ul>
+</div></details>
+
+
+<details class="details">
+<summary><div class="wrapper"><h4>Aliases</h4></div></summary>
+<div class="content">
+      <ul class="a">
+        <li>To find out which aliases are currently being used: <kbd>$ alias</kbd></li>
+        <li>Define an alias: <kbd>$ alias new_name='old command'</kbd> </li>       
+        <li>To create a permanent alias, edit the <kbd>.bashrc</kbd> file in home directory and after saving, load it by <kbd>$ source .bashrc</kbd> (csh has <kbd>~/.cshrc</kbd>, ksh has <kbd>~/.kshrc</kbd>, and zsh has <kbd>~/.zshrc</kbd>).</li>
+        <li>By preceding a command with <kbd>\</kbd> we can avoid using the alias of that command.
+        <li> Useful aliases: 
+             <ul class="c"> 
+                <li>Using <kbd>$ ls -l</kbd> gives too much information. To exclude the first four columns use <kbd>sed</kbd>:</br>
+                    <kbd>lsl='\ls -lhog --color=always | awk '\''NR>1'\'' | sed '\''$a\ '\'' | sed '\''s/^[^ ][^ ]*  *[^ ][^ ]* //'\'''</kbd></br>
+                    (The command is actually <kbd>\ls -lhog --color=always | awk 'NR>1' | sed '$a\ ' | sed 's/^[^ ][^ ]*  *[^ ][^ ]* //'</kbd> 
+                     but since alias definition must be wrapped in quotations, and these quotations interfere with the quotations in the command, 
+                     we need to replace <kbd>'</kbd> with <kbd>'\''</kbd>)</li>
+                <li>To show only files and no directories in <kbd>ls</kbd>, we can use the following alias</br>
+                    <kbd>lsfile='\ls -p | grep -v /'</kbd></br>
+                    (<kbd>-p</kbd> adds "/" to the end of directory names shown, and <kbd>grep</kbd> uses this character to filter these items out. 
+                    <kbd>-v</kbd> selects non-matching lines.)</br> 
+                If we want to get both of the above effects we need to combine the two:</br>
+                <kbd>lslfile='\ls -lhogp --color=always | awk '\''NR>1'\'' | sed '\''$a\ '\'' | sed '\''s/^[^ ][^ ]*  *[^ ][^ ]* //'\'' | grep -v /'</kbd></br></br></li>
+             </ul>
+      </ul>
+</div></details>
+
+
+<details class="details">
+<summary><div class="wrapper"><h4>I/O</h4></div></summary>
+<div class="content">
+	<p><kbd>$ do_something < input-file</kbd><br>
+	<kbd>$ do_something > output-file</kbd> (because stderr is not the same as stdout, error messages will still be seen on the terminal windows)<br>
+	<kbd>$ do_something >> append-to-output-file</kbd><br><br>
+
+	When commands are executed, by default there are three standard <b>file streams</b> (or <b>descriptors</b>) always open for use: 
+	<i>stdin</i> (descriptor 0), <i>stdout</i> (descriptor 1) and <i>stderr</i> (descriptor 2). 
+	If other files are opened in addition to these three, which are opened by default, they will start at file descriptor 3.<br><br>
+	- To redirect <i>stderr</i> to a separate file: <kbd>$ do_something 2> error-file</kbd><br>
+	- Shorthand notation to put anything written to <i>stderr</i> in the same place as <i>stdout</i>:<br> 
+	<kbd>$ do_something > all-output-file 2>&1</kbd> (bash-specific: <kbd>$ do_something >& all-output-file</kbd>)<br>
+	<br><samp>$ cat > myfile << EOF</samp> &ensp; writes everything typed into <samp>myfile</samp> until <samp>EOF</samp> is typed (can use anything instead of <samp>EOF</samp>).<br><br>
+	
+	<kbd>/dev/null</kbd> is a special file that discards all data that gets written to it.<br>
+	To ignore the standard output stream but printing any errors on the console:<br>
+	<samp>$ find / > /dev/null</samp><br><br>
+
+	<kbd><<<</kbd> (in newer versions of bash) can be used to redirect content of variables:<br>
+	<samp>$ TEST="John"</samp><br>
+	<samp>$ wc -m <<< $TEST</samp><br>
+	<samp>5</samp>
+	</p>
+</div></details>
+
+
+<details class="details">
+<summary><div class="wrapper"><h4>Information about the system</h4></div></summary>
+<div class="content">
+    <ul class="a">
+        <li>Hardwares:   <kbd>$ sudo lshw</kbd></li>
+        <li>Kernel and OS:   <kbd>$ uname -a</kbd></li>
+        <li>Disk Space Usage: <kbd>$ df -h</kbd>
+		<li>Mounted filesystems: <kbd>$ lsblk</kbd>
+        <li>Processes: <kbd>$ gnome-system-monitor</kbd>
+        <li>Main Memory: <kbd>$ cat /proc/meminfo</kbd></li>
+        <li>CPU: <kbd>$ cat /proc/cpuinfo</kbd></li>
+		<li><kbd>w</kbd> command shows information about the system and its users<br>
+			<pre>$ w
+3:18pm up 9 days, 20:33, 3 users, load average: 0.64, 0.66, 0.64
+User 	tty 	login@ idle JCPU PCPU what
+dhu 	ttyp6 	2:12pm 4:28 8:01 8:01 csh
+mchung 	console 9:57am 5:10 	      sh
+bgill 	ttyp7 	1:32pm 19 	      bash</pre>
+       </ul>
+</div></details>
+
+
+<details class="details">
+<summary><div class="wrapper"><h4>Editting</h4></div></summary>
+<div class="content">
+	<ul class="a">
+	   	<li>Use <kbd>head -n</kbd> command to access the first n lines of a file: <samp>head -n 	filename</samp><br>
+	   		Use <kbd>tail -n</kbd> command to access the last n lines of a file: <samp>tail -n filename</samp><br>
+			Use <kbd>tail -f</kbd> to continually monitor new output in a growing file: <samp>tail -f filename</samp>
+	   	<li><b>tr</b><br> 
+	   		Use the translation function <kbd>tr</kbd> to edit phrases.<br>
+	   		<samp>-d --delete</samp><br>
+	   		<samp>-c --comlements</samp><br>
+	   		<samp>-s --squeeze repeats</samp><br> 	
+			<code>	$ echo "test" | tr [:lower:] [:upper:]<br>
+					$ echo "John123" | tr -d [:digit:]<br>
+					$ echo "This &nbsp &nbsp &nbsp is &nbsp for &nbsp &nbsp testing" | tr -s [:space:]<br>
+					$ echo "my username is 432234" | tr -cd [:digit:]<br>
+					$ tr -cd [:print:] < FILENAME
+			</code>
+			<code>	TEST<br>
+					John<br>
+					This is or testing<br>
+					432234<br>
+					[Remove all non-printable characters]
+			</code>
+		</li><br>
+		<li><b>SED</b><br>
+			<kbd> sed 's/REGEXP/REPLACEMENT/' FILENAME</kbd> &nbsp &nbsp substitute only the first occurence (overview of REGEXP<a href= "http://www.gnu.org/software/sed/manual/html_node/BRE-syntax.html#BRE-syntax"> here </a>)<br> 
+			<kbd> sed 's/REGEXP/REPLACEMENT/g' FILENAME</kbd> &nbsp &nbsp substitute all occurences<br><br>
+			The above codes apply to all lines. To specify which lines the code be applied we need to add <a href="http://www.gnu.org/software/sed/manual/html_node/Addresses-overview.html#Addresses-overview">address</a> before <kbd>s</kbd>:<br>
+			<kbd> sed '/ADDRESS/s/REGEXP/REPLACEMENT/' FILENAME</kbd> &nbsp &nbsp substitute occurences in lines that match ADDRESS (a regular  expression)<br>
+			<kbd> sed 'n,ms/REGEXP/REPLACEMENT/' FILENAME</kbd> &nbsp &nbsp substitute occurences in lines n to m<br><br>
+
+			<kbd> sed -e command1 -e command2 FILENAME</kbd><br>
+			<kbd> sed -f scriptfile FILENAME</kbd><br>
+			<br>
+			<kbd>^</kbd> within <kbd>[...]</kbd> &nbsp negates the match of the list.<br>
+			Adding <kbd>!</kbd> at the end of ADDRESS negates the match: <kbd>sed '/ADDRESS/!s/REGEXP/REPLACEMENT/'</kbd><br>
+
+			<br>
+			To eliminate (replace with blank) lines that start with a number:<br> <kbd>sed 's/^[0-9].*//' input > output</kbd><br>
+			To eliminate those lines that start with c or d (possibly with some spaces before c or d):<br> <kbd>sed '/^ *c\|^ *d/s/.*//'</kbd><br>
+			To delete empty lines:<br> <kbd>sed '/^$/d'</kbd> (also <kbd>grep .</kbd> and <kbd>grep -v '^$'</kbd>)<br>
+			To add # to the beginning of all lines:<br> <kbd> sed 's/^/#/'</kbd> (for adding at the end of each line use <samp>$</samp> instead of <samp>^</samp>)
+		</li><br>
+
+		<li><b>AWK</b><br>
+			<kbd>$ awk '/REGEXP/ { print $0 }' FILENAME</kbd> &nbsp &nbsp prints those lines that match the REGEXP. 
+			<kbd>$0</kbd> refers to the current line. In this case it is the same as <kbd>print</kbd>.<br>
+			<kbd>$ awk -F '[ ]' '{ print $2, $4 }' FILENAME</kbd> &nbsp &nbsp Uses a single white space as the separator and prints the second and fourth fields.<br>
+			<br>
+			* In an awk rule, either the pattern or the action can be omitted, but not both. If the pattern is omitted, then the action is performed for every input line. 
+			If the action is omitted, the default action is to print all lines that match the pattern. So the first example can be written as<br>
+			<kbd> $ awk '/REGEXP/' FILENAME</kbd>
+		</li><br>
+		<li><b>cut</b><br>
+			<kbd>cut</kbd> is used for manipulating column-based files and is designed to extract specific columns. <br>
+			<samp>-d --delimiter=DELIM</samp><br>
+			<samp>-f --fields=LIST</samp><br>
+			<samp>-n --complement</samp><br>
+			<code>$ ls -l | cut -d " " -f 3-</code> &nbsp &nbsp All fields of <samp>ls -l</samp> except the first two 
+</div></details>
+
+
+<details class="details">
+<summary><div class="wrapper"><h4>Getting Help</h4></div></summary>
+<div class="content">
+	<ul>
+	    <li><kbd>man -f</kbd> is equivalent to <kbd>whatis</kbd> which shows all man pages containing the indicated string in their name.<br>
+	    	<kbd>man -k</kbd> is equivalent to <kbd>apropos</kbd> which shows all man pages containing the indicated string in their name or description.<br>
+		To restrict search to shell commands, use <kbd>man 1</kbd>.</li>
+	    <li><kbd>Help</kbd> describes only Bash commands (<samp>-s</samp> option displays a summary).
+	</ul>
+</div></details>
+
+<details class="details">
+<summary><div class="wrapper"><h4>Links</h4></div></summary>
+<div class="content">
+      <kbd>ln</kbd> can be used to create hard links and (with the <kbd>-s</kbd> option) soft links (aka <b>symbolic links</b> or <b>symlinks</b>).<br>
+  	   	Suppose that <i>file1</i> already exists. A hard link, called <i>file2</i>, is created with the command: <kbd>$ ln file1 file2</kbd><br>
+		Note that two files now appear to exist. However this is not quite true. If we run <kbd>$ ls -li file1 file2</kbd> (the -i option to ls prints out in the first column 
+		the inode number, which is a unique quantity for each file object) we see that inode field is the same for both of these files; so it is only one file but it has more 
+		than one name associated with it, as is indicated by the 2 that appears in the ls output.<br>
+		If you remove either file1 or file2, the inode object (and the remaining file name) will remain. 
+		If you edit one of the files, exactly what happens depends on your editor; most editors including vi and gedit will retain the link by default but it is possible that 
+		modifying one of the names may break the link and result in the creation of two objects.<br>
+		<br>
+		Symbolic (or Soft) links are created with the -s option: <kbd>$ ln -s file1 file4</kbd><br>
+		Notice file4 no longer is a regular file, it points to file1 and has a different inode number. Symbolic links take no extra space on the filesystem (unless their names are very long). 
+		They are extremely convenient as they can easily be modified to point to different places.<br>
+		Unlike hard links, soft links can point to objects even on different filesystems (or partitions) which may or may not be currently available or even exist. 
+		In the case where the link does not point to a currently available or existing object, you obtain a <i>dangling</i> link. <br>
+</div></details>
+
+
+<details class="details">
+<summary><div class="wrapper"><h4>Compression</h4></div></summary>
+<div class="content">
+	<ul>
+	   <li><kbd>gzip</kbd> 	The most frequently used Linux compression utility
+	   <li><kbd>bzip2</kbd> Produces files significantly smaller than those produced by <samp>gzip</samp>
+	   <li><kbd>xz</kbd> 	The most space efficient compression utility used in Linux
+	   <li><kbd>zip</kbd> 	Is often required to examine and decompress archives from other operating systems<br>
+			<kbd>$zip -0 -r /where/to/save/outputFileName *</kbd><br>
+			<kbd>-0</kbd> is for storing, <kbd>-r</kbd> is for subdirectories
+	</ul>
+	In addition the <kbd>tar</kbd> utility is often used to group files in an archive and then compress the whole archive at once (using the above compression tools).<br>
+</div></details>
+
+
+<details class="details">
+<summary><div class="wrapper"><h4>File Permissions and Ownership</h4></div></summary>
+<div class="content">
+	Files have three kinds of permissions: read (r), write (w), execute (x). 
+	These permissions affect three groups of owners: user/owner (u), group (g), and others/world (o).<br>
+	<kbd>chmod</kbd> is used for changing permissions. There are two ways to di it.<br>
+	<samp>$ chmod uo+x,g-w test</samp> adds the execute permission to user and other, and takes away write permission from group.<br>
+	Another method is using a single digit to represent permissions. This digit is the sum of:<br>
+	    4 if read permission is desired.<br>
+	    2 if write permission is desired.<br>
+	    1 if execute permission is desired.<br>
+	Thus 7 means read/write/execute, 6 means read/write, and 5 means read/execute.<br>
+	<br>
+	<kbd>chown</kbd> is used to change user ownership of a file or directory and <kbd>chgrp</kbd> is used to change group ownership.<br>
+	For example: <samp>$ sudo chown root test</samp> changes the ownership of <samp>test</samp> to <samp>root</samp>.<br>
+</div></details>
+
+<details class="details">
+  <summary><div class="wrapper"><h4>Processes</h4></div></summary>
+  <div class="content">
+    <ul>
+      <li>A program (or command) may have several processes. Each process may have several threads.
+      <li>When a process is in a <b>running state</b>, it means it is either currently executing instructions on a CPU, or is waiting for a share (or time slice) so it can run. Processes in this state are in a <b>run queue</b> which exists for each CPU.<br>
+      A process is in <b>sleep state</b> if it is waiting for something to happen before they can resume, perhaps for the user to type something. In this condition a process is sitting in a <b>wait queue</b>.<br>
+      If a child process completes but its parent process has not asked about its state, the process is in <b>zombie state</b> (the command <kbd>top</kbd> gives the number of processes in each state).
+      <li> Each process has a unique Process ID number (PID). There is also Parent Process ID (PPID) which is the ID of the process that started this process. Finally, each thread has a Thread ID number (TID).
+      <li> Priority of a process is illustrated by PR (priority) and NI (niceness) in the <samp>top</samp> command. PR is a real priority of a process at the moment inside of the kernel and NI is just a hint for the kernel what the priority the process should have. Theoretically the kernel can change PR value (but not NI) by itself.
+      <li><kbd>ps -ef</kbd> displays all the processes in the system in full detail. <kbd> ps -eLf</kbd> adds processes as well.<br>
+      <li><kbd>pstree</kbd> displays processes in a tree diagram. Repeated entries of a process are not displayed, and threads are displayed in curly braces.
+      <li><kbd>top</kbd> gives a live update of processes.<br>
+        The first line displays a quick summary of what is happening in the system including how long the system has been up, how many users are logged on and what is the load average in the last minute, 5 minutes and 15 minutes, respectively (the numbers need to be divided by number of CPUs). The <b>load average</b> determines how busy the system is. A load average of 1.00 per CPU indicates a fully subscribed, but not overloaded, system. If the load average goes above this value, it indicates that processes are competing for CPU time. If the load average is very high, it might indicate that the system is having a problem, such as a runaway process (a process in a non-responding state). Load average can be obtained from <kbd>w</kbd>, <kbd>uptime</kbd> or <kbd>top</kbd>.<br>
+        The third line of the top output indicates how the CPU time is being divided between the users (us) and the kernel (sy) by displaying the percentage of CPU time used for each.<br>
+      <li>To terminate a process <samp>kill -SIGKILL [PID]</samp> or <samp>kill -9 [PID]</samp>.
+      <li><kbd>sleep</kbd>delays execution for a specific period of time:<br>
+        <samp>sleep NUMBER[SUFFIX]</samp> (suffix can be s/m/h/d, s(seconds) is default)
+      <li>With <kbd>at</kbd> we can schedule start of execution of a command at a later time. The output of command is sent to the user's email.<br>
+<pre class="prettyprint">
+$ at now + 5 minutes  # Man page of 'at' describes different time formats
+at> echo "test"
+at> ^d
+</pre><br>
+      <li><kbd>cron</kbd> is used to schedule tasks that need to be performed at regular intervals. <kbd>crontab -e</kbd> opens the crontab editor and <kbd>crontab -l</kbd> shows the cron jobs.
+    </ul>
+  </div>
+</details>
+
+
+<details class="details">
+<summary><div class="wrapper"><h4>Misc</h4></div></summary>
+<div class="content">
+       <ul class="a">
+	   <li>To permanently make terminal window on top, add the following code to <kbd>.bashrc</kbd>:</br>
+          <kbd>wmctrl -r :ACTIVE: -b toggle,above</kbd>
+	    <li>To display files with symbols use <kbd>ls -–classify</kbd>. The <samp>--classify</samp> symbols are directories (/), programs (*), symbolic links (@), pipes (|), and Unix domain socket files (=).
+	    <li>By editting the value of the environment variable <kbd>PS1</kbd> (prompt string 1) we can customize the prompt:<br>
+		<kbd>$ declare -x PS1="MyName(\$PWD): "</kbd>
+	    <li> <kbd>wc</kbd> (word count) prints the number of lines, words and characters.
+	    <li> In Linux, a file's extension often does not categorize it. 
+		Most applications directly examine a file's contents to see what kind of object it is rather than relying on an extension.
+		The real nature of a file can be ascertained by using the <kbd>file</kbd> command.<br>
+<pre>$ file test
+test: directory</pre>
+	    <li>both <kbd>cp</kbd> and <kbd>rsync</kbd> can be used to synchronize entire directory trees. 
+		However, <samp>rsync</samp> is more efficient because it checks if the file being copied already exists. 
+		If the file exists and there is no change in size or modification time, <samp>rsync</samp> will avoid an unnecessary copy and save time. 
+		Furthermore, because <samp>rsync</samp> copies only the parts of files that have actually changed, it can be very fast.
+		One often synchronizes the destination directory tree with the origin, using the <kbd>-r</kbd> option to recursively walk down the 
+		directory tree copying all files and directories below the one listed as the source.<br>
+		
+		<samp>cp</samp> can only copy files to and from destinations on the local machine (unless you are copying to or from a filesystem mounted 
+		using NFS), but <samp>rsync</samp> can also be used to copy files from one machine to another. 
+		Locations are designated in the <samp>target:path</samp> form where target can be in the form of <samp>[user@]host</samp>. 
+		The <samp>user@</samp> part is optional and used if the remote user is different from the local user.<br>
+		<samp>$ rsync -r project-X archive-machine:archives/project-X</samp></br>
+		Note that <samp>rsync</samp> can be very destructive.  It is highly recommended that you first test your rsync command using the <kbd>-dry-run</kbd> 
+		option to ensure that it provides the results that you want.
+	    <li><kbd>id</kbd> gives information about the current user (uid (user ID), gid (group ID), ...).
+	    <li>If you want to recall a command in the history list, but do not want to press the arrow key repeatedly, 
+		you can press CTRL-R to do a reverse intelligent search. 
+		As you start typing the search goes back in reverse order to the first command that matches the letters you've typed.
+	    <li>The <kbd>reset</kbd> command attempts to restore a Bash session to a safe, sane state. If it fails, use <kbd>stty sane</kbd> to restore the session to a normal state. 
+       </ul>
+</div></details>
+</body>
+
+</html> 

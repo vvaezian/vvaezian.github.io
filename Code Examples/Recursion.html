@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <link rel="shortcut icon" href="../Pic/python.ico">
+    <title>Recursion</title>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+    <link rel="stylesheet" href="../styles.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato'     rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<img src="/~vvaezian/Pic/recursion.gif" alt="Logo" height="200"><br>
+
+<h3>Coding examples emplemented using recursion</h3><br><br>
+
+<details>
+<summary><b>Design an algorithm to print all permutations of a string. For simplicity, assume all character are unique.</b></summary>
+<pre class = "prettyprint linenums">
+def perms(s, temp):
+    """s is a string,
+    temp is part of the output found so far."""
+    if len(s) == 0:
+        print temp
+        return
+    for i in s:
+        s2 = s.replace(i, '')
+        temp += i
+        perms(s2, temp)
+        temp = temp[:-1]
+    return
+
+perms('abc', '')
+</pre><br>
+
+Generalizing the previous example where the characters may not be unique:<br>
+<pre class = "prettyprint linenums">
+output = []
+
+def perms(s, temp):
+    if len(s) == 0:
+        output.append(temp)
+        return
+    for i in s:
+        s2 = s.replace(i, '', 1) #replace the first occurance of i in s
+        temp += i
+        perms(s2, temp)
+        temp = temp[:-1]
+    return
+
+perms('acdc', '')
+for i in set(output): #using 'set' to get rid of repititions
+    print i</pre>
+</details>
+
+
+<details>
+<summary><b>The lexicographic permutations of 0, 1 and 2 are: 012   021   102   120   201   210.<br>
+ What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9?</b> (this is problem 24 of <a href="https://projecteuler.net/archives"> project Euler</a>)<br></summary>
+<pre class = "prettyprint linenums">
+remain = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+stack = []
+solution_count = 0
+flag = False
+
+def prob(stack, remain):
+    global solution_count, flag
+    if len(stack) == 10:
+        solution_count += 1
+        if solution_count == 1000000:
+            print stack
+            flag = True
+    for i in remain:
+        remain2 = remain[:]
+        remain2.remove(i)
+        stack2 = stack[:]
+        stack2.append(i)
+        prob(stack2, remain2)
+        if flag:
+            return
+
+prob(stack, remain)</pre><br>
+</details>
+
+</body>
