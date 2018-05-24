@@ -4,7 +4,7 @@
 <head>
   <title>Shell Commands</title>
   <link rel="shortcut icon" href="/~vvaezian/Pic/terminal.ico">
-  <link rel="stylesheet" href="/~vvaezian/styles.css"/>
+  <link rel="stylesheet" href="/styles.css"/>
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
   <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 </head>
@@ -25,7 +25,7 @@
 	most shells perform some kind of pre-processing to speed up execution, they still interpret
 	and carry out one line at time. High-level languages are faster because they almost
 	always translate a program into machine language to gain the best performance.
-	When tackling any programming problem, it’s essential to choose the right tool for
+	When tackling any programming problem, itâ€™s essential to choose the right tool for
 	the job. Developing large projects as shell scripts will mean your project will run slowly
 	and be difficult to maintain. Developing scripts in a high-level language will lead to a
 	longer and more costly development time. (<a href="https://www.amazon.com/exec/obidos/ISBN=0672326426/cbbrownecompu-20/" target="_blank">source</a>)
@@ -38,7 +38,7 @@
 <div class="content">
     <ul class="a">
 	<li>Shortcuts: <kbd>.</kbd> (present directory), <kbd>..</kbd> (parent directory), <kbd>~</kbd> (home directory).
-	<li>The <kbd>tree</kbd> command is a good way to get a bird’s-eye view of the filesystem tree. Use <kbd>tree -d</kbd> to view just the directories and to suppress listing file names.
+	<li>The <kbd>tree</kbd> command is a good way to get a birdâ€™s-eye view of the filesystem tree. Use <kbd>tree -d</kbd> to view just the directories and to suppress listing file names.
     </ul>
 </div></details>
 
@@ -54,8 +54,8 @@
 	<kbd>$ find /usr -type d -name "*foo"</kbd>  &emsp; Searching only for directories that end in "foo" in <i>/usr</i> onward<br>
 	
 	<br>To run commands on the files that match your search criteria use <kbd>-exec</kbd> option (<kbd>-ok</kbd> is similar but prompts before executing the action):<br>
-	<kbd>$ find -name "*foo" -exec rm {} ’;’</kbd> &emsp; finds and removes all files that end with foo. The {} is a place holder that will be filled with all the file names that result from the find expression, 
-	and the preceding command will be run on each one individually. Note that you have to end the command with either <kbd>‘;’</kbd> or <kbd>\;</kbd><br>
+	<kbd>$ find -name "*foo" -exec rm {} â€™;â€™</kbd> &emsp; finds and removes all files that end with foo. The {} is a place holder that will be filled with all the file names that result from the find expression, 
+	and the preceding command will be run on each one individually. Note that you have to end the command with either <kbd>â€˜;â€™</kbd> or <kbd>\;</kbd><br>
 	
 	<br>Finding based on time: <kbd>$ find / -ctime 3</kbd> &emsp; Here, <kbd>-ctime</kbd> is when the inode meta-data (i.e., file ownership, permissions, etc) last changed; 
 	it is often, but not necessarily when the file was first created. You can also search for last accessed/read (<kbd>-atime</kbd>) or last modified/written (<kbd>-mtime</kbd>) times. 
@@ -63,7 +63,7 @@
 	There are similar options for times in minutes (as in <kbd>-cmin</kbd>, <kbd>-amin</kbd>, and <kbd>-mmin</kbd>).<br>
 
 	Finding based on sizes: <kbd>$ find / -size 0</kbd> &emsp; Note the size here is in 512-byte blocks, by default; you can also specify bytes (c), kilobytes (k), megabytes (M), etc.<br>
-	<kbd>$ find / -size +10M -exec command {} ’;’</kbd> &emsp; finds files greater than 10 MB in size and runs "command" on those files.
+	<kbd>$ find / -size +10M -exec command {} â€™;â€™</kbd> &emsp; finds files greater than 10 MB in size and runs "command" on those files.
 	<li>One way to locate programs is to employ the <kbd>which</kbd> utility. For example, to find out exactly where the <kbd>diff</kbd> program resides on the filesystem: <kbd>$ which diff</kbd><br>
 	    If which does not find the program, <kbd>whereis</kbd> is a good alternative because it looks for packages in a broader range of system directories: <kbd>$ whereis diff</kbd>
 	<li>WhileCards:<br>
@@ -314,7 +314,7 @@ at> ^d
        <ul class="a">
 	   <li>To permanently make terminal window on top, add the following code to <kbd>.bashrc</kbd>:</br>
           <kbd>wmctrl -r :ACTIVE: -b toggle,above</kbd>
-	    <li>To display files with symbols use <kbd>ls -–classify</kbd>. The <samp>--classify</samp> symbols are directories (/), programs (*), symbolic links (@), pipes (|), and Unix domain socket files (=).
+	    <li>To display files with symbols use <kbd>ls -â€“classify</kbd>. The <samp>--classify</samp> symbols are directories (/), programs (*), symbolic links (@), pipes (|), and Unix domain socket files (=).
 	    <li>By editting the value of the environment variable <kbd>PS1</kbd> (prompt string 1) we can customize the prompt:<br>
 		<kbd>$ declare -x PS1="MyName(\$PWD): "</kbd>
 	    <li> <kbd>wc</kbd> (word count) prints the number of lines, words and characters.
