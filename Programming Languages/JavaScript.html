@@ -23,7 +23,20 @@
     There are 6 types: 4 primitive types (string, number, boolean, undefined), 2 complex types (function, object).<br>
     A primitive data doesn't have any properties or methods.<br>
     <b>null</b> and <b>undefined</b> both have value undefined, but null is of type object and undefined is of type undefined.<br>
-    Arrays and dictionaries (called 'objects' in JS) are of type object.
+    Arrays and dictionaries (called 'objects' in JS) are of type object. 
+  <li><b>Objects</b><br>
+    Objects are key:value pairs (like dictionaries in Python).<br>
+    We can access object properties in two ways: <samp>objName.propertyName</samp> or <samp>objName["propertyName"]</samp>
+<pre class="prettyprint">
+var person = {
+    firstName: "John",
+    lastName : "Doe",
+    id       : 5566,
+    fullName : function() {
+        return this.firstName + " " + this.lastName;
+};
+</pre><br>
+We can access object methods as objName.methodName(). (Leaving "()"" off will return the function definition).
   <li><b>Functions</b><br>
 <pre class="prettyprint">
 function myFunction(arg1, arg2) {
@@ -31,10 +44,12 @@ function myFunction(arg1, arg2) {
     return ...;
 }
 </pre><br>
+If you assign a value to a variable that has not been declared, it will automatically become a GLOBAL variable (even in a function), unless JavaScript is running in "strict mode".
   <li><b>Misc.</b><br>
     When adding a number and a string, JavaScript will treat the number as a string.<br>
     <kbd>===</kbd>&emsp;   equal value and equal type<br>
     <kbd>?</kbd>&emsp;   ternary operator<br>
+    n HTML, the global scope is the window object. All global variables belong to the window object. Your global variables (or functions) can overwrite window variables (or functions). Any function, including the window object, can overwrite your global variables and functions.<br>
 </ul>
 
 
