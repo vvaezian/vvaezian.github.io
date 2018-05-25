@@ -21,8 +21,10 @@
   ini_set("display_errors", 1);
   $a = 4;  # variables have $
   echo "value of a is:".$a  # dot is the string concatenation operator
+                            # echo and print are almost the same
 ?>
 </pre><br>
+
 <details class="details">
   <summary><div class="wrapper"><h4>Arrays</h4></div></summary>
   <div class="content">
@@ -122,7 +124,7 @@ function ($arg1, ...) {}
   return ...;
 }
 </pre><br>
-    For a global variable we can use either <samp>global</samp> (like python), or <samp>GLOBALS</samp> (The <samp>$GLOBALS</samp> array is an associative array with the name of the global variable being the key and the contents of that variable being the value of the array element):<br>
+    The <kbd>global</kbd> keyword is used to access a global variable from within a function (like python). Alternatively we can use <samp>GLOBALS</samp> which is an array of all global variables:<br>
 <pre class="prettyprint">
 $a = 1;
 function sum_a($b) {
@@ -149,6 +151,23 @@ function sum_a($b) {
   </div>
 </details>
 
+
+<details class="details">
+  <summary><div class="wrapper"><h4>Objects</h4></div></summary>
+  <div class="content">
+    An object is a data type that needs to be clearly declared. First we must declare a class of object:
+<pre class="prettyprint">
+class Car {
+    function Car() {
+        $this->model = "VW";
+    }
+}
+
+$herbie = new Car();  // create an object
+echo $herbie->model;  // show object properties
+</pre><br>
+  </div>
+</details>
 
 
 <details class="details">
@@ -185,6 +204,10 @@ When the user clicks somewhere on the image, the accompanying form will be trans
       <li>Unlike the double-quoted and <samp>heredoc</samp> syntaxes <kbd>("&lt;&lt;&lt;EOD")</kbd>, variables and escape sequences for special characters will not be expanded when they occur in single quoted strings or <samp>nowdocs</samp><kbd>("<<<'EOD'")</kbd>.
       <li>inside a double-quoted string, it's valid to not surround array indexes with quotes, so <samp>"$foo[bar]"</samp> is valid.
       <li>The type of a variable is not usually set by the programmer; rather, it is decided at runtime by PHP depending on the context in which that variable is used.
+      <li><kbd>NULL is both a data type and a value (the only value of the data type NULL).<br>
+        If a variable is created without a value, it is automatically assigned a value of NULL.<br>
+        Variables can be emptied by setting the value to NULL.
+      <li><kbd>var_dump($x)</kbd> returns the data type and value of <samp>x</samp>
   </div>
 </details>
 </body>
