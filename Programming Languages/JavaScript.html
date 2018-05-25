@@ -26,7 +26,7 @@
     Arrays and dictionaries (called 'objects' in JS) are of type object. 
   <li><b>Objects</b><br>
     Objects are key:value pairs (like dictionaries in Python).<br>
-    We can access object properties in two ways: <samp>objName.propertyName</samp> or <samp>objName["propertyName"]</samp>
+    We can access object properties in two ways: <samp>objName.propertyName</samp> or <samp>objName["propertyName"]</samp><br>
 <pre class="prettyprint">
 var person = {
     firstName: "John",
@@ -45,11 +45,23 @@ function myFunction(arg1, arg2) {
 }
 </pre><br>
 If you assign a value to a variable that has not been declared, it will automatically become a GLOBAL variable (even in a function), unless JavaScript is running in "strict mode".
+
+
+  <li><b>Events</b><br>
+    JS can react to HTML events such as a button is clicked, or a web page has finished loading.<br>
+<pre class="prettyprint">
+<button onclick="document.getElementById('demo').innerHTML=Date()">The time is?</button>
+
+<p id="demo"></p>
+</pre><br>
+To sho the date inside the button: <samp><button onclick="this.innerHTML=Date()">The time is?</button></samp>
+Common events: onclick, onmouseover, onmouseout, onkeydown, onload, onchange (<a href=https://www.w3schools.com/jsref/dom_obj_event.asp> full list</a>.
+
   <li><b>Misc.</b><br>
-    When adding a number and a string, JavaScript will treat the number as a string.<br>
-    <kbd>===</kbd>&emsp;   equal value and equal type<br>
-    <kbd>?</kbd>&emsp;   ternary operator<br>
-    n HTML, the global scope is the window object. All global variables belong to the window object. Your global variables (or functions) can overwrite window variables (or functions). Any function, including the window object, can overwrite your global variables and functions.<br>
+    - When adding a number and a string, JavaScript will treat the number as a string.<br>
+    - <kbd>===</kbd>&emsp;   equal value and equal type<br>
+    - <kbd>?</kbd>&emsp;   ternary operator<br>
+    - In HTML, the global scope is the window object. All global variables belong to the window object. Your global variables (or functions) can overwrite window variables (or functions). Any function, including the window object, can overwrite your global variables and functions.<br>
 </ul>
 
 
