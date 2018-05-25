@@ -56,6 +56,7 @@
 	<br>To run commands on the files that match your search criteria use <kbd>-exec</kbd> option (<kbd>-ok</kbd> is similar but prompts before executing the action):<br>
 	<kbd>$ find -name "*foo" -exec rm {} ’;’</kbd> &emsp; finds and removes all files that end with foo. The {} is a place holder that will be filled with all the file names that result from the find expression, 
 	and the preceding command will be run on each one individually. Note that you have to end the command with either <kbd>‘;’</kbd> or <kbd>\;</kbd><br>
+  Ex: <samp>find -exec sed -i 's/a/b/g' {} \;</samp> &emsp; applies substitution of b for a in all files in the current directory and sub-directories.<br>
 	
 	<br>Finding based on time: <kbd>$ find / -ctime 3</kbd> &emsp; Here, <kbd>-ctime</kbd> is when the inode meta-data (i.e., file ownership, permissions, etc) last changed; 
 	it is often, but not necessarily when the file was first created. You can also search for last accessed/read (<kbd>-atime</kbd>) or last modified/written (<kbd>-mtime</kbd>) times. 
