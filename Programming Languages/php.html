@@ -66,7 +66,7 @@ foreach ($arr as $key => $value) {  # If we don't need the key, we can write '$a
   ...
 }
 </pre><br>
-    - Changing the values of an array directly is possible by <a href='http://www.php.net/manual/en/language.references.whatdo.php'> passing them by reference </a>:<br>
+    - Changing the values of an array directly through functions is possible by <a href='http://www.php.net/manual/en/language.references.whatdo.php'> passing them by reference </a>:<br>
 <pre class="prettyprint">
 $colors = ['red', 'blue', 'green', 'yellow'];
 foreach ($colors as &$color) {  # '&' is used to pass by reference.
@@ -75,7 +75,7 @@ foreach ($colors as &$color) {  # '&' is used to pass by reference.
 unset($color); /* ensuring that following writes to $color
                   will not modify the last array element. */
 </pre><br>
-    - Array assignment always involves value copying. Use assignment by reference to change both items involved:<br>
+    - Array assignment always involves value copying. Use <i>assignment by reference</i> to change both items involved:<br>
 <pre class="prettyprint">
 $arr1 = [2, 3];
 $arr2 = $arr1;
@@ -93,7 +93,7 @@ $arr3[0] = 4; // now $arr1 and $arr3 are the same
   <summary><div class="wrapper"><h4>Strings</h4></div></summary>
   <div class="content">
     <ul>
-      <li><kbd>strpos()</kbd> is a built-in function which searches a string for another string and returns the position of the string. -->
+      <li><kbd>strpos()</kbd> is a built-in function which searches a string for another string and returns the position of the string.
   </div>
 </details>
 
@@ -104,7 +104,7 @@ $arr3[0] = 4; // now $arr1 and $arr3 are the same
 # fill an array with all items from a directory
 $handle = opendir('.');
 while (false !== ($file = readdir($handle))) {
-  $files[] = $file;
+  $files[] = $file;  # empty key
 }
 closedir($handle); 
 print_r($files);
@@ -183,7 +183,7 @@ When the user clicks somewhere on the image, the accompanying form will be trans
     <ul>
       <li><samp>&lt;?= 'testing echo with =' ?> </samp> is equivalent to <samp> &lt;?php 'testing echo with =' ?></samp>.
       <li>Unlike the double-quoted and <samp>heredoc</samp> syntaxes <kbd>("&lt;&lt;&lt;EOD")</kbd>, variables and escape sequences for special characters will not be expanded when they occur in single quoted strings or <samp>nowdocs</samp><kbd>("<<<'EOD'")</kbd>.
-      <li>inside a double-quoted string, it's valid to not surround array indexes with quotes so <samp>"$foo[bar]"</samp> is valid.
+      <li>inside a double-quoted string, it's valid to not surround array indexes with quotes, so <samp>"$foo[bar]"</samp> is valid.
       <li>The type of a variable is not usually set by the programmer; rather, it is decided at runtime by PHP depending on the context in which that variable is used.
   </div>
 </details>
