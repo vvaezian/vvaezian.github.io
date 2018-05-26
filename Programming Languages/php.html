@@ -95,7 +95,11 @@ $arr3[0] = 4; // now $arr1 and $arr3 are the same
   <summary><div class="wrapper"><h4>Strings</h4></div></summary>
   <div class="content">
     <ul>
-      <li><kbd>strpos()</kbd> is a built-in function which searches a string for another string and returns the position of the string.
+      <li><kbd>strpos()</kbd> searches a string for another string and returns the position of the string.
+        If no match is found, it will return FALSE.
+      <li><kbd>strlen()</kbd> returns the length of a string.</li>
+      <li><kbd>str_replace()</kbd> replaces some characters with some other characters in a string.</li>
+      <li><a href="https://www.w3schools.com/php/php_ref_string.asp">Complete reference</a>.</li>
   </div>
 </details>
 
@@ -207,6 +211,7 @@ When the user clicks somewhere on the image, the accompanying form will be trans
         If a variable is created without a value, it is automatically assigned a value of NULL.<br>
         Variables can be emptied by setting the value to NULL.
       <li><kbd>var_dump($x)</kbd> returns the data type and value of <samp>x</samp>.
+      <li><b>Constants</b> are global and created using <samp>define(name, value, [case-insensitive])</samp>.</li>
   </div>
 </details>
 </body>
