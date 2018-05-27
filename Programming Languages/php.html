@@ -194,7 +194,8 @@ Hi &lt;?php echo htmlspecialchars($_POST['name']); ?>.
 You are &lt;?php echo (int)$_POST['age']; ?> years old.
 # (int) conversion gets rid of any stray characters.
 </pre><br>
-To use an image as the submit button:<br>
+- Use <b>GET</b> method when the state of the server isn't changed, use <b>POST</b> when it is.<br>
+- To use an image as the submit button:<br>
 <pre class="prettyprint">
 &lt;input type="image" src="image.gif" name="sub" />
 </pre><br>
