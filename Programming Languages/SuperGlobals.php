@@ -1,4 +1,4 @@
-// a showcase of $_REQUEST, $_POST, $_GET and $_COOKIE superglobal variables
+<!-- a showcase of $_REQUEST, $_POST, $_GET and $_COOKIE superglobal variables -->
 
 <!DOCTYPE html>
 <html>
@@ -15,9 +15,9 @@ td, th {
 <body>
 
 
-// When a user submits the data by clicking on "Submit", the form data is sent to the file 
-// specified in the 'action' attribute of the <form> tag. 
-// In this example, it points to the current file itself.
+<!-- When a user submits the data by clicking on "Submit", the form data is sent to the file 
+specified in the 'action' attribute of the <form> tag. 
+In this example, it points to the current file itself. -->
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
   Name: <input type="text" name="fname">
   <input type="submit">
