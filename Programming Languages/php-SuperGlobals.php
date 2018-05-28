@@ -1,6 +1,8 @@
 <!-- a showcase of $_REQUEST, $_POST, $_GET and $_COOKIE superglobal variables 
 $_REUQEST by default contains the contents of $_GET, $_POST and $_COOKIE. 
+$_GET is an array of variables passed to the current script via the URL parameters.
 $_GET should be used with non destructive actions (sorting, recording actions, queries)
+$_POST is an array of variables passed to the current script via the HTTP POST method.
 $_POST should be used with destructive actions (deleting, updating)
 $_COOKIE = trivial settings (stylesheet preferences etc)
 $_SESSION = non trivial settings (username, logged in?, access levels)  -->
