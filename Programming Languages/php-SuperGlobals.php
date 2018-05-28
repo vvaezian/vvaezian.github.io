@@ -5,7 +5,10 @@ $_GET should be used with non destructive actions (sorting, recording actions, q
 $_POST is an array of variables passed to the current script via the HTTP POST method.
 $_POST should be used with destructive actions (deleting, updating)
 $_COOKIE = trivial settings (stylesheet preferences etc)
-$_SESSION = non trivial settings (username, logged in?, access levels)  -->
+$_SESSION = non trivial settings (username, logged in?, access levels)  
+
+GET vs. POST: https://www.w3schools.com/php/php_forms.asp
+-->
 
 <!DOCTYPE html>
 <html>
