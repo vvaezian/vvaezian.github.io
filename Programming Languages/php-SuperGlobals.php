@@ -1,4 +1,9 @@
-<!-- a showcase of $_REQUEST, $_POST, $_GET and $_COOKIE superglobal variables -->
+<!-- a showcase of $_REQUEST, $_POST, $_GET and $_COOKIE superglobal variables 
+$_REUQEST by default contains the contents of $_GET, $_POST and $_COOKIE. 
+$_GET should be used with non destructive actions (sorting, recording actions, queries)
+$_POST should be used with destructive actions (deleting, updating)
+$_COOKIE = trivial settings (stylesheet preferences etc)
+$_SESSION = non trivial settings (username, logged in?, access levels)  -->
 
 <!DOCTYPE html>
 <html>
