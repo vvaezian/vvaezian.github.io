@@ -13,18 +13,30 @@
 <img src="/vvaezian.github.io/Pic/JavaScript-logo.png" alt="Logo" height="200"><br>
 <p><em>* Most of the material is taken from <a href="https://www.w3schools.com/js">here</a>.</em></p>
 
+<pre class="prettyprint">
+<script>
+  console.log("Hello World");
+</script>
+</pre><br>
 <ul>
   <li><b>Variables</b><br>
-    JavaScript has dynamic types.<br>
-    <samp>var x = 5</samp>.<br>
-    JavaScript has only one type of numbers.<br>
-    By re-declaring a variable, it does not lose its value.<br>
-    Using <kbd>window</kbd> we can access a global variable inside a function (it acts like <samp>global</samp> in python.)<br>
+    - <samp>var x = 5</samp>.<br>
+    - JavaScript has dynamic types.<br>
+    - JavaScript has only one type of numbers.<br>
+    - By re-declaring a variable, it does not lose its value.<br>
+    - Using <kbd>window</kbd> we can access a global variable inside a function (it acts like <samp>global</samp> in python.)<br>
+  <li><b>Output</b><br>
+    - Writing into the browser console, <kbd>using console.log().</kbd>
+    - Writing into an HTML element, using <kbd>innerHTML.</kbd>
+    - Writing into the HTML output using <kbd>document.write().</kbd><br>
+    Using this after the page is fully loaded (e.x. defined in <kbd>onclick</kbd>), will delete all existing HTML content.
+    - Writing into an alert box, using <kbd>window.alert().</kbd>
+  </li>
   <li><b>types</b><br>
-    There are 6 types: 4 primitive types (string, number, boolean, undefined), 2 complex types (function, object).<br>
-    A primitive data doesn't have any properties or methods.<br>
-    <b>null</b> and <b>undefined</b> both have value undefined, but null is of type object and undefined is of type undefined.<br>
-    Arrays and dictionaries (called 'objects' in JS) are of type object. 
+    - There are 6 types: 4 primitive types (string, number, boolean, undefined), 2 complex types (function, object).<br>
+    - A primitive data doesn't have any properties or methods.<br>
+    - <b>null</b> and <b>undefined</b> both have value undefined, but null is of type object and undefined is of type undefined.<br>
+    - Arrays and dictionaries (called 'objects' in JS) are of type <samp>object</samp>.
   <li><b>Objects</b><br>
     Objects are key:value pairs (like dictionaries in Python).<br>
     We can access object properties in two ways: <samp>objName.propertyName</samp> or <samp>objName["propertyName"]</samp><br>
@@ -55,8 +67,8 @@ If you assign a value to a variable that has not been declared, it will automati
 
 &lt;p id="demo">&lt;/p>
 </pre><br>
-To sho the date inside the button: <samp>&lt;button onclick="this.innerHTML=Date()">The time is?&lt;/button></samp>
-Common events: onclick, onmouseover, onmouseout, onkeydown, onload, onchange (<a href=https://www.w3schools.com/jsref/dom_obj_event.asp> full list</a>).
+To show the date inside the button: <samp>&lt;button onclick="this.innerHTML=Date()">The time is?&lt;/button></samp><br>
+Common events: <samp>onclick, onmouseover, onmouseout, onkeydown, onload, onchange</samp> (<a href=https://www.w3schools.com/jsref/dom_obj_event.asp> full list</a>).
 
   <li><b>Misc.</b><br>
     - When adding a number and a string, JavaScript will treat the number as a string.<br>
