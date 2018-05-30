@@ -201,13 +201,70 @@ You are &lt;?php echo (int)$_POST['age']; ?> years old.
 &lt;input type="image" src="image.gif" name="sub" />
 </pre><br>
 When the user clicks somewhere on the image, the accompanying form will be transmitted to the server with two additional variables, sub_x and sub_y. These contain the coordinates of the user click within the image.
-    </ul>
-  </div>
-</details>
       <li><kbd>empty('myStr')</kbd> checks whether 'myStr' is NULL.<br>
         <kbd>preg_match("RegExp" ,$myVar)</kbd> checks whether <samp>$myVar</samp> follows the pattern of the regular expression <samp>RegExp</samp>.<br>
         <kbd>filter_var($myVar, [filtername], options)</kbd> filters a variable with the specified filter. There are a wide range of filters (<a href="http://php.net/manual/en/filter.filters.php">documentations</a>.) </li>
+      <li><pre class="prettyprint">
+&lt;?php
+// define variables and set to empty values
+$nameErr = $emailErr = $genderErr = $websiteErr = "";
+$name = $email = $gender = $comment = $website = "";
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (empty($_POST["name"])) {
+  $nameErr = "Name is required";
+} else {
+  $name = test_input($_POST["name"]);
+  // check if name only contains letters and whitespace
+  if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
+    $nameErr = "Only letters and white space allowed";
+  }
+}
+
+if (empty($_POST["email"])) {
+  $emailErr = "Email is required";
+} else {
+  $email = test_input($_POST["email"]);
+  // check if e-mail address is well-formed
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $emailErr = "Invalid email format";
+  }
+}
+  
+if (empty($_POST["website"])) {
+  $website = "";
+} else {
+  $website = test_input($_POST["website"]);
+  // check if URL address syntax is valid
+  if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&amp;@#\/%?=~_|!:,.;]*[-a-z0-9+&amp;@#\/%=~_|]/i",$website)) {
+    $websiteErr = "Invalid URL";
+  }    
+}
+
+if (empty($_POST["comment"])) {
+  $comment = "";
+} else {
+  $comment = test_input($_POST["comment"]);
+}
+
+if (empty($_POST["gender"])) {
+  $genderErr = "Gender is required";
+} else {
+  $gender = test_input($_POST["gender"]);
+}
+}
+
+function test_input($data) {
+$data = trim($data);
+$data = stripslashes($data);
+$data = htmlspecialchars($data);
+return $data;
+}
+?&gt;
+      </pre><br>
+    </ul>
+  </div>
+</details>
 <details class="details">
   <summary><div class="wrapper"><h4>Misc.</h4></div></summary>
   <div class="content">
