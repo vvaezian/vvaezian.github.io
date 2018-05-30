@@ -201,11 +201,11 @@ You are &lt;?php echo (int)$_POST['age']; ?> years old.
 &lt;input type="image" src="image.gif" name="sub" />
 </pre><br>
 When the user clicks somewhere on the image, the accompanying form will be transmitted to the server with two additional variables, sub_x and sub_y. These contain the coordinates of the user click within the image.
-      <li><kbd>empty('myStr')</kbd> checks whether 'myStr' is NULL.<br>
-        <kbd>preg_match("RegExp" ,$myVar)</kbd> checks whether <samp>$myVar</samp> follows the pattern of the regular expression <samp>RegExp</samp>.<br>
-        <kbd>filter_var($myVar, [filtername], options)</kbd> filters a variable with the specified filter. There are a wide range of filters (<a href="http://php.net/manual/en/filter.filters.php">documentations</a>).<br>
-        <a href="http://php.net/manual/en/function.trim.php"><kbd>trim($myStr, [$character_mask])</kbd></a> returns a string with whitespace stripped from the beginning and end of <samp>myStr</samp>. Add other chars that need to be striped from start and end in the second argument.<br>
-        <kbd>stripslashes($myStr)</kbd> un-quotes a quoted string. </li>
+      <li>- <kbd>empty('myStr')</kbd> checks whether 'myStr' is NULL.<br>
+        - <kbd>preg_match("RegExp" ,$myVar)</kbd> checks whether <samp>$myVar</samp> follows the pattern of the regular expression <samp>RegExp</samp>.<br>
+        - <kbd>filter_var($myVar, [filtername], options)</kbd> filters a variable with the specified filter. There are a wide range of filters (<a href="http://php.net/manual/en/filter.filters.php">documentations</a>).<br>
+        - <a href="http://php.net/manual/en/function.trim.php"><kbd>trim($myStr, [$character_mask])</kbd></a> returns a string with whitespace stripped from the beginning and end of <samp>myStr</samp>. Add other chars that need to be striped from start and end in the second argument.<br>
+        - <kbd>stripslashes($myStr)</kbd> un-quotes a quoted string. </li>
       <li><pre class="prettyprint">
 &lt;?php
 // define variables and set to empty values
