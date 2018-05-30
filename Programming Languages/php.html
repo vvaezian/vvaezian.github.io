@@ -183,7 +183,7 @@ echo $herbie->model;  // show object properties
     <ul>
       <li><pre class="prettyprint">
 &lt;form action="action.php" method="post">
-  &lt;p>Your name: &lt;input type="text" name="name" <b>required</b>/>&lt;/p>
+  &lt;p>Your name: &lt;input type="text" name="name" required/>&lt;/p>
   &lt;p>Your age: &lt;input type="text" name="age" />&lt;/p>
   &lt;p>&lt;input type="submit" value="Submit!" />&lt;/p>
 &lt;/form>    
@@ -205,8 +205,8 @@ When the user clicks somewhere on the image, the accompanying form will be trans
   </div>
 </details>
       <li><kbd>empty('myStr')</kbd> checks whether 'myStr' is NULL.<br>
-
-      </li>
+        <kbd>preg_match("RegExp" ,$myVar)</kbd> checks whether <samp>$myVar</samp> follows the pattern of the regular expression <samp>RegExp</samp>.<br>
+        <kbd>filter_var($myVar, [filtername], options)</kbd> filters a variable with the specified filter. There are a wide range of filters (<a href="http://php.net/manual/en/filter.filters.php">documentations</a>.) </li>
 
 <details class="details">
   <summary><div class="wrapper"><h4>Misc.</h4></div></summary>
