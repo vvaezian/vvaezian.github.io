@@ -30,7 +30,7 @@
     - Writing into the browser console, <kbd>using console.log().</kbd><br>
     - Writing into an HTML element, using <kbd>innerHTML.</kbd><br>
     - Writing into the HTML output using <kbd>document.write().</kbd><br>
-    Using this after the page is fully loaded (e.x. defined in <kbd>onclick</kbd>), will delete all existing HTML content.<br>
+    Using this after the page is fully loaded (e.x. defined in <samp>onclick</samp>), will delete all existing HTML content.<br>
     - Writing into an alert box, using <kbd>window.alert().</kbd>
   </li>
 
@@ -40,6 +40,20 @@
     - <b>null</b> and <b>undefined</b> both have value undefined, but null is of type object and undefined is of type undefined.<br>
     - Arrays and dictionaries (called 'objects' in JS) are of type <samp>object</samp>.
 
+  <li><b>String Methods</b><br>
+    - <samp>.length</samp><br>
+    - <samp>.indexOf()</samp> &emsp; takes an optional argument indicating the index to start the search.<br>
+    - <samp>.search()</samp> &emsp; similar to indexOf() but evaluates the string into a regex: "test.".search(".") returns 0, because . is the regex token for "any character". It also doesn't take an option.<br>
+    - <samp>.slice(start, end)</samp> &emsp; leaving 'end' defaults to end of string. Deals with negative index numbers like Python.<br>
+    - <samp>.substring(start, end)</samp> &emsp; similar to <samp>.slice()</samp> with minor differences.<br>
+    - <samp>substr(start, length)</samp>
+    - <samp>.replace()</samp> &emsp; By default replaces only the first occurence and is case-sensitive. Use RegExp flags /g and /i to change the default:<br>
+    <samp>var n = "myTest".replace(/yt/i, "hi");</samp><br>
+    - <samp>.toUpperCase()</samp><br>
+    - <samp>.concat(str1, str2, ...)</samp><br>
+    - <samp>charAt(position)</samp><br>
+    - <samp>.split()</samp> &emsp; similar to python
+  </li>
   <li><b>Objects</b><br>
     - Objects are key:value pairs (like dictionaries in Python).<br>
 <pre class="prettyprint">
