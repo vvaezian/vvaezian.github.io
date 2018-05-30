@@ -15,7 +15,12 @@
 
 <pre class="prettyprint">
 &lt;script&gt;
-  console.log("Hello World");  // comment
+  var str = "Hello World!";  // comment
+  var arr = str.split("");
+  console.log(str);  
+  for (var i = 0; i &lt; arr.length; i++) {
+    output += arr[i] + "<br>";
+  }
 &lt;/script&gt;
 </pre><br>
 <ul>
