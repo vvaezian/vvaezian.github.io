@@ -211,14 +211,14 @@ $nameErr = $emailErr = $genderErr = $websiteErr = "";
 $name = $email = $gender = $comment = $website = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-if (empty($_POST["name"])) {
-  $nameErr = "Name is required";
-} else {
-  $name = test_input($_POST["name"]);
-  // check if name only contains letters and whitespace
-  if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
-    $nameErr = "Only letters and white space allowed";
-  }
+  if (empty($_POST["name"])) {
+    $nameErr = "Name is required";
+  } else {
+    $name = test_input($_POST["name"]);  // test_input is a user defined function
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
+      $nameErr = "Only letters and white space allowed";
+    }
 }
 
 if (empty($_POST["email"])) {
@@ -231,34 +231,20 @@ if (empty($_POST["email"])) {
   }
 }
   
-if (empty($_POST["website"])) {
-  $website = "";
-} else {
-  $website = test_input($_POST["website"]);
-  // check if URL address syntax is valid
-  if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&amp;@#\/%?=~_|!:,.;]*[-a-z0-9+&amp;@#\/%=~_|]/i",$website)) {
-    $websiteErr = "Invalid URL";
-  }    
+
+$website = test_input($_POST["website"]);
+// check if URL address syntax is valid
+if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&amp;@#\/%?=~_|!:,.;]*[-a-z0-9+&amp;@#\/%=~_|]/i",$website)) {
+  $websiteErr = "Invalid URL";
 }
 
-if (empty($_POST["comment"])) {
-  $comment = "";
-} else {
-  $comment = test_input($_POST["comment"]);
-}
-
-if (empty($_POST["gender"])) {
-  $genderErr = "Gender is required";
-} else {
-  $gender = test_input($_POST["gender"]);
-}
-}
+$comment = test_input($_POST["comment"]);
 
 function test_input($data) {
-$data = trim($data);
-$data = stripslashes($data);
-$data = htmlspecialchars($data);
-return $data;
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
 }
 ?&gt;
       </pre><br>
