@@ -92,6 +92,22 @@ If you assign a value to a variable that has not been declared, it will automati
 To show the date inside the button: <samp>&lt;button onclick="this.innerHTML=Date()">The time is?&lt;/button></samp><br>
 Common events: <samp>onclick, onmouseover, onmouseout, onkeydown, onload, onchange</samp> (<a href=https://www.w3schools.com/jsref/dom_obj_event.asp> full list</a>).
 
+
+  <li><b>Numbers</b><br>
+    - JavaScript has only one type of number.<br>
+    - Integers are accurate up to 15 digits.<br>
+    - The maximum number of decimals is 17, but floating point arithmetic is not always 100% accurate. To solve the problem above, it helps to multiply and divide.<br>
+    - JavaScript will try to convert strings to numbers in all numeric operations except "+" which is used for string concatenation as well.<br>
+    - <kbd>NaN</kbd> is a reserved word for "not a number", though its type is 'number'. <samp>isNaN()</samp> checks it.<br>
+    - <kbd>Infinity</kbd> (and <samp>-Infinity</samp>) is the value JavaScript will return if you calculate a number outside the largest possible number. Division by zero also generates it.<br>
+    - We can use the <samp>toString()</samp> method to output numbers as base 16 (hex), base 8 (octal), or base 2 (binary):<br>
+    <pre class="prettyprint">
+var myNumber = 128;
+myNumber.toString(16);  // returns 80
+</pre><br>
+  </li>
+
+
   <li><b>Misc.</b><br>
     - When adding a number and a string, JavaScript will treat the number as a string.<br>
     - <kbd>===</kbd>&emsp;   equal value and equal type<br>
