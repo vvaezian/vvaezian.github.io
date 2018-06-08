@@ -46,7 +46,7 @@ Official Documentation can be found <a href="https://developer.android.com/guide
 <li>To delete action bar (the bar at the top by default) change styles.xml in <i>values</i> folder (.NoActionBar)
 </ul>
 
-<h3>Action Bar</h3>
+<h3>Action Bar</h3><br>
 Follow the instructions <a href="https://developer.android.com/training/appbar/">here</a>. To make one toolbar apply to all activities, 
 make an activity for action bar and make other activities extend it.
 <pre class=prettyprint>
@@ -89,7 +89,7 @@ public class ActionBar extends AppCompatActivity {
 Make a my_toolbar.xml file in layout folder and include this in xml file of all activities that need action bar:<br>
 <samp>&lt;include layout="@layout/my_toolbar"/&gt;</samp><br>
 and put the following in their java file:<br>
-<samp>setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));<samp>
+<samp>setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));<samp><br>
 
 
 <h3>Examples</h3><br>
