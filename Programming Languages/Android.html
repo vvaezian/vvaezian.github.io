@@ -46,6 +46,51 @@ Official Documentation can be found <a href="https://developer.android.com/guide
 <li>To delete action bar (the bar at the top by default) change styles.xml in <i>values</i> folder (.NoActionBar)
 </ul>
 
+<h3>Action Bar</h3>
+Follow the instructions <a href="https://developer.android.com/training/appbar/">here</a>. To make one toolbar apply to all activities, 
+make an activity for action bar and make other activities extend it.
+<pre class=prettyprint>
+public class ActionBar extends AppCompatActivity {
+
+    /* handling actionBar */
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.[item 1]:
+                // do sth
+                return true;
+
+            case R.id.[item 2]:
+                // do sth
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    /* end of handling actionBar */
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_action_bar);
+        setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
+    }
+}
+</pre><br>
+Make a my_toolbar.xml file in layout folder and include this in xml file of all activities that need action bar:<br>
+<samp>&lt;include layout="@layout/my_toolbar"/&gt;</samp><br>
+and put the following in their java file:<br>
+<samp>setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));<samp>
+
 
 <h3>Examples</h3><br>
 When button "about" (id) is clicked, show the page "aboutPage"<br>
