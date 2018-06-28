@@ -114,7 +114,7 @@ $myfile = fopen("data.txt", "r") or die("Unable to open file!");
 echo fgets($myfile); // Reading the first line. After this the file pointer has moved to the next line.
 // Output one character until end-of-file
 while(!feof($myfile)) { // 'feof' checks if end-of-file has been reached.
-  echo fgetc($myfile) . "<br>";
+  echo fgetc($myfile) . "&lt;br>";
 }
 echo fread($myfile, filesize("data.txt")); // The second parameter specifies the maximum number of bytes to read.
 fclose($myfile);
