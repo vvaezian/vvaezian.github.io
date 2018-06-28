@@ -110,6 +110,16 @@ $arr3[0] = 4; // now $arr1 and $arr3 are the same
   <summary><div class="wrapper"><h4>Input</h4></div></summary>
   <div class="content">
 <pre class="prettyprint">
+$myfile = fopen("data.txt", "r") or die("Unable to open file!");
+echo fgets($myfile); // Reading the first line. After this the file pointer has moved to the next line.
+// Output one character until end-of-file
+while(!feof($myfile)) { // 'feof' checks if end-of-file has been reached.
+  echo fgetc($myfile) . "<br>";
+}
+echo fread($myfile, filesize("data.txt")); // The second parameter specifies the maximum number of bytes to read.
+fclose($myfile);
+</pre><br>
+<pre class="prettyprint">
 # fill an array with all items from a directory
 $handle = opendir('.');
 while (false !== ($file = readdir($handle))) {
@@ -118,11 +128,7 @@ while (false !== ($file = readdir($handle))) {
 closedir($handle); 
 print_r($files);
 </pre><br>
-<pre class="prettyprint">
-$myfile = fopen("data.txt", "r") or die("Unable to open file!");
-echo fread($myfile, filesize("data.txt")); // The second parameter specifies the maximum number of bytes to read.
-fclose($myfile);
-</pre><br>
+Complete PHP Filesystem <a href="https://www.w3schools.com/php/php_ref_filesystem.asp">Reference</a>.
   </div>
 </details>
 
