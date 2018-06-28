@@ -119,6 +119,14 @@ while(!feof($myfile)) { // 'feof' checks if end-of-file has been reached.
 echo fread($myfile, filesize("data.txt")); // The second parameter specifies the maximum number of bytes to read.
 fclose($myfile);
 </pre><br>
+- Using <samp>fopen()</samp> on a file that does not exist, will create it, given that the file is opened for writing (w) or appending (a). <br>
+We can also overwrite a file by openning it for write.
+<pre class="prettyprint">
+$myfile = fopen("newfile.txt", "w") or die("Unable to open file!");
+$txt = "John Doe\n";
+fwrite($myfile, $txt);  
+fclose($myfile); 
+</pre><br>
 <pre class="prettyprint">
 # fill an array with all items from a directory
 $handle = opendir('.');
