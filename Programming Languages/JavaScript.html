@@ -101,18 +101,39 @@ Common events: <samp>onclick, onmouseover, onmouseout, onkeydown, onload, onchan
     - <kbd>NaN</kbd> is a reserved word for "not a number", though its type is 'number'. <samp>isNaN()</samp> checks it.<br>
     - <kbd>Infinity</kbd> (and <samp>-Infinity</samp>) is the value JavaScript will return if you calculate a number outside the largest possible number. Division by zero also generates it.<br>
     - We can use the <samp>toString()</samp> method to output numbers as base 16 (hex), base 8 (octal), or base 2 (binary):<br>
+    - <samp>Number(new Date("2017-09-30"));</samp>  // returns 1506729600000
     <pre class="prettyprint">
 var myNumber = 128;
 myNumber.toString(16);  // returns 80
 </pre><br>
   </li>
 
+  <li><b>Arrays</b><br>
+    <pre class="prettyprint">
+var arr = ["a", "c", "b"];  // we can use 'new Array(...)' instead but [...] is simpler.
+var x = arr.length;
+var y = arr.sort();
+arr.pop();  // we can assign the popped value as: var z = arr.pop()
+arr.shift() // removing the first element
+arr.push("d"); // equivalent to arr[3] = "d" (this is different from Python)
+arr.unshift("k")  // adding to the beginning
+arr.splice(2, 0, "m", "n")  // first arg is the position for insertion, second arg defines how many elements should be removed
+arr.join(" * "); // a * c * b
+var concatedArrays = arr.concat(arr2, arr3)
+var w = arr.slice(1); // equivalent of arr[1:] in Python
+var w = arr.slice(1,3) // equivalent of arr[1:3] in Python
+    </pre><br>
+- JavaScript does not support arrays with named indexes (associative arrays). 
+They always use numbered indexes. For named indexes we should use objects.
+    
+  </li>
 
   <li><b>Misc.</b><br>
     - When adding a number and a string, JavaScript will treat the number as a string.<br>
     - <kbd>===</kbd>&emsp;   equal value and equal type<br>
     - <kbd>?</kbd>&emsp;   ternary operator<br>
     - In HTML, the global scope is the window object. All global variables belong to the window object. Your global variables (or functions) can overwrite window variables (or functions). Any function, including the window object, can overwrite your global variables and functions.<br>
+  </li>
 </ul>
 
 
