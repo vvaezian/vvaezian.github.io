@@ -120,7 +120,7 @@ echo fread($myfile, filesize("data.txt")); // The second parameter specifies the
 fclose($myfile);
 </pre><br>
 - Using <samp>fopen()</samp> on a file that does not exist, will create it, given that the file is opened for writing (w) or appending (a). <br>
-We can also overwrite a file by openning it for write.
+We can also overwrite a file by openning it for write.<br>
 <pre class="prettyprint">
 $myfile = fopen("newfile.txt", "w") or die("Unable to open file!");
 $txt = "John Doe\n";
