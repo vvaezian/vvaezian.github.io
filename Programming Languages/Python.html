@@ -713,10 +713,11 @@ plt.xlabel("x_Label")
 plt.ylabel("y_label")
 plt.title("Title")
 plt.legend(loc=9)  # assuming 'label' is defined. 9 means top-center
+plt.grid(True)  # more options: plt.grid(color='r', linestyle='-.', linewidth=2)
 plt.show()
 </pre><br>
 
-<b>Types of plots</b>
+<b>Types of plots</b><br>
 <pre class="prettyprint">
 #--- Line Chart ---
 plt.plot(x_list, y_list, color='green', marker='o', linestyle='solid', label='my_label', linewidth=2)  
@@ -752,7 +753,7 @@ for label, x_item, y_item in zip(labels, x_list, y_list):
 <pre class="prettyprint">
 plt.axis("scaled")  # Equal scaling by changing box dimensions
 # full list of arguments can be found <a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.axis.html#matplotlib.axes.Axes.axis">here</a>.
-</pre><br>
+</pre>
 </div>
 </details>
 
