@@ -146,7 +146,8 @@ They always use numbered indexes. For named indexes we should use objects.
       break myLabel;
     ...
    }</pre>
-  </li>
+ <li>In JS, arrays are of type <samp>object</samp>. So <samp>['a', 'b', 'c']</samp> is in fact <samp>{0:'a', 1:'b', 2:'c'}</samp>. 
+  That is why in <samp>for (i in arr) { console.log(i) }</samp> the indexes are printed. So JS arrays are like dictionaries with integere keys in Python.
 </ul>
 
 
