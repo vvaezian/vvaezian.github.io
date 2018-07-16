@@ -108,9 +108,9 @@ Common events: <samp>onclick, onmouseover, onmouseout, onkeydown, onload, onchan
     - JavaScript will try to convert strings to numbers in all numeric operations except "+" which is used for string concatenation as well.<br>
     - <kbd>NaN</kbd> is a reserved word for "not a number", though its type is 'number'. <samp>isNaN()</samp> checks it.<br>
     - <kbd>Infinity</kbd> (and <samp>-Infinity</samp>) is the value JavaScript will return if you calculate a number outside the largest possible number. Division by zero also generates it.<br>
-    - We can use the <samp>toString()</samp> method to output numbers as base 16 (hex), base 8 (octal), or base 2 (binary):<br>
     - <samp>Number(x)</samp> converts x to Number type. <samp>+ x</samp> does the same thing.<br>
-    <samp>Number(new Date("2017-09-30"));</samp>  // returns 1506729600000. 
+    <samp>Number(new Date("2017-09-30"));</samp>  // returns 1506729600000. <br>
+    - We can use the <samp>toString()</samp> method to output numbers as base 16 (hex), base 8 (octal), or base 2 (binary):<br>
     <pre class="prettyprint">
 var myNumber = 128;
 myNumber.toString(16);  // returns 80
@@ -153,7 +153,12 @@ They always use numbered indexes. For named indexes we should use objects.
     ...
    }</pre>
  <li>In JS, arrays are of type <samp>object</samp>. So <samp>['a', 'b', 'c']</samp> is in fact <samp>{0:'a', 1:'b', 2:'c'}</samp>. 
-  That is why in <samp>for (i in arr) { console.log(i) }</samp> the indexes are printed. So JS arrays are like dictionaries with integere keys in Python.
+  That is why in<br>
+  <pre class="prettyprint">
+  for (i in arr) { 
+    console.log(i) 
+  }
+  </pre><br> the indexes are printed. So JS arrays are like dictionaries with integere keys in Python.
 </ul>
 
 
