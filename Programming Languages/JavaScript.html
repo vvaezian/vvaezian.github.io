@@ -136,6 +136,14 @@ They always use numbered indexes. For named indexes we should use objects.
     - <kbd>===</kbd>&emsp;   equal value and equal type. So <samp>5=="5" is true but 5==="5" is false.<br>
     - <kbd>?</kbd>&emsp;   ternary operator<br>
     - In HTML, the global scope is the window object. All global variables belong to the window object. Your global variables (or functions) can overwrite window variables (or functions). Any function, including the window object, can overwrite your global variables and functions.<br>
+    - With a <kbd>label</kbd> reference, the <samp>break</samp> statement can be used to jump out of any code block (not just for loops) <br>
+   <pre class=pretttyprint>
+   myLabel: {
+    ...
+    if ...
+      break myLabel;
+    ...
+   }</pre>
   </li>
 </ul>
 
