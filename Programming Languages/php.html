@@ -297,6 +297,8 @@ function test_input($data) {
       <li><b>Constants</b> are global and created using <samp>define(name, value, [case-insensitive])</samp>.</li>
       <li>To automatically update the copyright year on a website:<br>
         <samp>&amp;copy; 2010-&lt;?php echo date("Y");?></samp>
+      <li>The <kbd>include</kbd> (or <kbd>require</kbd>) statement takes all the text/code/markup that exists in the specified file and copies it into the file that uses the include statement.<br>
+        <samp>require</samp> will produce a fatal error (<samp>E_COMPILE_ERROR</samp>) and stop the script, while <samp>include</samp> will only produce a warning (<samp>E_WARNING</samp>) and the script will continue
   </div>
 </details>
 </body>
