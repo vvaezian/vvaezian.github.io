@@ -305,7 +305,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
         With PHP, we can both create and retrieve cookie values.<br>
         A cookie is created with the <kbd>setcookie()</kbd> function.
         <samp>setcookie(name, value, expire, path, domain, secure, httponly);</samp><br>
-        Only the <samp>name</samp> parameter is required. All other parameters are optional.
+        Only the <samp>name</samp> parameter is required. All other parameters are optional.<br>
         <pre class="prettyprint">
 &lt;?php
   $cookie_name = "user";
@@ -351,7 +351,7 @@ print_r($_COOKIE);
 ?>
 &lt;/body>&lt;/html>
 </pre><br>
-        *** By default, session variables last until the user closes the browser. This is the major difference with cookies which last until their defined expiration date.
+        <b>***</b> By default, session variables last until the user closes the browser. This is the major difference with cookies which last until their defined expiration date.
       <li><b>Constants</b><br> Constants are global and created using <samp>define(name, value, [case-insensitive])</samp>.</li>
       <li><kbd>===</kbd> returns true if equal and the same type. For arrays returns true if same key/value pairs in the same order and the same type.
       <li><samp>&lt;?= 'testing echo with =' ?> </samp> is equivalent to <samp> &lt;?php 'testing echo with =' ?></samp>.
