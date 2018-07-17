@@ -286,7 +286,7 @@ function test_input($data) {
     <ul>
       <li><b>Filters</b><br>
       PHP filters are used to validate (i.e. determine if the data is in proper form) and sanitize (i.e. remove any illegal character from the data) external input.<br>
-      The <kbd>filter_var()</kbd> function both validates and sanitizes data.
+      The <kbd>filter_var()</kbd> function both validates and sanitizes data.<br>
       <pre class="prettyprint">
 $email = "john.doe@example.com";
 
@@ -306,21 +306,36 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
         A session is a way to store information (in variables) to be used across multiple pages. Unlike a cookie which stores the information on the user's computer, 
         sessions store information on the server (the path to file is in <samp>phpinfo()</samp>).<br>
         The variabe <kbd>$_SESSION</kbd> is an associative array containing session variables available to the current script.<br>
-        <kbd>session_start()</kbd> creates a session or resumes the current one based on a session identifier passed via a GET or POST request, or passed via a cookie. <br>
+        <kbd>session_start()</kbd> creates a session or resumes the current one. When it is called it checks the $_SESSION variable to see if there are any information saved for the user. 
+        It identifies the user based on a session id which is passed either via a cookie or via a GET or POST request. <br>
         <pre class="prettyprint">
 &lt;?php
 session_start();
 ?>
 
-<!DOCTYPE html>
-<html><body>
+&lt;!DOCTYPE html>&lt;html>&lt;body>
 
 &lt;?php
 $_SESSION["favcolor"] = "green";
 ?>
 
-</body></html> 
-        </pre><br>
+&lt;/body>&lt;/html>
+</pre><br>
+        Now session id is stored in cookies, and "favcolor" saved in the _SESSION variable on the server.<br>
+<pre class="prettyprint">
+<?php
+session_start();
+?>
+&lt;!DOCTYPE html>&lt;html>&lt;body>
+
+<?php
+header('Content-Type: text/plain');
+print_r($_SESSION);
+print_r($_COOKIE);
+?>
+
+&lt;/body>&lt;/html>
+</pre><br>
         By default, session variables last until the user closes the browser.
       <li><kbd>===</kbd> returns true if equal and the same type. For arrays returns true if same key/value pairs in the same order and the same type.
       <li><samp>&lt;?= 'testing echo with =' ?> </samp> is equivalent to <samp> &lt;?php 'testing echo with =' ?></samp>.
