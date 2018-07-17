@@ -288,7 +288,6 @@ function test_input($data) {
       PHP filters are used to validate (i.e. determine if the data is in proper form) and sanitize (i.e. remove any illegal character from the data) external input.<br>
       The <kbd>filter_var()</kbd> function both validates and sanitizes data.
       <pre class="prettyprint">
-<?php
 $email = "john.doe@example.com";
 
 $email = filter_var($email, FILTER_SANITIZE_EMAIL);
@@ -298,10 +297,31 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
 } else {
     echo("$email is not a valid email address");
 }
-?> 
 </pre><br>
 <samp>filter_val()</samp> Returns the filtered data, or <samp>FALSE</samp> if the filter fails. That's why in the above code we check if it is not false.
       <li><b>Constants</b><br> Constants are global and created using <samp>define(name, value, [case-insensitive])</samp>.</li>
+      <li><b>Cookies</b><br>
+      
+      <li><b>Sessions</b><br>
+        A session is a way to store information (in variables) to be used across multiple pages. Unlike a cookie which stores the information on the user's computer, 
+        sessions store information on the server (the path to file is in <samp>phpinfo()</samp>).<br>
+        The variabe <kbd>$_SESSION</kbd> is an associative array containing session variables available to the current script.<br>
+        <kbd>session_start()</kbd> creates a session or resumes the current one based on a session identifier passed via a GET or POST request, or passed via a cookie. <br>
+        <pre class="prettyprint">
+&lt;?php
+session_start();
+?>
+
+<!DOCTYPE html>
+<html><body>
+
+&lt;?php
+$_SESSION["favcolor"] = "green";
+?>
+
+</body></html> 
+        </pre><br>
+        By default, session variables last until the user closes the browser.
       <li><kbd>===</kbd> returns true if equal and the same type. For arrays returns true if same key/value pairs in the same order and the same type.
       <li><samp>&lt;?= 'testing echo with =' ?> </samp> is equivalent to <samp> &lt;?php 'testing echo with =' ?></samp>.
       <li>Unlike the double-quoted and <samp>heredoc</samp> syntaxes <kbd>("&lt;&lt;&lt;EOD")</kbd>, variables and escape sequences for special characters will not be expanded when they occur in single quoted strings or <samp>nowdocs</samp><kbd>("<<<'EOD'")</kbd>.
