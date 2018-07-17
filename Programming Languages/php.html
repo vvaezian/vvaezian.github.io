@@ -299,15 +299,14 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
 }
 </pre><br>
 <samp>filter_val()</samp> Returns the filtered data, or <samp>FALSE</samp> if the filter fails. That's why in the above code we check if it is not false.
-      <li><b>Constants</b><br> Constants are global and created using <samp>define(name, value, [case-insensitive])</samp>.</li>
       <li><b>Cookies</b><br>
       
       <li><b>Sessions</b><br>
         A session is a way to store information (in variables) to be used across multiple pages. Unlike a cookie which stores the information on the user's computer, 
         sessions store information on the server (the path to file is in <samp>phpinfo()</samp>).<br>
         The variabe <kbd>$_SESSION</kbd> is an associative array containing session variables available to the current script.<br>
-        <kbd>session_start()</kbd> creates a session or resumes the current one. When it is called it checks the $_SESSION variable to see if there are any information saved for the user. 
-        It identifies the user based on a session id which is passed either via a cookie or via a GET or POST request. <br>
+        <kbd>session_start()</kbd> creates a session or resumes the current one. When it is called it checks the <samp>$_SESSION</samp> variable to see if there are any information saved for the user. 
+        It identifies the user based on a session id which is passed either via a cookie or via a <samp>GET</samp> or <samp>POST</samp> request. <br>
         <pre class="prettyprint">
 &lt;?php
 session_start();
@@ -321,14 +320,14 @@ $_SESSION["favcolor"] = "green";
 
 &lt;/body>&lt;/html>
 </pre><br>
-        Now session id is stored in cookies, and "favcolor" saved in the _SESSION variable on the server.<br>
+        Now session id is stored in cookies, and "favcolor" saved in the <samp>$_SESSION</samp> variable on the server.<br>
 <pre class="prettyprint">
-<?php
+&lt;?php
 session_start();
 ?>
 &lt;!DOCTYPE html>&lt;html>&lt;body>
 
-<?php
+&lt;?php
 header('Content-Type: text/plain');
 print_r($_SESSION);
 print_r($_COOKIE);
@@ -337,6 +336,7 @@ print_r($_COOKIE);
 &lt;/body>&lt;/html>
 </pre><br>
         By default, session variables last until the user closes the browser.
+      <li><b>Constants</b><br> Constants are global and created using <samp>define(name, value, [case-insensitive])</samp>.</li>
       <li><kbd>===</kbd> returns true if equal and the same type. For arrays returns true if same key/value pairs in the same order and the same type.
       <li><samp>&lt;?= 'testing echo with =' ?> </samp> is equivalent to <samp> &lt;?php 'testing echo with =' ?></samp>.
       <li>Unlike the double-quoted and <samp>heredoc</samp> syntaxes <kbd>("&lt;&lt;&lt;EOD")</kbd>, variables and escape sequences for special characters will not be expanded when they occur in single quoted strings or <samp>nowdocs</samp><kbd>("<<<'EOD'")</kbd>.
