@@ -229,7 +229,8 @@ When the user clicks somewhere on the image, the accompanying form will be trans
       <li>- <kbd>empty('myStr')</kbd> checks whether 'myStr' is NULL.<br>
         - <kbd>preg_match("RegExp" ,$myVar)</kbd> checks whether <samp>$myVar</samp> follows the pattern of the regular expression <samp>RegExp</samp>.<br>
         - <kbd>filter_var($myVar, [filtername], options)</kbd> filters a variable with the specified filter. There are a wide range of filters (<a href="http://php.net/manual/en/filter.filters.php">documentations</a>).<br>
-        - <a href="http://php.net/manual/en/function.trim.php"><kbd>trim($myStr, [$character_mask])</kbd></a> returns a string with whitespace stripped from the beginning and end of <samp>myStr</samp>. Add other chars that need to be striped from start and end in the second argument.<br>
+        - <a href="http://php.net/manual/en/function.trim.php"><kbd>trim($myStr, [$character_mask])</kbd></a> returns a string with whitespace stripped from the beginning and end of <samp>myStr</samp>. 
+        Add other chars that need to be striped from start and end in the second argument.<br>
         - <kbd>stripslashes($myStr)</kbd> un-quotes a quoted string. </li>
       <li><pre class="prettyprint">
 &lt;?php
@@ -300,7 +301,27 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
 </pre><br>
 <samp>filter_val()</samp> Returns the filtered data, or <samp>FALSE</samp> if the filter fails. That's why in the above code we check if it is not false.
       <li><b>Cookies</b><br>
-      
+        A cookie is a small file that the server embeds on the user's computer, which is used for identifying the user. Each time the same computer requests a page with a browser, it will send the cookie too. 
+        With PHP, we can both create and retrieve cookie values.<br>
+        A cookie is created with the <kbd>setcookie()</kbd> function.
+        <samp>setcookie(name, value, expire, path, domain, secure, httponly);</samp><br>
+        Only the <samp>name</samp> parameter is required. All other parameters are optional.
+        <pre class="prettyprint">
+&lt;?php
+  $cookie_name = "user";
+  $cookie_value = "John Doe";
+  setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+?>
+&lt;html>&lt;body>
+&lt;?php
+  if(!isset($_COOKIE[$cookie_name])) {
+      echo "Cookie named '" . $cookie_name . "' is not set!";
+  } else {
+      echo "Cookie '" . $cookie_name . "' is set!<br>";
+      echo "Value is: " . $_COOKIE[$cookie_name];
+  }
+?>
+&lt;/body>&lt;/html></pre><br>
       <li><b>Sessions</b><br>
         A session is a way to store information (in variables) to be used across multiple pages. Unlike a cookie which stores the information on the user's computer, 
         sessions store information on the server (the path to file is in <samp>phpinfo()</samp>).<br>
@@ -311,13 +332,10 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
 &lt;?php
 session_start();
 ?>
-
 &lt;!DOCTYPE html>&lt;html>&lt;body>
-
 &lt;?php
 $_SESSION["favcolor"] = "green";
 ?>
-
 &lt;/body>&lt;/html>
 </pre><br>
         Now session id is stored in cookies, and "favcolor" saved in the <samp>$_SESSION</samp> variable on the server.<br>
@@ -326,20 +344,19 @@ $_SESSION["favcolor"] = "green";
 session_start();
 ?>
 &lt;!DOCTYPE html>&lt;html>&lt;body>
-
 &lt;?php
 header('Content-Type: text/plain');
 print_r($_SESSION);
 print_r($_COOKIE);
 ?>
-
 &lt;/body>&lt;/html>
 </pre><br>
-        By default, session variables last until the user closes the browser.
+        *** By default, session variables last until the user closes the browser. This is the major difference with cookies which last until their defined expiration date.
       <li><b>Constants</b><br> Constants are global and created using <samp>define(name, value, [case-insensitive])</samp>.</li>
       <li><kbd>===</kbd> returns true if equal and the same type. For arrays returns true if same key/value pairs in the same order and the same type.
       <li><samp>&lt;?= 'testing echo with =' ?> </samp> is equivalent to <samp> &lt;?php 'testing echo with =' ?></samp>.
-      <li>Unlike the double-quoted and <samp>heredoc</samp> syntaxes <kbd>("&lt;&lt;&lt;EOD")</kbd>, variables and escape sequences for special characters will not be expanded when they occur in single quoted strings or <samp>nowdocs</samp><kbd>("<<<'EOD'")</kbd>.
+      <li>Unlike the double-quoted and <samp>heredoc</samp> syntaxes <kbd>("&lt;&lt;&lt;EOD")</kbd>, variables and escape sequences for special characters will not be expanded when they occur
+         in single quoted strings or <samp>nowdocs</samp><kbd>("<<<'EOD'")</kbd>.
       <li>inside a double-quoted string, it's valid to not surround array indexes with quotes, so <samp>"$foo[bar]"</samp> is valid.
       <li>The type of a variable is not usually set by the programmer; rather, it is decided at runtime by PHP depending on the context in which that variable is used.
       <li><kbd>NULL</kbd> is both a data type and a value (the only value of the data type NULL).<br>
