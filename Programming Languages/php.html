@@ -317,7 +317,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
   if(!isset($_COOKIE[$cookie_name])) {
       echo "Cookie named '" . $cookie_name . "' is not set!";
   } else {
-      echo "Cookie '" . $cookie_name . "' is set!<br>";
+      echo "Cookie '" . $cookie_name . "' is set!&lt;br>";
       echo "Value is: " . $_COOKIE[$cookie_name];
   }
 ?>
@@ -330,24 +330,24 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
         It identifies the user based on a session id which is passed either via a cookie or via a <samp>GET</samp> or <samp>POST</samp> request. <br>
         <pre class="prettyprint">
 &lt;?php
-session_start();
+  session_start();
 ?>
 &lt;!DOCTYPE html>&lt;html>&lt;body>
 &lt;?php
-$_SESSION["favcolor"] = "green";
+  $_SESSION["favcolor"] = "green";
 ?>
 &lt;/body>&lt;/html>
 </pre><br>
         Now session id is stored in cookies, and "favcolor" saved in the <samp>$_SESSION</samp> variable on the server.<br>
 <pre class="prettyprint">
 &lt;?php
-session_start();
+  session_start();
 ?>
 &lt;!DOCTYPE html>&lt;html>&lt;body>
 &lt;?php
-header('Content-Type: text/plain');
-print_r($_SESSION);
-print_r($_COOKIE);
+  header('Content-Type: text/plain'); // makes print_r to print arrays with spaces and tabs and new lines.
+  print_r($_SESSION);
+  print_r($_COOKIE);
 ?>
 &lt;/body>&lt;/html>
 </pre><br>
