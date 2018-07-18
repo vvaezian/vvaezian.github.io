@@ -47,6 +47,7 @@
     - A primitive data doesn't have any properties or methods.<br>
     - <b>null</b> and <b>undefined</b> both have value undefined, but null is of type object and undefined is of type undefined.<br>
     - Three constructs has data type <samp>objects</samp>: Arrays, dates and objects (similar to dictionaries in Python).<br>
+    - <kbd>typeof(x)</kbd> (alternatively <samp>typeof x</samp>) returns the type of <samp>x</samp>. Since array is not a type, for detecting array we can use this:<br>
 <pre class="prettyprint">
 function isArray(myArray) {
   return myArray.constructor === Array;
@@ -115,6 +116,8 @@ Common events: <samp>onclick, onmouseover, onmouseout, onkeydown, onload, onchan
 var myNumber = 128;
 myNumber.toString(16);  // returns 80
 </pre><br>
+    - Use <kbd>parseInt(x, base)</kbd> (and <kbd>parseFloat(x, base)</kbd>) to let the interpreter know which is <samp>x</samp>.<br>
+<samp>parseInt(111, 2); // returns 7</samp><br>
   </li>
 
   <li><b>Arrays</b><br>
