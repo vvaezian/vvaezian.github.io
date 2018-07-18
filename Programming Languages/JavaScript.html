@@ -116,7 +116,7 @@ Common events: <samp>onclick, onmouseover, onmouseout, onkeydown, onload, onchan
 var myNumber = 128;
 myNumber.toString(16);  // returns 80
 </pre><br>
-    - Use <kbd>parseInt(x, base)</kbd> (and <kbd>parseFloat(x, base)</kbd>) to let the interpreter know which is <samp>x</samp>.<br>
+    - Use <kbd>parseInt(x, base)</kbd> (and <kbd>parseFloat(x, base)</kbd>) to let the interpreter know at which base is <samp>x</samp>:<br>
 <samp>parseInt(111, 2); // returns 7</samp><br>
   </li>
 
@@ -160,8 +160,7 @@ They always use numbered indexes. For named indexes we should use objects.
   <pre class="prettyprint">
   for (i in arr) { 
     console.log(i) 
-  }
-  </pre><br> the indexes are printed. So JS arrays are like dictionaries with integere keys in Python.
+  }</pre><br> the indexes are printed. So JS arrays are like dictionaries with integere keys in Python.
 </ul>
 
 
