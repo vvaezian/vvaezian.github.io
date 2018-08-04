@@ -776,5 +776,38 @@ plt.clabel(c, inline=1, fontsize=10)
     </div>
 </details>
 
+<details class="details">
+    <summary><div class="wrapper"><h4><samp>Importing data from internet</samp></h4></div></summary>
+    <div class="content">
+        <pre class=prettyprint>
+import requests
+from bs4 import BeautifulSoup
+
+url = 'http://www.midi.gouv.qc.ca/publications/en/'
+
+# Packages the request, send the request and catch the response: r
+r = requests.get(url)
+
+# Extract the response: text
+html = r.text
+
+soup = BeautifulSoup(html)
+pretty_soup = soup.prettify()
+print(pretty_soup)
+
+print(soup.title())
+print(soup.get_text()) # apparently get_text() doesn't work on prettified soups
+
+# finding all urls
+a_tags = soup.find_all('a')
+a= soup.find
+for link in a_tags:
+  print(link.get('href'))</pre><br>
+    </div>
+</details>
+
+    </div>
+</details>	
+	
 </body>
 </html>
