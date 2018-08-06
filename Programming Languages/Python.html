@@ -207,7 +207,7 @@ d = defaultdict(tuple)
 e = defaultdict(set)
 f = defaultdict(dict)
 
-g = defaultdict(lambda: [0, 0])
+g = defaultdict(lambda: [5, 8])
 g[2][1] = 1
 
 print(a[1])
@@ -226,7 +226,7 @@ print(g.items())</pre>
 set([])
 {}
 [0, 0]
-[(1, [0, 0]), (2, [0, 1])]
+[(1, [5, 8]), (2, [5, 1])]
 </pre><br>
 <br>
 
@@ -247,11 +247,11 @@ for word, count in word_counts.most_common(10):
 First approach<br>
 <pre class="prettyprint">
 word_counts = {}
-    for word in document:
-        if word in word_counts:
-            word_counts[word] += 1
-        else:
-            word_counts[word] = 1
+for word in document:
+if word in word_counts:
+    word_counts[word] += 1
+else:
+    word_counts[word] = 1
 </pre><br>
 Second approach:<br>
 <pre class="prettyprint">
