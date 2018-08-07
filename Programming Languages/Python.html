@@ -519,9 +519,15 @@ for index, item in enumerate(a):
 2. c</pre><br>
 
 <pre class="prettyprint">
-print "Case #{}: {}".format(1, 2)
+first_name ='John'
+last_name = 'Doe'
+print "Full name is {} {}".format(first_name, last_name)
 </pre>
-<pre>case #1: 2</pre><br>
+<pre>Full name is John Doe</pre><br>
+* in Python 3.6+ we can use F-Strings insted: <samp>print(f"Full name is {first_name} {last_name}")</samp><br>
+<br>
+For printing members of <samp>myList</samp> line by line: <samp>print(*myList, sep='\n')</samp><br>
+		
 </div>
 </details>
 
