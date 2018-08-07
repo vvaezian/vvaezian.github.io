@@ -70,6 +70,29 @@ Since strings are immutable, there is no method to replace an arbitrary characte
 
     print arbit_replace('foo', 2, 'z')</pre>
 <pre>foz</pre><br>
+	    
+<b>F-Strings</b> (Python 3.6+)<br>
+<pre class=prettyprint>
+name = 'John'
+print(f"name is {name}.")
+
+for x in range(3):
+  print(f"{x/3:.3f}")  # print to precision of 3 digits
+
+from datetime import datetime
+date=datetime(2018, 1, 1)
+print(f"Date is {date:%B %d, %Y}.")
+</pre><br>
+<pre>
+
+name is John.
+
+
+0.000
+0.333
+0.667
+
+Date is January 01, 2018.
 </div>
 </details>
 
