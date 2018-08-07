@@ -727,9 +727,11 @@ It works the other way too:<br>
 def test2(x, y, z):
     return x + y + z
 
-x_y_list = [1, 2]
-z_dict = { "z" : 3 }
-print test2(*x_y_list, **z_dict)  # 6
+list123 = [1, 2, 3]
+print(test2(*list123))  # 6
+dict123 = {'a': 1, 'b': 2, 'c': 3}
+print(test2(*dict123))  # 'abc'
+print(test2(**dict123))	# 6
 </pre><br>
 </div></details>
 <details class="details">
