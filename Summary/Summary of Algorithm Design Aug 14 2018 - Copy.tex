@@ -1,0 +1,224 @@
+\documentclass{report}
+\usepackage[dvips]{color}
+\usepackage{cmll}
+\usepackage{amsmath}
+\usepackage{stmaryrd}
+\usepackage[dvips]{graphicx}
+\usepackage{anysize}
+\usepackage{amssymb}
+\usepackage{bussproofs}
+\usepackage{esvect}
+\usepackage{array}
+\marginsize{2.9cm}{2.9cm}{2cm}{4cm}
+
+\newtheorem{Theorem}{Theorem}
+\newtheorem{lemma}{Lemma}[section]
+
+\begin{document}
+\EnableBpAbbreviations
+\def\ScoreOverhang{1pt}
+\setlength{\parindent}{0pt}
+
+\begin{flushleft}
+{\Large Summary of Algorithm Design (2006)}\newline
+{\large Jon Kleinberg, Eva Tardos}\\
+\end{flushleft}
+
+\emph{* Obviously, I don't take any credit for the material in this file. This is just for my own reference.}
+\section*{Chapter 2: Basics of Algorithm Analysis}
+Suppose $f$ and $T$ are positive functions.
+\begin{align*}
+O(f(n))&=\{T(n)|\exists c>0 \ \text{and} \ n_0>0 ; \ \forall n\geq n_0 \ T(n)\leq c.f(n)\}\\
+\Omega(f(n))&=\{T(n)|\exists c>0  \ \text{and} \  n_0>0 ; \ \forall n\geq n_0 \ T(n)\geq c.f(n)\}\\
+o(f(n))&=\{T(n)|\forall c>0 \ \exists n_0>0 ; \ \forall n\geq n_0 \ T(n)\leq c.f(n)\}\\
+\omega(f(n))&=\{T(n)|\forall c>0 \ \exists n_0>0 ; \ \forall n\geq n_0 \ T(n)\geq c.f(n)\}\\
+\theta(f(n))&=\{T(n)|T(n)\in O(f(n)) \ \text{and} \ T(n) \in \Omega(f(n))\}
+\end{align*}
+$\lim_{n\rightarrow \infty} \frac{f(n)}{g(n)}=c$ \qquad
+  \begin{tabular}{>{$}c<{$}  >{$}c<{$}  >{$}c<{$}}
+  c=0 & \Rightarrow & f\in o(g)\\
+  c=\infty & \Rightarrow & f\in w(g)\\
+  0<c<\infty & \Rightarrow & f\in \theta(g)
+  \end{tabular}
+\[\log_an=\frac{\log_bn}{\log_ba} \qquad \qquad \ln(n!) \approx n\ln n -n+O(\ln n)\]
+
+Examples:\\
+$O(log(n))$: Binary Search\\
+$O(n)$: Merging two sorted list\\
+$O(n \text{log}n)$: Sorting a list\\
+$O(n^2): {{n}\choose{2}}$\\
+$O(2^n)$: NP-Complete, it is the number of subsets of an n-element set.\\
+$O(n!)$: It is the number of ways to match up $n$ items with $n$ other items.
+
+\section*{Chapter 3: Graphs}
+A \textbf{binary tree} is a tree in which each node has at most two children.
+
+A \textbf{binary search tree} is a binary tree in which for each node, its left descendants are less than or equal to the current node, which is less than the right descendants. In-order traversal on a BST visits the nodes in ascending order.
+
+A \textbf{balanced tree} is ``balanced" enough to ensure $O(log(n))$ times for \texttt{insert} and \texttt{find}, but it's not necessarily as
+balanced as it could be. E.x. it can be a tree such that the heights of the two subtrees of any node never differ by more than one.
+
+A \textbf{complete binary tree} is a binary tree which every level of the tree is fully filled, other than possibly the rightmost elements on the last level.
+
+A \textbf{full binary tree} is a binary tree in which every node has either zero or two children.
+
+A \textbf{perfect binary tree} is one that is both full and complete.
+
+A \textbf{min-heap} is a complete binary tree where each node is smaller than its children (so the root is the minimum of the tree).\\
+
+BFS and DFS algorithms run in time $O(m + n)$ if the graph is given by the adjacency list representation.\\
+
+A \textbf{topological ordering} of $G$ is an ordering of its nodes as $v_1,\ldots,v_n$ so that for every edge $(v_i,v_j)$, we have $i<j$. In other words, all edges point ``forward" in the ordering.
+
+\begin{Theorem}
+	$G$ has a topological ordering iff it is a DAG.
+\end{Theorem}
+
+\subsection*{3.1 Tree Decomposition}
+A \textbf{tree decomposition} (TD) of $G=(V,E)$ consists of 
+\begin{itemize}
+	\item A tree $T$ (different node set)
+	\item A set $B_t\subseteq V$ for each $t\in T$ (called ``\emph{bag}") that satisfy the following 3 conditions:
+	\begin{enumerate}
+		\item Node Coverage: Every node of $G$ belongs to at least one bag $B_t$.
+		\item Edge Coverage: $\forall e\in E, \exists B_t$ containing both ends of $e$.
+		\item Coherence: Let $t_1, t_2, t_3$ be 3 nodes of $T$ s.t. $t_2$ lies on the path from $t_1$ to $t_3$. Then if a node $v$ of $G$ belongs to both $B_{t_1}$ and $B_{t_3}$, it also belongs to $B_{t_2}$.
+	\end{enumerate}
+\end{itemize}
+Let $T$ be a TD of $G$. \emph{Width} of $T$ is defined as $(\max_{t\in T} |B_t|) -1$. \emph{Tree-width} of $G$ is defined as minimum width of any TD of $G$.
+
+A TD is \emph{nonredundant} iff there is no edge $(x,y)$ in the tree s.t. $B_x\subseteq B_y$. We can always turn a redundant TD to a nonredundant one without changing the tree-width.
+\begin{Theorem}
+	Any nonredundant TD of an n-node graph has at most $n$ bags.
+\end{Theorem}
+\begin{Theorem}
+	Every graph with tree-width $k$ has a node of degree at most $k$.
+\end{Theorem}
+\begin{Theorem}
+	An n-node graph has tree-width n-1 iff it is a clique\footnote{A set of nodes is a \emph{clique} if every two nodes are adjacant.} .
+\end{Theorem}
+
+\section*{Chapter 4: Greedy Algorithms}
+Greedy algorithms make the locally optimal choice at each stage with the hope of finding a global optimum.\\
+
+Using the heap-based priority queue Dijkstra's Algorithm for finding the shortest path in a weighted graph runs in $O(m\text{log}n)$.\\
+
+Using the heap-based priority queue Prim's Algorithm for finding the minimum spanning tree runs in $O(m\text{log}n)$.
+\section*{Chapter 5: Divide and Conquer}
+Divide-and-conquer algorithms partition the problem into disjoint subproblems, solve the subproblems recursively, and then combine their solutions to solve the original problem. [CLRS]
+
+It is usually used to reduce a polynomial running time down to a faster running time.\\
+
+\textbf{Master Theorem:}
+\begin{align*}
+&    T(n)\leq
+    \begin{cases}
+      aT(n/b)+cn^x & n>1 \\
+      d & n=1
+    \end{cases}\\
+& a>b^x \quad \Rightarrow \quad T(n)\in \theta(n^{\log_ba})\\
+& a=b^x \quad \Rightarrow \quad T(n)\in\theta(n^x\log_bn)\\
+&a<b^x  \quad \Rightarrow \quad T(n)\in\theta(n^x)
+\end{align*}
+In the first case the total running time is dominated by the work done on constant-size subproblems at the bottom of the recursion. In the the third case it's dominated by the top level. The second case represents a 
+``knife-edge''; the amount of work done at each level is exactly the same.\\
+
+Mergesort: 
+\begin{align*}
+T(n) &= T(divide)+T(sub_1)+T(sub_2)+T(combine)\\
+     &=\underbrace{2T(n/2)}_{recursion}+\underbrace{cn}_{divide+combine}
+\end{align*}
+
+\section*{Chapter 6: Dynamic Programming}
+In contrast to divide-and-conquer (which applies on disjoint subprblems), dynamic programming applies when the subproblems overlap (i.e. when subproblems share subsubproblems). [CLRS]
+
+\textbf{Memoization}: A DP algorithm solves each subsubproblem just once and then saves its answer in a table, thereby avoiding the work of recomputing the answer every time it solves each subsubproblem.[CLRS]\\
+
+\textbf{Dijkstra's} Algorithm (Greedy, $O(m\text{log}n)$): Finding shortest path from one node to all nodes.\\
+\textbf{Bellman-Ford's} Algorithm (DP, $\theta(mn)$): Finding shortest path from one node to all nodes, where negative edges are allowed.\\
+\textbf{Floyd-Warshall's} Algorithm (DP, $\theta(n^3)$): Finding shortest path between all pairs of nodes, where negative edges are allowed.\\
+
+Bellman-Ford's and Floyd-Warshall's algorithms can be used to detect negative cycles in graphs.
+
+\section*{Chapter 7: Network Flow}
+A \textbf{flow network} is a directed graph $G = (V, E)$ with the following features. Associated with each edge $e$ is a nonnegative capacity $c_e$. There is a single source node $s$ and a single sink node $t$.\\
+
+\textit{Assumptions:} 1) No edge enters the source $s$ and no edge leaves the sink t. 2) There is at least one edge incident to each node. 3) All capacities are integers.\\
+
+An $s\text{-}t$ \textbf{flow} is a function $f$ that maps each edge $e$ to a
+nonnegative real number, $f:E\rightarrow \mathbb{R}^+$; the value $f(e)$ intuitively represents the
+amount of flow carried by edge $e$. A flow $f$ must satisfy the following two properties:\\
+(i) (\emph{Capacity conditions}) For each $e \in E$, we have $0 \leq f(e) \leq c_e$.\\
+(ii) (\emph{Conservation conditions}) For each node $v$ other than $s$ and $t$, we have
+\[\sum_{e \text{ into } v} f(e) = \sum_{e \text{ out of } v} f(e) \qquad \qquad (f^{out}(v)=f^{in}(v))\]
+The \emph{value} of a flow $f$ , denoted $v(f)$, is defined to be the amount of flow generated at the source: $v(f) = f^{out}(s)$.\\
+
+\textbf{Ford-Fulkerson Max-Flow Algorithm}
+\begin{Theorem}
+If all capacities in the flow network are integers then the Ford-Fulkerson Algorithm can be implemented to run in $O(mC)$ time ($C=\sum_{e \text{ out of } s}c_e$).
+\end{Theorem}
+
+An $s\text{-}t$ \textbf{cut} is a partition $(A, B)$ of the vertex set $V$, so that $s \in A$ and $t \in B$. The capacity of a cut $(A, B)$, denoted $c(A, B)$, is simply the sum of the capacities of all edges out of $A$.
+
+\begin{Theorem}
+If $f$ is an $s\text{-}t$ flow such that there is no $s\text{-}t$ (augmenting) path in the residual graph, then there is an $s\text{-}t$ cut $(A^*, B^*)$ for which $v(f) = c(A^*, B^*)$. Consequently, $f$ has the maximum value of any flow, and $(A∗, B∗)$ has the minimum capacity of any $s-t$ cut.
+\end{Theorem}
+
+Given a flow $f$ of maximum value, we can compute an s-t cut of minimum capacity in $O(m)$ time as follows: We construct the residual graph $G_f$ , and perform breadth-first or depth-first search to
+determine the set $A^*$ of all nodes that $s$ can reach. We then define $B^* = V − A^*$.\\
+
+\textbf{Scaling Max-Flow Algorithm}\\
+Augmentation increases the value of the maximum flow by the bottleneck capacity of the selected path; so if we choose paths with large bottleneck capacity, we will be making a lot of progress. A natural
+idea is to select the path that has the largest bottleneck capacity. Having to find such paths can slow down each individual iteration by quite a bit. We avoid this slowdown by not worrying about selecting the path that has exactly the largest bottleneck capacity. Instead, we will maintain a scaling
+parameter $\Delta$, and we will look for paths that have bottleneck capacity of at least $\Delta$.
+\begin{Theorem}
+	The \textbf{Scaling Max-Flow} Algorithm in a graph with m edges and integer
+	capacities finds a maximum flow in at most $2m(1+ \lceil log_2 C\rceil)$ augmentations.
+	It can be implemented to run in at most $O(m^2 log_2 C)$ time.
+\end{Theorem}
+
+\textbf{Preflow-Push Max-Flow Algorithm}\\
+A \textbf{preflow} is a quasi-flow where in place of the conservation conditions, we require only inequalities: Each node other than $s$ must have at least as much flow entering as leaving. The Preflow-Push Algorithm will maintain a preflow and work on converting the preflow into a flow.
+\begin{Theorem}
+	The running time of the Preflow-Push Algorithm, implemented using
+a special data structures, is $O(mn)$ plus $O(1)$ for each nonsaturating push
+	operation. In particular, the generic Preflow-Push Algorithm runs in $O(n^2m)$
+	time, while the version where we always select the node at maximum height
+	runs in $O(n^3)$ time.
+\end{Theorem}
+
+The Ford-Fulkerson Algorithm can be used to find a maximum matching in a bipartite graph in $O(mn)$ time.
+\section*{Chapter 8: NP-Completeness}
+To prove problem $X$ is NP-Complete first show that it is in NP. Then reduce an NP-complete problem $Y$ to $X$ ($Y\leq_P X$) i.e.: Start with an instance of $Y$. Transform it to an instance of $X$ in polynomial time. Discuss the connection between the two instances.
+\section*{Chapter 11: Approximation Algorithms}
+Standard form for \textbf{Linear Programming (LP)}, as an optimization problem:
+\begin{quote}
+	Given an $m \times n$ matrix $A$, and vectors $b\in \mathbb{R}^m$ and $c \in \mathbb{R}^n$, find a vector
+	$x \in \mathbb{R}^n$ to solve the following optimization problem:
+\end{quote}
+\vspace{-1cm}
+\begin{align*}
+&min \quad c^tx\\
+&\text{s.t.} \quad x\geq 0,\\
+& \qquad Ax\geq b
+\end{align*}
+The decision version of LP is in $NP\cap co\text{-}NP$.
+The most widely used algorithm for LP is the \emph{simplex method}. It
+works very well in practice yet its worst-case running time is known
+to be exponential; it is simply that this exponential behavior shows up in
+practice only very rarely. But in general LP problems can be solved in polynomial time, and very efficient algorithms exist in practice. \\
+
+Decision version of \textbf{Subset Sum} (a special case of the \textbf{Knapsack Problem}) is as follows:
+\begin{quote}
+	Given natural numbers $w_1, \ldots , w_n$, and a target number $W$, is there a
+	subset of $\{w_1, \ldots , w_n\}$ that adds up to precisely $W$?
+\end{quote}
+
+We have already seen an algorithm to solve this problem; why are we now
+including it on our list of computationally hard problems? Using dynamic programming we can solve this problem in time $O(nW)$, which is reasonable when $W$ is small, but becomes hopelessly impractical as $W$ (and the numbers $w_i$) grow large. Consider, for example, an instance with 100 numbers, each of
+which is 100 bits long. Then the input is only $100 \times 100 = 10,000$ digits, but $W$ is now roughly $2^{100}$ (i.e. $W$ is also roughly 100 bits long but its value can be as high as $2^{100}$).
+\hfill
+\begin{flushright}
+\small{Vahid Vaezian (vvaezian [at] sfu.ca), \today}
+\end{flushright}
+\end{document}
