@@ -123,25 +123,16 @@ class Stack(object):
         self.items = []
 
     def is_empty(self):
-        return self.size() == 0
+        return len(self.items) == 0
 
     def push(self, m):
         self.items.append(m)
 
     def pop(self):
-        if self.is_empty():
-            print "The list is empty"
-        else:
-            self.items.pop()
+        return self.items.pop() if not self.isEmpty() else None
 
     def peek(self):
-        if self.is_empty():
-            print "The List is Empty"
-        else:
-            return self.items[-1]
-
-    def size(self):
-        return len(self.items)
+        return self.items[-1] if not self.isEmpty() else None
 
     def __str__(self):
         return str(self.items)
@@ -157,16 +148,16 @@ class Queue(object):
         self.items = []
 
     def isEmpty(self):
-        return self.items == []
+        return len(self.items) == 0
 
     def enqueue(self, item):
         self.items.insert(0, item)
 
     def dequeue(self):
-        return self.items.pop()
+        return self.items.pop() if not self.isEmpty() else None
 
     def peek(self):
-        return self.items[-1]
+        return self.items[-1] if not self.isEmpty() else None
 </pre></div>
 </details>
 
