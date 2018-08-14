@@ -94,15 +94,12 @@ class LinkedList:
     def reverse(self):
         cur = self.head
         prev = None
-        next = cur.nxt
-        while True:
-            cur.nxt = prev
-            if next is None:
-                break
-            prev = cur
-            cur = next
-            next = next.nxt
-        self.head = cur
+        while cur:
+          tmpNext = cur.nxt
+          cur.nxt = prev
+          prev = cur
+          cur = tmpNext
+        self.head = prev
 
     def __str__(self):
         if self.head is None:
