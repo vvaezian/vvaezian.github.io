@@ -31,22 +31,18 @@ perm('xyz')
 
 Generalizing the previous example where the characters may not be unique:<br>
 <pre class = "prettyprint linenums">
-output = []
-
-def perms(s, temp):
+finalOutput = set()
+def perm(s, output=''):
     if len(s) == 0:
-        output.append(temp)
+        finalOutput.add(output)
         return
-    for i in s:
-        s2 = s.replace(i, '', 1) #replace the first occurance of i in s
-        temp += i
-        perms(s2, temp)
-        temp = temp[:-1]
-    return
-
-perms('acdc', '')
-for i in set(output): #using 'set' to get rid of repititions
-    print i</pre>
+    for char in s:
+        s2 = s.replace(char, '', 1)
+        output2 = output[:]
+        output2 += char
+        perm(s2, output2)
+perm('xyyz')
+print(*finalOutput, sep='\n')</pre>
 </details>
 
 
