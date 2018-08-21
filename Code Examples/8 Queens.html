@@ -15,100 +15,54 @@
 Both iterative and recursive implementations are given<br>
 <br>
 
-The recursive version takes 3 times more than iterative version to complete. Let me know in the comments below if the recursive version can be improved.
 <pre class = "prettyprint linenums">
-def possible(row,col): #checks whether placing a queen in the specified row and column is possible
-    for i in xrange(8):
-        if board[row][i] == 1 or board[i][col] == 1:    #check horizontally and vertically
-            return False
-            
-    r, c = row, col             #The rest is for checking diagonally
-    while r <= 7 and c <= 7:
-        if board[r][c] == 1:
-            return False
-        r += 1
-        c += 1
-        
-    r, c = row, col
-    while r >= 0 and c >= 0:
-        if board[r][c] == 1:
-            return False
-        r -= 1
-        c -= 1
-    
-    r, c = row, col
-    while r >= 0 and c <= 7:
-        if board[r][c] == 1:
-            return False
-        r -= 1
-        c += 1
-        
-    r, c = row, col
-    while r <= 7 and c >= 0:
-        if board[r][c] == 1:
-            return False
-        r += 1
-        c -= 1
-    
-    return True
- 
-###############################################################################
-
 ####Iterative Version####
+def legal(queens):
+  board = [[0] * 8 for _ in range(8)]
+  for index, q in enumerate(queens):
+    board[index][q] = 1
+  for j in range(7):
+    if sum([board[i][i + j] for i in range(8 - j)]) > 1:
+      return False
+  for j in range(1, 8):
+    if sum([board[i][j - i] for i in range(j + 1)]) > 1:
+      return False
+  for j in range(7):
+    if sum([board[i][(7 - i) + j] for i in range(7, j - 1 , -1)]) > 1:
+      return False
+  for j in range(1, 8):
+    if sum([board[i][j - (7 - i)] for i in range(7, (8 - j) -2 , -1)]) > 1:
+      return False
+  return True
 
-def removeLastQ(count,coor,board):  #remove the last queen off the stack
-    z = coor.pop() 
-    board[z[0]][z[1]] = 0
-    count[0] -= 1
-
-board = [ [ 0 for i in xrange(8)] for i in xrange(8)] #create an 8x8 board. 0 represents no Queen, 1 represents Queen
-coor = []           #stores row and column of queens
-count = [0]         #number of Queens so far (it's represented as an array of length 1 to <a href="https://stackoverflow.com/a/13299557/2445273">allow for modification</a> in the 
-		    #removeLastQ function)
-sol_count =  0      #number of solutions found so far
-r,c = 0, 0          #row, column
-
-while True:
-    if possible(r,c):
-        board[r][c] = 1 #place a queen at row r and column c
-        coor.append((r,c))
-        count[0] += 1
-        if r < 7: #we are not in the last row
-            r += 1
-            c = 0
-        else:   #we are in the last row
-            if count[0] == 8: #A solution has been found
-                for i in board:
-                    print i
-                print   #extra empty line to separate solutions
-                sol_count += 1
-            if c<7: #in the last row but not in the last column
-                removeLastQ(count, coor, board)
-                c += 1
-            else:   #in the last row and last column
-                removeLastQ(count,coor,board)
-                r = coor[-1][0]
-                c = coor[-1][1] + 1 #coor[-1][1] refers to the column part of coor[-1]
-                removeLastQ(count, coor, board)
-                    
-    else:   #not possible to place a Queen
-        if c<7:
-            c+=1
-        else:   #while loop is on the last column
-            row, col = coor[-1][0], coor[-1][1]
-            if col < 7: #col is column of last-put Queen
-                r = row
-                c = col + 1
-            else: #the most recent queen was put in the last column
-                removeLastQ(count, coor, board)
-                if len(coor) == 0: #termination check
-                    break
-                r = coor[-1][0]
-                c = coor[-1][1] + 1
-            
-            removeLastQ(count, coor, board)    
- 
-print "Number of Solutions Found:", sol_count
+count = 0
+a0 = list(range(8))
+for i0 in a0:
+  a1 = a0[:]
+  a1.remove(i0)
+  for i1 in a1:
+    a2 = a1[:]
+    a2.remove(i1)
+    for i2 in a2:
+      a3 = a2[:]
+      a3.remove(i2)
+      for i3 in a3:
+        a4 = a3[:]
+        a4.remove(i3)
+        for i4 in a4:
+          a5 = a4[:]
+          a5.remove(i4)
+          for i5 in a5:
+            a6 = a5[:]
+            a6.remove(i5)
+            for i6 in a6:
+              a7 = a6[:]
+              a7.remove(i6)
+              for i7 in a7:
+                queens = [i0, i1, i2, i3, i4, i5, i6, i7]
+                if legal(queens):
+                  count += 1
+print(count)
 </pre><br>
 <pre class= "prettyprint linenums">
 
