@@ -405,14 +405,9 @@ class Node(object):
         self.parent = None  # Is needed for finding the shortest path using BFS
 
 class Graph(object):
-    def __init__(self, nodes):
+    def __init__(self):
         self.nodes = {} # pairs of key, Node (i.e. id of node and the node itself)
         self.flag = False   # auxiliary variable used in _dfs2 method
-
-    def __str__(self):
-        for item in self.nodes:
-            print str(item.key) + ' : ' + ''.join(str(i) + ', ' for i in item.neighbors)[:-2]
-        return ''
 
     def addNode(self, key):
         if key not in self.nodes:
@@ -423,9 +418,6 @@ class Graph(object):
             if node.key == key:
                 return node
         return None
-
-    def __contains__(self, key):
-        return key in self.nodes
     
     def addEdge(self, key1, key2):
         if key1 not in self.nodes:
@@ -435,9 +427,24 @@ class Graph(object):
         if key2 not in self.nodes[key1].neighbours:
             self.nodes[key1].neighbours.add(self.nodes[key2])
 
-    def dfs(self, key):
-        """Explores the graph rooted at 'key' using Depth-First Search"""
-        node = self.get_node(key)
+    def buildUsingAdjacencyList(self, adjList):
+        # adjList is given by a tuple, where the first item is a key and the second item list of keys of nodes that are its neighbours
+        for tupleItem in adjList:
+            self.addNode(tupleItem[0])
+            for neighbourKey in tupleItem[1]:
+                self.addEdge(tupleItem[0], neighbourKey)
+
+    def __str__(self):
+        for item in self.nodes:
+            print str(item.key) + ' : ' + ''.join(str(i) + ', ' for i in item.neighbors)[:-2]
+        return ''
+    
+    def __contains__(self, key):
+        return key in self.nodes
+
+    def dfs(self, start):
+        """Explores the graph rooted at 'start' using Depth-First Search"""
+        node = self.getNode(start)
         if not node.visited:
             print node.key
             node.visited = True
@@ -455,7 +462,7 @@ class Graph(object):
             global path
             if self.flag:   # if the destination node has been reached, stop nested recursions
                 return
-            s = self.get_node(_start)
+            s = self.getNode(_start)
             if not s.visited:
                 s.visited = True
                 tmp_path_copy = _tmp_path[:]
@@ -487,7 +494,7 @@ class Graph(object):
 
     def bfs(self, key):
         """Explores the graph rooted at 'key' using Breadth-First Search"""
-        node = self.get_node(key)
+        node = self.getNode(key)
         q = Queue()
         q.enqueue(node)
         node.visited = True
@@ -508,7 +515,7 @@ class Graph(object):
 
         def _bfs2(_start, _end):
             q = Queue()
-            s = self.get_node(_start)
+            s = self.getNode(_start)
             q.enqueue(s)
             while not q.isEmpty():
                 node = q.dequeue()
@@ -522,7 +529,7 @@ class Graph(object):
                         node = node.parent
                     return _path
                 for i in node.neighbors:
-                    n = self.get_node(i)
+                    n = self.getNode(i)
                     if not n.visited:
                         n.visited = True
                         n.parent = node
