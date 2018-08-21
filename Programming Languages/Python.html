@@ -612,29 +612,6 @@ list2 = copy.deepcopy(list1)</pre><br>
 </div>
 </details>
 
-<details class="details">
-    <summary><div class="wrapper"><b>Difference between <kbd>==</kbd> and <kbd>is</kbd></b></div></summary>
-    <div class="content">
-    The equality operator (<kbd>x == y</kbd>) tests the values of x and y for equality, while the identity operators (<kbd>is</kbd>) tests two objects to see whether they refer to the same object in memory. 
-    In general, it may be the case that <kbd>x == y</kbd>, but <kbd>x is not y</kbd>.<br>
-<code>
->>> a = [1, 2, 3]<br>
->>> b = a<br>
->>> b is a <br>
-<span style="color:blue">True</span><br>
->>> b == a<br>
-<span style="color:blue">True</span><br>
-</code>
-<code>
->>> a = [1, 2, 3]<br>
->>> b = a[:]<br>
->>> b is a<br>
-<span style="color:blue">False</span><br>
->>> b == a<br>
-<span style="color:blue">True</span>
-</code></li>
-</div>
-</details>
 
 <details class="details">
     <summary><div class="wrapper"><b>Sorting a list with two rules</b></div></summary>
@@ -840,7 +817,33 @@ all_urls = [url + tag_element.get('href') for tag_element in soup.find_all('a')]
 all_urls_texts = [tag_element.contents[0] for tag_element in soup.find_all('a')]
     </div>
 </details>
-
+	
+	
+	
+	
+<ul><b>Difference between <kbd>==</kbd> and <kbd>is</kbd></b><br>
+    The equality operator (<kbd>x == y</kbd>) tests the values of x and y for equality, while the identity operators (<kbd>is</kbd>) tests two objects to see whether they refer to the same object in memory. 
+    In general, it may be the case that <kbd>x == y</kbd>, but <kbd>x is not y</kbd>.<br>
+<code>
+>>> a = [1, 2, 3]<br>
+>>> b = a<br>
+>>> b is a <br>
+<span style="color:blue">True</span><br>
+>>> b == a<br>
+<span style="color:blue">True</span><br>
+</code>
+<code>
+>>> a = [1, 2, 3]<br>
+>>> b = a[:]<br>
+>>> b is a<br>
+<span style="color:blue">False</span><br>
+>>> b == a<br>
+<span style="color:blue">True</span>
+</code></li>
+	<li> If we initialize a variable outside a function, to assign a new value to it inside the function we need to declare it <samp>global</samp>. But if are just changing its content (e.x. it is a list) we don't need to declare it global.
+</ul>
+	    
+	    
     </div>
 </details>	
 	
