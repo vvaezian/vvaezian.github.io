@@ -18,9 +18,11 @@ Both iterative and recursive implementations are given<br>
 <pre class = "prettyprint linenums">
 ####Iterative Version####
 def legal(queens):
+  """Check whether the given queen placements qualify as an answer"""
   board = [[0] * 8 for _ in range(8)]
   for index, q in enumerate(queens):
     board[index][q] = 1
+  # check diagonally
   for j in range(7):
     if sum([board[i][i + j] for i in range(8 - j)]) > 1:
       return False
@@ -35,7 +37,7 @@ def legal(queens):
       return False
   return True
 
-count = 0
+count = 0  # num of solutions found
 a0 = list(range(8))
 for i0 in a0:
   a1 = a0[:]
