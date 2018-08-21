@@ -49,48 +49,6 @@ class LinkedList:
         else:
             self.head = Node(val)
 
-    def insertAfter(self, val_1, val_2):  # Assuming all values are distinct. If not, we need to use "keys" for nodes.
-        """inserts a node with value val_1 after the node with value val_2"""
-        if self.head is None:
-            print "There is no node with value " + str(val_2)
-            return
-        else:
-            cur = self.head
-            while True:
-                if cur.val == val_2:
-                    tmp = Node(val_1)
-                    tmp.nxt = cur.nxt
-                    cur.nxt = tmp
-                    break
-                else:
-                    if cur.nxt is not None:
-                        cur = cur.nxt
-                    else:
-                        print "There is no node with value " + str(val_2)
-                        return
-
-    def insertBehind(self, val_1, val_2):  # Assuming all values are distinct. If not, we need to use 'keys' for nodes.
-        """inserts a node with value val_1 behind the node with value val_2"""
-        if self.head is None:
-            print "There is no node with value " + str(val_2)
-        else:
-            if val_2 == self.head:
-                self.insertAtFront(val_1)
-            else:
-                cur = self.head
-                while True:
-                    if cur.nxt.val == val_2:
-                        tmp = Node(val_1)
-                        tmp.nxt = cur.nxt
-                        cur.nxt = tmp
-                        break
-                    else:
-                        if cur.nxt:
-                            cur = cur.nxt
-                        else:
-                            print "There is no node with value " + str(val_2)
-                            break
-
     def reverse(self):
         cur = self.head
         prev = None
@@ -113,6 +71,7 @@ class LinkedList:
             return ''.join(str(i) + ' -> ' for i in output)[:-4]  # '-4' is for excluding the last arrow and spaces
 </pre></div>
 </details>
+
 
 <details class="details">
 <summary><h3>Stack</h3></summary>
@@ -139,6 +98,7 @@ class Stack(object):
 </pre></div>
 </details>
 
+
 <details class="details">
 <summary><h3>Queue</h3></summary>
 <div class="content">
@@ -160,8 +120,6 @@ class Queue(object):
         return self.items[-1] if not self.isEmpty() else None
 </pre></div>
 </details>
-
-
 
 
 <details class="details">
@@ -440,17 +398,15 @@ class MaxHeap(object):
 from Queue import Queue
 
 class Node(object):
-    def __init__(self, key, neighbours):
+    def __init__(self, key):
         self.key = key
-        self.neighbors = neighbours
+        self.neighbors = set()
         self.visited = False
         self.parent = None  # Is needed for finding the shortest path using BFS
 
 class Graph(object):
-    """nodes and edges are given as an adjacency list.
-        Adjacency list itself is given as a tuple of node key and a list of its neighbors"""
     def __init__(self, nodes):
-        self.nodes = [Node(item[0], item[1]) for item in nodes]
+        self.nodes = {} # pairs of key, Node (i.e. id of node and the node itself)
         self.flag = False   # auxiliary variable used in _dfs2 method
 
     def __str__(self):
@@ -458,12 +414,26 @@ class Graph(object):
             print str(item.key) + ' : ' + ''.join(str(i) + ', ' for i in item.neighbors)[:-2]
         return ''
 
-    def get_node(self, key):
+    def addNode(self, key):
+        if key not in self.nodes:
+            self.nodes[key] = Node(key)    
+
+    def getNode(self, key):
         for node in self.nodes:
             if node.key == key:
                 return node
-        print 'not found!'
         return None
+
+    def __contains__(self, key):
+        return key in self.nodes
+    
+    def addEdge(self, key1, key2):
+        if key1 not in self.nodes:
+            self.addNode(key1)
+        if key2 not in self.nodes:
+            self.addNode(key2)
+        if key2 not in self.nodes[key1].neighbours:
+            self.nodes[key1].neighbours.add(self.nodes[key2])
 
     def dfs(self, key):
         """Explores the graph rooted at 'key' using Depth-First Search"""
