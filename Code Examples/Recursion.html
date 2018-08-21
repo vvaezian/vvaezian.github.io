@@ -17,20 +17,16 @@
 <details>
 <summary><b>Design an algorithm to print all permutations of a string. For simplicity, assume all character are unique.</b></summary>
 <pre class = "prettyprint linenums">
-def perms(s, temp):
-    """s is a string,
-    temp is part of the output found so far."""
+def perm(s, output=''):
     if len(s) == 0:
-        print temp
+        print(output)
         return
-    for i in s:
-        s2 = s.replace(i, '')
-        temp += i
-        perms(s2, temp)
-        temp = temp[:-1]
-    return
-
-perms('abc', '')
+    for index, char in enumerate(s):
+        s2 = s.replace(char, '', 1)
+        output2 = output[:]
+        output2 += char
+        perm(s2, output2)
+perm('xyz')
 </pre><br>
 
 Generalizing the previous example where the characters may not be unique:<br>
