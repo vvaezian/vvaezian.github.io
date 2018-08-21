@@ -21,7 +21,7 @@ def perm(s, output=''):
     if len(s) == 0:
         print(output)
         return
-    for index, char in enumerate(s):
+    for char in s:
         s2 = s.replace(char, '', 1)
         output2 = output[:]
         output2 += char
