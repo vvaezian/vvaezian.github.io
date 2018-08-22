@@ -560,11 +560,12 @@ For printing members of <samp>myList</samp> line by line: <samp>print(*myList, s
     <div class="content">
 <pre class=prettyprint>
 f = open('pathToFile', [option])
-for line in data:
+for line in f:
     print(line.rstrip('\n'))  # rstrip('\n') is for ignoring newline symbols
                               # which causes to print an empty line between lines</pre><br>
 [option] can be <samp>'r'</samp> (read) [default], <samp>'w'</samp> (write), <samp>'r+'</samp> (read and write) and <samp>'a'</samp> (append).<br>
 <br>
+We can use <samp>lines = f.readline()</samp> to turn <samp>f</samp> into a list.<br>
 Using <samp>with</samp> block, closes the file automatically afterwards:<br>
 <pre class="prettyprint">
 with open('pathToFile', [option]) as f:
