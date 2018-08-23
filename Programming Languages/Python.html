@@ -666,9 +666,10 @@ r_num1 = random.random()  			# random float in [0, 1)
 r_num2 = random.randrange(a, b)  		# random integer in [a, b)
 r_num3 = random.uniform(a, b)  			# random float in [a, b)
 r_num4 = random.normalvariate(mu, sigma)  	# random float from normal dist of mu and sigma
-shuffled_list = random.shuffle(my_list)  # shuffles the list
-chosen_member = random.chice(my_list)  # chooses a member of the list
-chosen_members = random.sample(my_list, 4)  # chooses 4 member of the list without replacement 
+
+shuffled_list = random.shuffle(my_list)  	# shuffles the list
+chosen_member = random.chice(my_list)  		# chooses a member of the list
+chosen_members = random.sample(my_list, 4)  	# chooses 4 member of the list without replacement 
 chosen_members_with_replacement = [random.choice(my_list) for _ in range(3)]
 
 # use random.seed to get reproducible results
