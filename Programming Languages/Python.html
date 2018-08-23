@@ -560,6 +560,8 @@ For printing members of <samp>myList</samp> line by line: <samp>print(*myList, s
     <div class="content">
 <pre class=prettyprint>
 f = open('pathToFile', [option])
+fs = f.read()	# turns f into one string
+fl = f.readlines()  # turns f into a list of strings, each item of list is one line of f (defined by '\n')
 for line in f:
     print(line.rstrip('\n'))  # rstrip('\n') is for ignoring newline symbols
                               # which causes to print an empty line between lines</pre><br>
