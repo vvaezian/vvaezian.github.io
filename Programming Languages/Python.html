@@ -360,7 +360,7 @@ def listDivision(l1,l2):
     for n in range(len(l1)):
         try:
             result.append(l1[n]/float(l2[n]))
-        except ZeroDivisionError, e:
+        except ZeroDivisionError, e:	# in Python 3.x we must write `except ZeroDivisionErroe as e:`
             result.append(float('NaN'))
             print e
         except: #For all other kinds of exceptions
