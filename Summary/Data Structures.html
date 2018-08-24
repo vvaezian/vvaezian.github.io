@@ -427,7 +427,6 @@ class Graph(object):
         # adjList is given by a tuple, where the first item is a key 
         # and the second item is a list of keys of nodes that are its neighbours
         for tupleItem in adjList:
-            self.addNode(tupleItem[0])
             for neighbourKey in tupleItem[1]:
                 self.addEdge(tupleItem[0], neighbourKey)
 
