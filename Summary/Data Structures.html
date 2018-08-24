@@ -444,8 +444,8 @@ class Graph(object):
             for i in node.neighbors:
                 self.dfs(i)
         # Reverting back the visited status of all nodes to 'not visited'
-        for node in self.nodes:
-            node.visited = False
+        for key in self.nodes:
+            self.nodes[key].visited = False
 
 
     def bfs(self, start):
@@ -462,8 +462,8 @@ class Graph(object):
                     q.enqueue(node)
                     node.visited = True
         # Reverting back the visited status of all nodes to 'not visited'
-        for node in self.nodes:
-            node.visited = False
+        for key in self.nodes:
+            self.nodes[key].visited = False
 </pre></div>
 </details>
 
