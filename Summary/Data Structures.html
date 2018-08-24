@@ -416,12 +416,9 @@ class Graph(object):
             return self.nodes[key]
     
     def addEdge(self, key1, key2):
-        if key1 not in self.nodes:
-            self.addNode(key1)
-        if key2 not in self.nodes:
-            self.addNode(key2)
-        if key2 not in self.nodes[key1].neighbours:
-            self.nodes[key1].neighbours.add(self.nodes[key2])
+        self.addNode(key1)
+        self.addNode(key2)
+        self.nodes[key1].neighbours.add(self.nodes[key2])
 
     def buildUsingAdjacencyList(self, adjList):
         # adjList is given by a tuple, where the first item is a key 
