@@ -412,10 +412,8 @@ class Graph(object):
             self.nodes[key] = Node(key)    
 
     def getNode(self, key):
-        for node in self.nodes:
-            if node.key == key:
-                return node
-        return None
+        if key in self.nodes:
+            return self.nodes[key]
     
     def addEdge(self, key1, key2):
         if key1 not in self.nodes:
