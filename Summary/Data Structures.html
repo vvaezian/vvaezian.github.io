@@ -443,10 +443,6 @@ class Graph(object):
             node.visited = True
             for i in node.neighbors:
                 self.dfs(i)
-        # Reverting back the visited status of all nodes to 'not visited'
-        for key in self.nodes:
-            self.nodes[key].visited = False
-
 
     def bfs(self, start):
         """Explores the graph rooted at 'start' using Breadth-First Search"""
