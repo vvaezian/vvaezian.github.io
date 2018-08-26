@@ -344,35 +344,8 @@ class MinHeap(object):
           else:
             break
 </pre></div>
-</details>
-
-<details class="details">
-<summary><h3>MaxHeap with heapq</h3></summary>
-<div class="content">
-<pre class=prettyprint>
-# Since heapq methods work for MinHeap, here for MaxHeap we use them for negated values.
-# At the end we negate again to get the desired output.
-
-# If values are not numbers (int, float) we need to redefine __lt__ (see https://stackoverflow.com/a/40455775/2445273).
-
-from heapq import heappop, heappush
-
-class MaxHeap(object):
-    def __init__(self):
-        self.items = []
-
-    def insert(self, val):
-        heappush(self.items, -val)
-
-    def extract_min(self):
-        heappop(self.items)
-
-    def get_min(self):
-        return -self.items[0]
-
-    def __str__(self):
-        return str([-x for x in self.items])
-</pre></div>
+    Python has built-in <a href="https://docs.python.org/3.0/library/heapq.html">heap</a> methods:<br> <samp>from heapq import heappop, heappush</samp><br>
+    For max-heap see <a hre"https://stackoverflow.com/questions/2501457/what-do-i-use-for-a-max-heap-implementation-in-python/40455775#40455775"> this</a>.
 </details>
 
 <details class="details">
