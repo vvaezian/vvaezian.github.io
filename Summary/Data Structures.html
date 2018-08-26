@@ -275,31 +275,7 @@ b.create_bst([1, 2, 3])</pre></div>
 </details>
 
 <details class="details">
-<summary><h3>MinHeap with heapq</h3></summary>
-<div class="content">
-<pre class=prettyprint>
-from heapq import heappop, heappush
-
-class MinHeap(object):
-    def __init__(self):
-        self.items = []
-
-    def insert(self, val):
-        heappush(self.items, val)
-
-    def extract_min(self):
-        heappop(self.items)
-
-    def get_min(self):
-        return self.items[0]
-
-    def __str__(self):
-        return str(self.items)
-</pre></div>
-</details>
-
-<details class="details">
-<summary><h3>MinHeap without heapq</h3></summary>
+<summary><h3>MinHeap</h3></summary>
 <div class="content">
 <pre class=prettyprint>
 class MinHeap(object):
@@ -309,19 +285,19 @@ class MinHeap(object):
     def isEmpty(self):
         return len(self.items) == 0
         
-    def insert(self, val):
-        self.items.append(val)
+    def insert(self, item):
+        self.items.append(item)
         self.heapify_up()
 
-    def extract_min(self):
+    def extractMin(self):
         if not self.isEmpty():
             min = self.items[0]
             self.items[0] = self.items[-1]
             self.items.pop()
-            self.heapify_down()
+            self.heapifyDown()
             return min
 
-    def get_min(self):
+    def getMin(self):
         if not self.isEmpty():
             return self.items[0]
 
@@ -330,42 +306,43 @@ class MinHeap(object):
 
     # The rest is for defining heapify
 
+    def hasLeftChild(self, itemIndex):
+        return len(self.items) >= 2 * itemIndex + 1
+
+    def hasRightChild(self, itemIndex):
+        return len(self.items) >= 2 * itemIndex + 2
+
     @staticmethod
-    def get_parent(index):
-        if index == 0:
-            print "Root has no parent"
-            return None
-        return (index - 1) / 2
+    def getParentIndex(index):
+        if index != 0:
+            return (index - 1) // 2
 
-    def has_left_child(self, index):
-        return 2 * index + 1 < len(self.items)
+    def swap(self, ind1, ind2):
+        self.items[ind1], self.items[ind2] = self.items[ind2], self.items[ind1]
 
-    def has_right_child(self, index):
-        return 2 * index + 2 < len(self.items)
+    def heapifyDown(self):
+        if not self.isEmpty():
+          cur_index = 0
+          while self.hasLeftChild(cur_index):
+            if not self.hasRightChild(cur_index):
+              minChildIndex = 2 * cur_index + 1
+            else:
+              minChildIndex = 2 * cur_index + 1 if self.items[2 * cur_index + 1] <= self.items[2 * cur_index + 2] else 2 * cur_index + 2
+            if self.items[minChildIndex] < self.items[cur_index]:
+              self.swap(cur_index, minChildIndex)
+              cur_index = minChildIndex
+            else:
+              break
 
-    def swap(self, i, j):
-        self.items[i], self.items[j] = self.items[j], self.items[i]
-
-    def heapify_up(self):
+    def heapifyUp(self):
         cur_index = len(self.items) - 1
         while cur_index > 0:
-            par = self.get_parent(cur_index)
-            if self.items[par] > self.items[cur_index]:
-                self.swap(par, cur_index)
-            cur_index -= 1
-
-    def heapify_down(self):
-        cur_index = 0
-        while 2 * cur_index + 1 < len(self.items):
-            left_child = 2 * cur_index + 1
-            if self.has_right_child(cur_index):
-                right_child = 2 * cur_index + 2
-                child = self.items.index(min(self.items[left_child], self.items[right_child]))
-            else:
-                child = left_child
-            if self.items[child] < self.items[cur_index]:
-                self.swap(child, cur_index)
-            cur_index += 1
+          parent = self.getParentIndex(cur_index)
+          if self.items[cur_index] < self.items[parent]:
+            self.swap(cur_index, parent)
+            cur_index = parent
+          else:
+            break
 </pre></div>
 </details>
 
