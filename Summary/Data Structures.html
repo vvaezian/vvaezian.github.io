@@ -305,18 +305,25 @@ class MinHeap(object):
 class MinHeap(object):
     def __init__(self):
         self.items = []
-
+    
+    def isEmpty(self):
+        return len(self.items) == 0
+        
     def insert(self, val):
         self.items.append(val)
         self.heapify_up()
 
     def extract_min(self):
-        self.items[0] = self.items[-1]
-        self.items.pop()
-        self.heapify_down()
+        if not self.isEmpty():
+            min = self.items[0]
+            self.items[0] = self.items[-1]
+            self.items.pop()
+            self.heapify_down()
+            return min
 
     def get_min(self):
-        return self.items[0]
+        if not self.isEmpty():
+            return self.items[0]
 
     def __str__(self):
         return str(self.items)
