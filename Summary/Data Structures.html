@@ -137,58 +137,12 @@ class BinaryTree(object):
     def __init__(self):
         self.root = None
 
-    def addLeft(self, val):
-        """Adds a node with value 'val' to immediate left of the root"""
-        if self.root is None:
-            self.root = Node(val)
-        elif self.root.left is None:
-            self.root.left = Node(val)
-        else:
-            tmp = Node(val)
-            tmp.left = self.root.left
-            self.root.left = tmp
-
-    def addRight(self, val):
-        """Adds a node with value 'val' to immediate right of the root"""
-        tmp = Node(val)
-        if self.root is None:
-            self.root = tmp
-        elif self.root.right is None:
-            self.root.right = Node(val)
-        else:
-            tmp.right = self.root.right
-            self.root.right = tmp
-
-    def addAtRootL(self, val):
-        """creates a node with value 'val' and attaches the tree to the left of it"""
-        tmp = Node(val)
-        if self.root is None:
-            self.root = tmp
-        else:
-            tmp.left = self.root
-            self.root = tmp
-
-    def addAtRootR(self, val):
-        """Creates a node with value 'val' and attaches the tree to the right of it"""
-        tmp = Node(val)
-        if self.root is None:
-            self.root = tmp
-        else:
-            tmp.right = self.root
-            self.root = tmp
-
-    def inorder(self):
-        """One of Depth-First Traversal Methods"""
-        if self.root:
-            self._inOrder(self.root)
-        else:
-            print 'The tree is empty'
-
-    def _inOrder(self, node):
+    def inOrder(self, node):
+        """One of dfs iplementations"""
         if node:
-            self._inOrder(node.left)
-            print node.value
-            self._inOrder(node.right)
+            self.inOrder(node.left)
+            print(node.value)
+            self.inOrder(node.right)
 
     def levelOrder(self):
         """Breadth-First Traversal"""
