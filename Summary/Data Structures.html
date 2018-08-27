@@ -311,7 +311,7 @@ from Queue import Queue
 class Node(object):
     def __init__(self, key):
         self.key = key
-        self.neighbors = set()
+        self.neighbours = set()
         self.visited = False
 
 class Graph(object):
@@ -339,8 +339,8 @@ class Graph(object):
                 self.addEdge(tupleItem[0], neighbourKey)
 
     def __str__(self):
-        for item in self.nodes:
-            print str(item.key) + ' : ' + ''.join(str(i) + ', ' for i in item.neighbors)[:-2]
+        for key, node in self.nodes.items():
+            print(str(key) + ' : ' + ''.join(str(i.key) + ', ' for i in node.neighbours)[:-2])
         return ''
     
     def __contains__(self, key):
@@ -350,9 +350,9 @@ class Graph(object):
         """Explores the graph rooted at 'start' using Depth-First Search"""
         node = self.getNode(start)
         if not node.visited:
-            print node.key
+            print(node.key)
             node.visited = True
-            for i in node.neighbors:
+            for i in node.neighbours:
                 self.dfs(i)
 
     def bfs(self, start):
@@ -363,15 +363,34 @@ class Graph(object):
         node.visited = True
         while not q.isEmpty():
             n = q.dequeue()
-            print n.key
-            for node in n.neighbors:
+            print(n.key)
+            for node in n.neighbours:
                 if not node.visited:
                     q.enqueue(node)
                     node.visited = True
         # Reverting back the visited status of all nodes to 'not visited'
         for key in self.nodes:
             self.nodes[key].visited = False
-</pre></div>
+    
+    global flag
+    flag = False
+    def routeExist(self, s, t):
+        global flag
+        if flag:
+            return
+        if s == t:
+            flag = True
+        if s:
+            for node in s.neighbours:
+                if not node.visited:
+                    node.visited = True
+                    self.routeExist(node, t)
+        return True if flag else False 
+
+g= Graph()
+g.buildUsingAdjacencyList([(1, {1,2}), (2, {1}), (3, {2})])
+print(g)
+print(g.routeExist(g.getNode(1), g.getNode(3)))</pre></div>
 </details>
 
 <details class="details">
