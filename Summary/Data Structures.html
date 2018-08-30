@@ -330,14 +330,15 @@ class Graph(object):
     def __contains__(self, key):
         return key in self.nodes
 
-    def dfs(self, start):
-        """Explores the graph rooted at 'start' using Depth-First Search"""
-        node = self.getNode(start)
-        if not node.visited:
-            print(node.key)
+    def dfs(self, key):
+        node = self.getNode(key)
+        self._dfs(node)
+    def _dfs(self, node):
+        if node and not node.visited:
             node.visited = True
-            for i in node.neighbours:
-                self.dfs(i)
+            print(node.key)
+            for node in node.neighbours:
+                self._dfs(node)
 
     def bfs(self, start):
         """Explores the graph rooted at 'start' using Breadth-First Search"""
