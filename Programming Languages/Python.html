@@ -11,7 +11,8 @@
 
 <body>
 <img src="/vvaezian.github.io/Pic/Python-logo.png" alt="Logo" height="200"><br>
-<em>* Most of the material is taken from <a href="https://courses.edx.org/courses/course-v1:MITx+6.00.1x_9+2T2016/info" target="_blank">this</a> online course and <a href="https://www.amazon.com/Data-Science-Scratch-Principles-Python/dp/149190142X" target="_blank">this</a> book.</em><br>
+<em>* Sources: <a href="https://courses.edx.org/courses/course-v1:MITx+6.00.1x_9+2T2016/info" target="_blank">this</a> online course, 
+	<a href="https://www.amazon.com/Data-Science-Scratch-Principles-Python/dp/149190142X" target="_blank">this</a> book, and <a href="https://medium.freecodecamp.org/an-a-z-of-useful-python-tricks-b467524ee747> this </a> post.</em><br>
 
 
 <details class="details">
@@ -863,6 +864,14 @@ pprint.pprint(structuredData)</pre>
 import inspect
 import queue	# Python 3
 print(inspect.getsource(queue))</pre>
+	<li><kbd>sh</kbd> module makes it easy to work with standard os and subprocess libraries:<br>
+		<pre class=prettyprint>
+import sh
+sh.pwd()
+sh.mkdir('newDir')
+sh.touch('newFile.txt')
+sh.whoami()
+sh.echo('This is cool!')
 </ul>
 	    
 	    
