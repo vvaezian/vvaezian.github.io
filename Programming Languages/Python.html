@@ -823,7 +823,8 @@ def get_all_urls(soup):
 
 tag_elements = [tag_element for tag_element in soup.find_all('a')]
 all_urls = [url + tag_element.get('href') for tag_element in soup.find_all('a')]
-all_urls_texts = [tag_element.contents[0] for tag_element in soup.find_all('a')]
+all_urls_texts = [tag_element.contents[0] for tag_element in soup.find_all('a')]</pre><br>
+The package <a href="https://newspaper.readthedocs.io/en/latest/" > newspaper </a> is practical and useful.
     </div>
 </details>
 	
