@@ -750,7 +750,10 @@ plt.bar(x_list, y_list, bar_width)
 # full list of arguments can be found <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.bar.html">here</a>.
 
 #--- Scatterplots ---
-plt.scatter(x_list, y_list)
+plt.scatter(x_list, y_list,
+		s=30, 		# marker size 
+		alpha=.65,  	# alpha helps to show overlapping data
+		color='b')
 </pre><br>
 
 <b>Annotation</b><br>
