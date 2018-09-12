@@ -75,4 +75,25 @@ FULLTEXT #E.x: ALTER TABLE table ADD FULLTEXT(col1) \\enables text search functi
 </samp>
 </body>
 </html> 
-   
+  
+drop table  #vahidtable
+select top 50000
+ s.*, 
+ p.[Description], 
+ p.VolPerUnit,
+ a.AccountKey, 
+ a.PCodeZip
+into #vahidtable
+from
+ [magSales2k].[dbo].[Sales] s
+  INNER JOIN [magSales2k].[dbo].[Products] p ON s.ProvState = p.ProvState AND
+                                                s.ProductID = p.ProductID
+  INNER JOIN [magSales2k].[dbo].[Accounts] a ON s.ProvState = a.ProvState AND
+                                                s.AccountID = a.AccountID
+where
+ s.ProvState = 'BC' AND
+ p.ISActive = 1
+
+select SaleDate, count(Units)  from #vahidtable group by SaleDate order by saleDate desc
+
+
