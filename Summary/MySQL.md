@@ -1,14 +1,15 @@
 
 
 
-Create table<br>
-<samp>CREATE TABLE table( <br>
-col1 int AUTO_INCREMENT, <br>
-col2 varchar(30), #max string length=30 <br>
-col3 varchar(10) NOT NULL,<br>
-PRIMARY KEY(col1) <br>
-)</samp><br>
-
+Create table
+````MySQL
+CREATE TABLE table(
+col1 int AUTO_INCREMENT,
+col2 varchar(30),           #max string length=30
+col3 varchar(10) NOT NULL,
+PRIMARY KEY(col1)
+)
+````
 Delete table
 <br><samp>DROP TABLE table</samp><br>
 
