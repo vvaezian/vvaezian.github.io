@@ -73,10 +73,13 @@ SELECT CONCAT(city, ', ', state) AS address FROM customers
  ````
 `_` represents a single character, `%` represents 0 or more characters  
 `REGEXP`  E.x: . | [123] [^123] [1-7]  
-`FULLTEXT`
+`FULLTEXT` Enables text search functionality for the column "col1" of the table "table".
+This is similar to `LIKE` but easier to work with.
 ````MySQL
-ALTER TABLE table ADD FULLTEXT(col1) \\enables text search functionality for the column "col1" of the table "table": \\this is similar to LIKE but easier to work with
+ALTER TABLE table ADD FULLTEXT(col1)
 ````
+------------
+````MySQL
 select * from [dbo].[Sales] where ProvState='BC'
 select AccountID, AccountKey, PCodeZip from [dbo].[Accounts] where ProvState='BC'
 select ProductID, Description, VolPerUnit from [dbo].[Products] where IsActive=1 and ProvState='BC'
@@ -100,5 +103,4 @@ where
  p.ISActive = 1
 
 select SaleDate, count(Units)  from #vahidtable group by SaleDate order by saleDate desc
-
-
+````
