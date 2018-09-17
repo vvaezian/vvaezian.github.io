@@ -23,7 +23,7 @@ Insert row
 INSERT INTO table VALUES('col1a','col2a'),('col1b','col2b') #inserted two rows
 INSERT INTO table(col1_name,col2_name) VALUES('col1','col2')
 ````
-Insert rows from another table (same comuln names)
+Insert rows from another table (same column names)
 ````MySQL
 INSERT INTO table(col1_name,col2_name) SELECT sol1_name,col2_name FROM table2 WHERE ...
 ````
@@ -39,8 +39,10 @@ Delete column
 ````MySQL
 ALTER TABLE table DROP COLUMN col
 ````
- "VIEW" is like a reference to a portion or entire part of one or more table. It dynamically represents those info.<br>
-<samp>CREATE VIEW view AS SELECT id FROM table 1 ORDER BY col2 DESC LIMIT 10</samp><br><br>
+ **VIEW** is like a reference to a portion or entire part of one or more table. It dynamically represents those info.  
+````MySQL
+CREATE VIEW view AS SELECT id FROM table 1 ORDER BY col2 DESC LIMIT 10
+````
 
 Keywords: (<a href="https://dev.mysql.com/doc/refman/5.7/en/sql-syntax-data-manipulation.html">This</a> gives a comprehensive description)<br>
 <samp>SELECT	<br>					
