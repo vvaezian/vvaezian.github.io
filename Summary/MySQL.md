@@ -51,18 +51,18 @@ WHERE
 ````MySQL
 SELECT col3, col4, col5 FROM table WHERE (col1=1 OR col1=2) AND col3='Alex';
 ````
-LIMIT<br>					
+<samp>LIMIT<br>					
 IN<br>
 NOT IN<br>
 ORDER BY <br>
 ASC<br>
 DESC<br>
-AS #name the defined column as, it can rename the current columns or tables as well<br>
-CONCAT
+AS</<samp> name the defined column as, it can rename the current columns or tables as well<br>
+<samp>CONCAT
 ````MySQL
 SELECT CONCAT(city, ', ', state) AS address FROM customers
 ````
-UPPER #uppercase<br>
+<samp>UPPER</samp> uppercase<br>
 COUNT()<br>
 GROUP BY<br>
 HAVING #similar to WHERE but used for GROUP By<br>
