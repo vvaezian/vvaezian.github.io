@@ -1,5 +1,10 @@
 
-
+**SQL Server**
+```MySQL
+show databases;
+use myDB
+````
+--------------
 
 Create table
 ````MySQL
