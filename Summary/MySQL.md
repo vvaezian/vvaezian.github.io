@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-  <title>MySQL</title>
-  <link rel="shortcut icon" href="/vvaezian.github.io/Pic/terminal.ico">
-  <link rel="stylesheet" href="/vvaezian.github.io/styles.css"/>
-  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
-  <link href='http://fonts.googleapis.com/css?family=Hind' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
-</head>
-
-<body>
 
 
 Create table<br>
