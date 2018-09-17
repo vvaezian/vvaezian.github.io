@@ -2,7 +2,8 @@
 **SQL Server**
 ```MySQL
 show databases;
-use myDB
+use myDB;
+show tables;
 ````
 --------------
 
