@@ -11,29 +11,34 @@ PRIMARY KEY(col1)
 )
 ````
 Delete table
-<br><samp>DROP TABLE table</samp><br>
-
+````MySQL
+DROP TABLE table
+````
 Rename table
-<br><samp>RENAME TABLE table_old TO table_new</samp><br>
-
+````MySQL
+RENAME TABLE table_old TO table_new
+````
 Insert row
-<br><samp>INSERT INTO table VALUES('col1a','col2a'),('col1b','col2b') #inserted two rows<br>
-INSERT INTO table(col1_name,col2_name) VALUES('col1','col2')</samp><br>
-
-Insert rows from another table (same comuln names)<br>
-<samp>INSERT INTO table(col1_name,col2_name) SELECT sol1_name,col2_name FROM table2 WHERE ...</samp><br>
-
+````MySQL
+INSERT INTO table VALUES('col1a','col2a'),('col1b','col2b') #inserted two rows
+INSERT INTO table(col1_name,col2_name) VALUES('col1','col2')
+````
+Insert rows from another table (same comuln names)
+````MySQL
+INSERT INTO table(col1_name,col2_name) SELECT sol1_name,col2_name FROM table2 WHERE ...
+````
 Delete rows
-<br><samp>DELETE FROM table WHERE col_name=100 (e.x. id=100, deletes the rows with id=100)</samp><br>
-
-
+````MySQL
+DELETE FROM table WHERE col_name=100 (e.x. id=100, deletes the rows with id=100)
+````
 Add column
-<br><samp>ALTER TABLE table ADD col varchar(10)</samp><br>
-
-
+````MySQL
+ALTER TABLE table ADD col varchar(10)
+````
 Delete column
-<br><samp>ALTER TABLE table DROP COLUMN col</samp><br>
-
+````MySQL
+ALTER TABLE table DROP COLUMN col
+````
  "VIEW" is like a reference to a portion or entire part of one or more table. It dynamically represents those info.<br>
 <samp>CREATE VIEW view AS SELECT id FROM table 1 ORDER BY col2 DESC LIMIT 10</samp><br><br>
 
