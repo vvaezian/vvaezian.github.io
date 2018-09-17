@@ -47,7 +47,10 @@ CREATE VIEW view AS SELECT id FROM table 1 ORDER BY col2 DESC LIMIT 10
 Keywords: (<a href="https://dev.mysql.com/doc/refman/5.7/en/sql-syntax-data-manipulation.html">This</a> gives a comprehensive description)<br>
 <samp>SELECT	<br>					
 FROM<br>
-WHERE 		#E.x: SELECT col3, col4, col5 FROM table WHERE (col1=1 OR col1=2) AND col3='Alex';<br>
+WHERE
+````MySQL
+SELECT col3, col4, col5 FROM table WHERE (col1=1 OR col1=2) AND col3='Alex';
+````
 LIMIT<br>					
 IN<br>
 NOT IN<br>
@@ -55,7 +58,10 @@ ORDER BY <br>
 ASC<br>
 DESC<br>
 AS #name the defined column as, it can rename the current columns or tables as well<br>
-CONCAT #E.X: SELECT CONCAT(city, ', ', state) AS address FROM customers
+CONCAT
+````MySQL
+SELECT CONCAT(city, ', ', state) AS address FROM customers
+````
 UPPER #uppercase<br>
 COUNT()<br>
 GROUP BY<br>
