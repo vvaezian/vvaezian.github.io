@@ -44,21 +44,21 @@ ALTER TABLE table DROP COLUMN col
 CREATE VIEW view AS SELECT id FROM table 1 ORDER BY col2 DESC LIMIT 10
 ````
 
-Keywords: (<a href="https://dev.mysql.com/doc/refman/5.7/en/sql-syntax-data-manipulation.html">This</a> gives a comprehensive description)<br>
-<samp>SELECT	<br>					
-FROM<br>
-WHERE
+`Keywords` (<a href="https://dev.mysql.com/doc/refman/5.7/en/sql-syntax-data-manipulation.html">This</a> gives a comprehensive description)  
+`SELECT`			
+`FROM`  
+`WHERE`  
 ````MySQL
 SELECT col3, col4, col5 FROM table WHERE (col1=1 OR col1=2) AND col3='Alex';
 ````
-<samp>LIMIT<br>					
-IN<br>
-NOT IN<br>
-ORDER BY <br>
-ASC<br>
-DESC<br>
-AS</samp> name the defined column as, it can rename the current columns or tables as well<br>
-<samp>CONCAT
+`LIMIT`  					
+`IN`  
+`NOT IN`  
+`ORDER BY`  
+`ASC`  
+`DESC`  
+`AS` name the defined column as, it can rename the current columns or tables as well  
+`CONCAT`
 ````MySQL
 SELECT CONCAT(city, ', ', state) AS address FROM customers
 ````
@@ -66,21 +66,17 @@ SELECT CONCAT(city, ', ', state) AS address FROM customers
 `COUNT()`  
 `GROUP BY`  
 `HAVING` similar to WHERE but used for GROUP By  
-`UNION` similar to OR but between queries (the SELECT part need to be the same)<br>
+`UNION` similar to OR but between queries (the SELECT part need to be the same)  
 `LIKE`
  ````MySQL
  SELECT city FROM customers WHERE city LIKE 'h%d'; \\starts with h and ends with d. <br>
  ````
 `_` represents a single character, `%` represents 0 or more characters  
-`REGEXP`  E.x: . | [123] [^123] [1-7]
+`REGEXP`  E.x: . | [123] [^123] [1-7]  
 `FULLTEXT`
 ````MySQL
 ALTER TABLE table ADD FULLTEXT(col1) \\enables text search functionality for the column "col1" of the table "table": \\this is similar to LIKE but easier to work with
 ````
-</samp>
-</body>
-</html> 
-
 select * from [dbo].[Sales] where ProvState='BC'
 select AccountID, AccountKey, PCodeZip from [dbo].[Accounts] where ProvState='BC'
 select ProductID, Description, VolPerUnit from [dbo].[Products] where IsActive=1 and ProvState='BC'
