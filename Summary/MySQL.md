@@ -57,20 +57,26 @@ NOT IN<br>
 ORDER BY <br>
 ASC<br>
 DESC<br>
-AS</<samp> name the defined column as, it can rename the current columns or tables as well<br>
+AS</samp> name the defined column as, it can rename the current columns or tables as well<br>
 <samp>CONCAT
 ````MySQL
 SELECT CONCAT(city, ', ', state) AS address FROM customers
 ````
-<samp>UPPER</samp> uppercase<br>
-COUNT()<br>
-GROUP BY<br>
-HAVING #similar to WHERE but used for GROUP By<br>
-UNION #similar to OR but between queries (the SELECT part need to be the same)<br>
-LIKE #E.x: SELECT city FROM customers WHERE city LIKE 'h%d'; \\starts with h and ends with d. <br>
-_ represents a single character, % represents 0 or more characters<br>
-REGEXP  #E.x: . | [123] [^123] [1-7]
-FULLTEXT #E.x: ALTER TABLE table ADD FULLTEXT(col1) \\enables text search functionality for the column "col1" of the table "table": \\this is similar to LIKE but easier to work with
+`UPPER` uppercase  
+`COUNT()`  
+`GROUP BY`  
+`HAVING` similar to WHERE but used for GROUP By  
+`UNION` similar to OR but between queries (the SELECT part need to be the same)<br>
+`LIKE`
+ ````MySQL
+ SELECT city FROM customers WHERE city LIKE 'h%d'; \\starts with h and ends with d. <br>
+ ````
+`_` represents a single character, `%` represents 0 or more characters  
+`REGEXP`  E.x: . | [123] [^123] [1-7]
+`FULLTEXT`
+````MySQL
+ALTER TABLE table ADD FULLTEXT(col1) \\enables text search functionality for the column "col1" of the table "table": \\this is similar to LIKE but easier to work with
+````
 </samp>
 </body>
 </html> 
