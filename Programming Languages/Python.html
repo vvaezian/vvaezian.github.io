@@ -808,6 +808,7 @@ msg = "hi, this is a test"
 print(re.findall('.*s', msg))  # ['hi, this is a tes']
 print(re.findall('.*?s', msg))  # ['hi, this', ' is', ' a tes']  non-greedy search
 print(re.findall('\w+', msg))  # ['hi', 'this', 'is', 'a', 'test'] \w = [A-Za-z0-9_]
+# lookaround is important too.
 </pre><br>
     </div>
 </details>
