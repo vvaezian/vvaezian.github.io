@@ -799,6 +799,18 @@ plt.clabel(c, inline=1, fontsize=10)
     </div>
 </details>
 
+<details class="details">
+    <summary><div class="wrapper"><h4>Regular Expressions</h4></div></summary>
+    <div class="content">
+        <pre class=prettyprint>
+import re
+msg = "hi, this is a test"
+print(re.findall('.*s', msg))  # ['hi, this is a tes']
+print(re.findall('.*?s', msg))  # ['hi, this', ' is', ' a tes']  non-greedy search
+print(re.findall('\w+', msg))  # ['hi', 'this', 'is', 'a', 'test'] \w = [A-Za-z0-9_]
+</pre><br>
+    </div>
+</details>
 
 <details class="details">
     <summary><div class="wrapper"><h4><samp><b>Web Scraping</b></samp></h4></div></summary>
