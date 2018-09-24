@@ -805,11 +805,14 @@ plt.clabel(c, inline=1, fontsize=10)
         <pre class=prettyprint>
 import re
 msg = "hi, this is a test"
-print(re.findall('.*s', msg))  # ['hi, this is a tes']
-print(re.findall('.*?s', msg))  # ['hi, this', ' is', ' a tes']  non-greedy search
-print(re.findall('\w+', msg))  # ['hi', 'this', 'is', 'a', 'test'] \w = [A-Za-z0-9_]
-# lookaround is important too.
+re.findall('.*s', msg)[0]  # ['hi, this is a tes']
+re.findall('.*?s', msg)[0]  # ['hi, this', ' is', ' a tes']  non-greedy search
+re.findall('\w+', msg)[0]  # ['hi', 'this', 'is', 'a', 'test'] \w = [A-Za-z0-9_]
 </pre><br>
+Matching the part that starts with an space followed by / (without including the space in the result) until a space 
+(without including the space):<br>
+<samp>re.findall('(?<=\s)/[^\s]*', log_msg)[0] # ?<= is called 'lookahead'</samp></br>
+
     </div>
 </details>
 
