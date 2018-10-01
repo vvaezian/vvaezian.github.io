@@ -879,9 +879,18 @@ The package <a href="https://newspaper.readthedocs.io/en/latest/" > newspaper </
 	<li>Prettyprinting structured data: <br>
 		<pre class=prettyprint>
 import pprint
-pprint.pprint(structuredData)</pre>
+pprint.pprint(structuredData)</pre><br>
+		
+<pre class=prettyprint>
+import pprint
+import json
+
+response = requests.get("URL")
+pprint.pprint(json.loads(response.text))</pre>
+
 	<li><kbd>inspect</kbd> is handy for looking at source code modules:<br>
-		<pre class=prettyprint>
+
+<pre class=prettyprint>
 import inspect
 import queue	# Python 3
 print(inspect.getsource(queue))</pre>
