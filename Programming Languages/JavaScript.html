@@ -136,7 +136,13 @@ var w = arr.slice(1); // equivalent of arr[1:] in Python
 var w = arr.slice(1,3) // equivalent of arr[1:3] in Python
 </pre><br>
 - JavaScript does not support arrays with named indexes (associative arrays). 
-They always use numbered indexes. For named indexes we should use objects.
+They always use numbered indexes. For named indexes we should use objects.<br>
+- In JS, arrays are of type <samp>object</samp>. So <samp>['a', 'b', 'c']</samp> is in fact <samp>{0:'a', 1:'b', 2:'c'}</samp>. 
+That is why in<br>
+<pre class="prettyprint">
+for (i in arr) { 
+  console.log(i) 
+}</pre><br> the indexes are printed. So JS arrays are like dictionaries with integere keys in Python.
   </li>
 
   <li><b>Misc.</b><br>
@@ -155,12 +161,25 @@ They always use numbered indexes. For named indexes we should use objects.
       break myLabel;
     ...
    }</pre>
- <li>In JS, arrays are of type <samp>object</samp>. So <samp>['a', 'b', 'c']</samp> is in fact <samp>{0:'a', 1:'b', 2:'c'}</samp>. 
-  That is why in<br>
-  <pre class="prettyprint">
-  for (i in arr) { 
-    console.log(i) 
-  }</pre><br> the indexes are printed. So JS arrays are like dictionaries with integere keys in Python.
+   
+ <li><b>Scripts</b><br>
+  - Downloading all PDF's in a website (<a href=" ">source</a>):<br>
+<pre>function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function dl() {
+	for(var count=20; count<1002; count++) {
+	var url = 'ftp://poguser:showme@ftp.aafes.com/pogs/' + String(links[count].getAttribute('href'));
+	//console.log(url)
+	if(url && url.endsWith('wine.pdf')) {
+   links[count].dispatchEvent(new MouseEvent('click'));
+	//console.log('downloading ...');
+	await sleep(10000);
+	    }
+	}
+}
+dl();</pre><br>
+ 
 </ul>
 
 
