@@ -167,8 +167,11 @@ myLabel: {
 <pre class="pretttyprint">function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+var links = document.getElementsByTagName('a');
+
 async function dl() {
-  for(var count=20; count<1002; count++) {
+  for(var count=20; count<links.length; count++) {
   var url = 'prefix_in_case_it_is_a_local_path_to_link' + String(links[count].getAttribute('href'));
   //console.log(url)
   if(url && url.endsWith('.pdf')) {
