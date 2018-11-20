@@ -1,6 +1,6 @@
 
 Create table
-````MySQL
+````SQL
 CREATE TABLE table(
 col1 int AUTO_INCREMENT,
 col2 varchar(30),           #max string length=30
@@ -9,36 +9,36 @@ PRIMARY KEY(col1)
 )
 ````
 Delete table
-````MySQL
+````SQL
 DROP TABLE table
 ````
 Rename table
-````MySQL
+````SQL
 RENAME TABLE table_old TO table_new
 ````
 Insert row
-````MySQL
+````SQL
 INSERT INTO table VALUES('col1a','col2a'),('col1b','col2b') #inserted two rows
 INSERT INTO table(col1_name,col2_name) VALUES('col1','col2')
 ````
 Insert rows from another table (same column names)
-````MySQL
+````SQL
 INSERT INTO table(col1_name,col2_name) SELECT sol1_name,col2_name FROM table2 WHERE ...
 ````
 Delete rows
-````MySQL
+````SQL
 DELETE FROM table WHERE col_name=100 (e.x. id=100, deletes the rows with id=100)
 ````
 Add column
-````MySQL
+````SQL
 ALTER TABLE table ADD col varchar(10)
 ````
 Delete column
-````MySQL
+````SQL
 ALTER TABLE table DROP COLUMN col
 ````
  **VIEW** is like a reference to a portion or entire part of one or more table. It dynamically represents those info.  
-````MySQL
+````SQL
 CREATE VIEW view AS SELECT id FROM table 1 ORDER BY col2 DESC LIMIT 10
 ````
 
@@ -46,7 +46,7 @@ CREATE VIEW view AS SELECT id FROM table 1 ORDER BY col2 DESC LIMIT 10
 `SELECT`			
 `FROM`  
 `WHERE`  
-````MySQL
+````SQL
 SELECT col3, col4, col5 FROM table WHERE (col1=1 OR col1=2) AND col3='Alex';
 ````
 `LIMIT`  					
@@ -66,19 +66,19 @@ SELECT CONCAT(city, ', ', state) AS address FROM customers
 `HAVING` similar to WHERE but used for GROUP By  
 `UNION` similar to OR but between queries (the SELECT part need to be the same)  
 `LIKE`
- ````MySQL
+ ````SQL
  SELECT city FROM customers WHERE city LIKE 'h%d'; \\starts with h and ends with d. <br>
  ````
 `_` represents a single character, `%` represents 0 or more characters  
 `REGEXP`  E.x: . | [123] [^123] [1-7]  
 `FULLTEXT` Enables text search functionality for the column "col1" of the table "table".
 This is similar to `LIKE` but easier to work with.
-````MySQL
+````SQL
 ALTER TABLE table ADD FULLTEXT(col1)
 ````
 ------------
 **SQL Server**
-```MySQL
+```SQL
 show databases;
 use myDB;
 show tables;
