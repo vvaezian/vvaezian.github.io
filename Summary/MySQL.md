@@ -111,31 +111,47 @@ select SaleDate, count(Units)  from #vahidtable group by SaleDate order by saleD
 ````
 #### Pricing
 ````SQL
-drop table  #tt
+
+select CSPC, ScenarioName, MarketRouteID, MarketRouteShortName, ScenarioStatus, ScenarioStatusID, StartDate, EndDate, StandardCost, StandardCostCurrency, IndirectCost, Inbond, InbondCurrency, DutyPaid, WholeSalePrice, RetailPrice, Discount, MarginPct, MarginDollars
+into PricingTest.dbo.VANSQL12t
+FROM vansql12.CAN_Pricing.dbo.vListingScenarios where CSPC='257816' and MarketRouteShortName='BC' and ScenarioStatusID!=0 order by StartDate desc
+
+select * from PricingTest.dbo.VANSQL12t
+-- -------------------------
+
+drop table PricingTest.dbo.VANSQL13t
 SELECT s.ProductID, s.SaleDate, s.AccountID, s.Units, s.ProvState,
-p.Type, p.Description, p.Brand, p.SubBrand, p.Category, p.SubCategory, p.Varietal, p.Manufacturer, p.Origin, p.Country, p.Agent, p.MAG, p.IsActive
-into #tt
-FROM [magSales2k].[dbo].[Sales] s 
-	INNER JOIN [magSales2k].[dbo].[Products] p 
+p.Type, p.Description, p.Brand, p.SubBrand, p.Category, p.SubCategory, p.Varietal, p.Manufacturer, p.Origin, p.Country, p.Agent, p.MAG, p.IsActive, p.UnitsPerCase
+into PricingTest.dbo.VANSQL13t
+FROM vansql13.[magSales2k].[dbo].[Sales] s 
+	INNER JOIN vansql13.[magSales2k].[dbo].[Products] p 
 	ON  s.ProductID = p.ProductID 
 WHERE p.MAG = 1 and p.IsActive = 1
+and s.ProductID='0257816' and s.ProvState='BC'
 
 -- Aggregate
-drop table #tt2
-select SaleDate, sum(units) as 'units' into #tt2 from #tt where ProductID='0257816' and ProvState='BC' group by SaleDate order by SaleDate desc
+drop table #tt
+select SaleDate, sum(units) as 'units' into #tt from PricingTest.dbo.VANSQL13t group by SaleDate order by SaleDate desc
 
 -- Add row number
-drop table #tt3
+drop table #tt2
 select r = ROW_NUMBER() OVER (ORDER BY a.SaleDate Desc), a.SaleDate, a.units
-into #tt3 from #tt2 as a order by a.SaleDate desc
+into #tt2 from #tt as a order by a.SaleDate desc
 
 -- Calculate the days-difference and add as a column
-drop table #tt4
+drop table #tt3
 SELECT a.SaleDate, a.units, DATEDIFF(day, b.SaleDate, a.SaleDate) as datedif
-into #tt4 FROM #tt3 a 
-LEFT JOIN #tt3 b on a.r = b.r - 1
+into #tt3 FROM #tt2 a 
+LEFT JOIN #tt2 b on a.r = b.r - 1
 
 -- Calculate Average Units Sold per day and add as a column
-drop table #tt5
-select SaleDate, units, datedif, units / datedif as 'average' into #tt5 from #tt4
+drop table #tt4
+select SaleDate, units, datedif, units / datedif as 'average' into #tt4 from #tt3
+
+-- Get UnitPerCase
+declare @unitPerCase int
+set @unitPerCase = (select top 1 UnitsPerCase  FROM vansql13.[magSales2k].[dbo].[Products] where cspc = '0255380')
+
+select	bb.ScenarioName, bb.EndDate, aa.units, aa.datedif, aa.average, bb.StandardCost, bb.StandardCostCurrency as sCur, bb.inbond, bb.InbondCurrency as iCur, bb.Discount, bb.RetailPrice, bb.MarginDollars, 
+		aa.units, (aa.units / @unitPerCase) as cases, (aa.units/ @unitPerCase) * bb.MarginDollars as profitTotal, ((aa.units/ @unitPerCase) * bb.MarginDollars)/datedif as profitAVGPerDay from #tt4 aa INNER JOIN PricingTest.dbo.VANSQL12t bb ON aa.SaleDate = bb.EndDate
 ````
