@@ -110,7 +110,7 @@ where
 select SaleDate, count(Units)  from #vahidtable group by SaleDate order by saleDate desc
 ````
 #### Pricing
-````MySQL
+````SQL
 drop table  #tt
 SELECT s.ProductID, s.SaleDate, s.AccountID, s.Units, s.ProvState,
 p.Type, p.Description, p.Brand, p.SubBrand, p.Category, p.SubCategory, p.Varietal, p.Manufacturer, p.Origin, p.Country, p.Agent, p.MAG, p.IsActive
