@@ -1,12 +1,4 @@
 
-**SQL Server**
-```MySQL
-show databases;
-use myDB;
-show tables;
-````
---------------
-
 Create table
 ````MySQL
 CREATE TABLE table(
@@ -85,6 +77,13 @@ This is similar to `LIKE` but easier to work with.
 ALTER TABLE table ADD FULLTEXT(col1)
 ````
 ------------
+**SQL Server**
+```MySQL
+show databases;
+use myDB;
+show tables;
+````
+
 ````MySQL
 select * from [dbo].[Sales] where ProvState='BC'
 select AccountID, AccountKey, PCodeZip from [dbo].[Accounts] where ProvState='BC'
@@ -109,4 +108,33 @@ where
  p.ISActive = 1
 
 select SaleDate, count(Units)  from #vahidtable group by SaleDate order by saleDate desc
+````
+````MySQL
+drop table  #tt
+SELECT s.ProductID, s.SaleDate, s.AccountID, s.Units, s.ProvState,
+p.Type, p.Description, p.Brand, p.SubBrand, p.Category, p.SubCategory, p.Varietal, p.Manufacturer, p.Origin, p.Country, p.Agent, p.MAG, p.IsActive
+into #tt
+FROM [magSales2k].[dbo].[Sales] s 
+	INNER JOIN [magSales2k].[dbo].[Products] p 
+	ON  s.ProductID = p.ProductID 
+WHERE p.MAG = 1 and p.IsActive = 1
+
+-- Aggregate
+drop table #tt2
+select SaleDate, sum(units) as 'units' into #tt2 from #tt where ProductID='0257816' and ProvState='BC' group by SaleDate order by SaleDate desc
+
+-- Add row number
+drop table #tt3
+select r = ROW_NUMBER() OVER (ORDER BY a.SaleDate Desc), a.SaleDate, a.units
+into #tt3 from #tt2 as a order by a.SaleDate desc
+
+-- Calculate the days-difference and add as a column
+drop table #tt4
+SELECT a.SaleDate, a.units, DATEDIFF(day, b.SaleDate, a.SaleDate) as datedif
+into #tt4 FROM #tt3 a 
+LEFT JOIN #tt3 b on a.r = b.r - 1
+
+-- Calculate Average Units Sold per day and add as a column
+drop table #tt5
+select SaleDate, units, datedif, units / datedif as 'average' into #tt5 from #tt4
 ````
