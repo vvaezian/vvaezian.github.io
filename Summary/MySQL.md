@@ -111,8 +111,7 @@ select SaleDate, count(Units)  from #vahidtable group by SaleDate order by saleD
 ````
 #### Pricing
 ````SQL
-
-select CSPC, ScenarioName, MarketRouteID, MarketRouteShortName, ScenarioStatus, ScenarioStatusID, StartDate, EndDate, StandardCost, StandardCostCurrency, IndirectCost, Inbond, InbondCurrency, DutyPaid, WholeSalePrice, RetailPrice, Discount, MarginPct, MarginDollars
+SELECT CSPC, ScenarioName, MarketRouteID, MarketRouteShortName, ScenarioStatus, ScenarioStatusID, StartDate, EndDate, StandardCost, StandardCostCurrency, IndirectCost, Inbond, InbondCurrency, DutyPaid, WholeSalePrice, RetailPrice, Discount, MarginPct, MarginDollars
 into PricingTest.dbo.VANSQL12t
 FROM vansql12.CAN_Pricing.dbo.vListingScenarios where CSPC='257816' and MarketRouteShortName='BC' and ScenarioStatusID!=0 order by StartDate desc
 
@@ -150,8 +149,10 @@ select SaleDate, units, datedif, units / datedif as 'average' into #tt4 from #tt
 
 -- Get UnitPerCase
 declare @unitPerCase int
-set @unitPerCase = (select top 1 UnitsPerCase  FROM vansql13.[magSales2k].[dbo].[Products] where cspc = '0255380')
+set @unitPerCase = (select top 1 UnitsPerCase  FROM vansql13.[magSales2k].[dbo].[Products] where cspc = '0257816')
 
-select	bb.ScenarioName, bb.EndDate, aa.units, aa.datedif, aa.average, bb.StandardCost, bb.StandardCostCurrency as sCur, bb.inbond, bb.InbondCurrency as iCur, bb.Discount, bb.RetailPrice, bb.MarginDollars, 
-		aa.units, (aa.units / @unitPerCase) as cases, (aa.units/ @unitPerCase) * bb.MarginDollars as profitTotal, ((aa.units/ @unitPerCase) * bb.MarginDollars)/datedif as profitAVGPerDay from #tt4 aa INNER JOIN PricingTest.dbo.VANSQL12t bb ON aa.SaleDate = bb.EndDate
+select	bb.ScenarioName, bb.EndDate, aa.units, aa.datedif, aa.average, bb.StandardCost, bb.StandardCostCurrency as sCur, bb.inbond, bb.InbondCurrency as iCur, bb.Discount, bb.WholeSalePrice, bb.RetailPrice, bb.MarginPct, bb.MarginDollars, 
+		(aa.units / @unitPerCase) as cases, (aa.units/ @unitPerCase) * bb.MarginDollars as profitTotal, ((aa.units/ @unitPerCase) * bb.MarginDollars)/datedif as profitAVGPerDay 
+INTO PricingTest.dbo.T0257816
+from #tt4 aa INNER JOIN PricingTest.dbo.VANSQL12t bb ON aa.SaleDate = bb.EndDate
 ````
