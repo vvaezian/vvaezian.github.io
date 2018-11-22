@@ -156,3 +156,72 @@ select	bb.ScenarioName, bb.EndDate, aa.units, aa.datedif, aa.average, bb.Standar
 INTO PricingTest.dbo.T0257816
 from #tt4 aa INNER JOIN PricingTest.dbo.VANSQL12t bb ON aa.SaleDate = bb.EndDate
 ````
+recent
+````
+drop table #cursorTable1
+select * into #cursorTable1 from VANSQL12t
+left join (select SaleDate, sum(units) as 'units' from VANSQL13t  group by SaleDate) Z on Z.SaleDate=VANSQL12t.EndDate  order by VANSQL12t.StartDate 
+
+--select * from #cursorTable1
+
+DECLARE @curStartDate DATE, @prevStartDate DATE, @curSaleDate DATE, @prevSaleDate DATE, @StoredDate DATE = (select top 1 startDate from #cursorTable1);
+DECLARE cursor_res1 CURSOR FOR
+  SELECT StartDate, SaleDate FROM #cursorTable1;
+
+OPEN cursor_res1
+FETCH NEXT FROM cursor_res1 into @curStartDate, @curSaleDate
+WHILE @@FETCH_STATUS = 0
+BEGIN 
+  IF @curSaleDate is NULL and @prevSaleDate is not null
+	SET @StoredDate = @CurStartDate;
+  IF @curSaleDate is not NULL and @prevSaleDate is null
+    BEGIN
+	  UPDATE #cursorTable1 SET StartDate = @StoredDate WHERE CURRENT OF cursor_res1; 
+	  -- SET @sum = 0;
+	END 
+  SET @prevStartDate = @curStartDate
+  SET @prevSaleDate = @curSaleDate
+  FETCH NEXT FROM cursor_res1 into @curStartDate, @curSaleDate
+END
+ 
+CLOSE cursor_res1;
+DEALLOCATE cursor_res1;
+
+-- select * from #cursorTable1
+
+DELETE FROM #cursorTable1 WHERE SaleDate is Null
+ALTER TABLE #cursorTable1 DROP Column SaleDate, units
+
+drop table #cursorTable2
+select * 
+into #cursorTable2 
+from (select SaleDate, sum(units) as 'units' from VANSQL13t  group by SaleDate) Z
+left join #cursorTable1 on Z.SaleDate=#cursorTable1.EndDate where SaleDate > '2013-07-27' order by Z.SaleDate
+
+-- select * from #cursorTable2 order by SaleDate
+
+DECLARE @CurrUnits INT, @currCSPC INT, @prevCSPC INT, @sum INT = 0;
+DECLARE cursor_res CURSOR FOR
+  SELECT units, CSPC FROM #cursorTable2;
+
+OPEN cursor_res
+FETCH NEXT FROM cursor_res into @CurrUnits, @currCSPC
+WHILE @@FETCH_STATUS = 0
+BEGIN 
+  IF @currCSPC is NULL 
+	SET @sum = @sum + @CurrUnits;
+  ELSE
+	IF @prevCSPC is null
+      BEGIN
+	    UPDATE #cursorTable2 SET units = @sum + @CurrUnits WHERE CURRENT OF cursor_res; 
+	    SET @sum = 0;
+	  END 
+  SET @prevCSPC = @currCSPC
+  FETCH NEXT FROM cursor_res into @CurrUnits, @currCSPC
+END
+ 
+CLOSE cursor_res;
+DEALLOCATE cursor_res;
+
+select saleDate, StartDate, EndDate, units from #cursorTable2 where CSPC is not null order by StartDate desc
+````
