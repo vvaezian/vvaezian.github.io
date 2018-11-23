@@ -111,59 +111,11 @@ select SaleDate, count(Units)  from #vahidtable group by SaleDate order by saleD
 ````
 #### Pricing
 ````SQL
-SELECT CSPC, ScenarioName, MarketRouteID, MarketRouteShortName, ScenarioStatus, ScenarioStatusID, StartDate, EndDate, StandardCost, StandardCostCurrency, IndirectCost, Inbond, InbondCurrency, DutyPaid, WholeSalePrice, RetailPrice, Discount, MarginPct, MarginDollars
-into PricingTest.dbo.VANSQL12t
-FROM vansql12.CAN_Pricing.dbo.vListingScenarios where CSPC='257816' and MarketRouteShortName='BC' and ScenarioStatusID!=0 order by StartDate desc
-
-select * from PricingTest.dbo.VANSQL12t
--- -------------------------
-
-drop table PricingTest.dbo.VANSQL13t
-SELECT s.ProductID, s.SaleDate, s.AccountID, s.Units, s.ProvState,
-p.Type, p.Description, p.Brand, p.SubBrand, p.Category, p.SubCategory, p.Varietal, p.Manufacturer, p.Origin, p.Country, p.Agent, p.MAG, p.IsActive, p.UnitsPerCase
-into PricingTest.dbo.VANSQL13t
-FROM vansql13.[magSales2k].[dbo].[Sales] s 
-	INNER JOIN vansql13.[magSales2k].[dbo].[Products] p 
-	ON  s.ProductID = p.ProductID 
-WHERE p.MAG = 1 and p.IsActive = 1
-and s.ProductID='0257816' and s.ProvState='BC'
-
--- Aggregate
-drop table #tt
-select SaleDate, sum(units) as 'units' into #tt from PricingTest.dbo.VANSQL13t group by SaleDate order by SaleDate desc
-
--- Add row number
-drop table #tt2
-select r = ROW_NUMBER() OVER (ORDER BY a.SaleDate Desc), a.SaleDate, a.units
-into #tt2 from #tt as a order by a.SaleDate desc
-
--- Calculate the days-difference and add as a column
-drop table #tt3
-SELECT a.SaleDate, a.units, DATEDIFF(day, b.SaleDate, a.SaleDate) as datedif
-into #tt3 FROM #tt2 a 
-LEFT JOIN #tt2 b on a.r = b.r - 1
-
--- Calculate Average Units Sold per day and add as a column
-drop table #tt4
-select SaleDate, units, datedif, units / datedif as 'average' into #tt4 from #tt3
-
--- Get UnitPerCase
-declare @unitPerCase int
-set @unitPerCase = (select top 1 UnitsPerCase  FROM vansql13.[magSales2k].[dbo].[Products] where cspc = '0257816')
-
-select	bb.ScenarioName, bb.EndDate, aa.units, aa.datedif, aa.average, bb.StandardCost, bb.StandardCostCurrency as sCur, bb.inbond, bb.InbondCurrency as iCur, bb.Discount, bb.WholeSalePrice, bb.RetailPrice, bb.MarginPct, bb.MarginDollars, 
-		(aa.units / @unitPerCase) as cases, (aa.units/ @unitPerCase) * bb.MarginDollars as profitTotal, ((aa.units/ @unitPerCase) * bb.MarginDollars)/datedif as profitAVGPerDay 
-INTO PricingTest.dbo.T0257816
-from #tt4 aa INNER JOIN PricingTest.dbo.VANSQL12t bb ON aa.SaleDate = bb.EndDate
-````
-recent
-````
 drop table #cursorTable1
 select * into #cursorTable1 from VANSQL12t
 left join (select SaleDate, sum(units) as 'units' from VANSQL13t  group by SaleDate) Z on Z.SaleDate=VANSQL12t.EndDate  order by VANSQL12t.StartDate 
 
---select * from #cursorTable1
-
+-- Correct those periods of price change that their EndDate doesn't correspond with a SaleDate
 DECLARE @curStartDate DATE, @prevStartDate DATE, @curSaleDate DATE, @prevSaleDate DATE, @StoredDate DATE = (select top 1 startDate from #cursorTable1);
 DECLARE cursor_res1 CURSOR FOR
   SELECT StartDate, SaleDate FROM #cursorTable1;
@@ -175,30 +127,24 @@ BEGIN
   IF @curSaleDate is NULL and @prevSaleDate is not null
 	SET @StoredDate = @CurStartDate;
   IF @curSaleDate is not NULL and @prevSaleDate is null
-    BEGIN
-	  UPDATE #cursorTable1 SET StartDate = @StoredDate WHERE CURRENT OF cursor_res1; 
-	  -- SET @sum = 0;
-	END 
+    UPDATE #cursorTable1 SET StartDate = @StoredDate WHERE CURRENT OF cursor_res1; 
   SET @prevStartDate = @curStartDate
   SET @prevSaleDate = @curSaleDate
   FETCH NEXT FROM cursor_res1 into @curStartDate, @curSaleDate
 END
- 
+
 CLOSE cursor_res1;
 DEALLOCATE cursor_res1;
-
--- select * from #cursorTable1
 
 DELETE FROM #cursorTable1 WHERE SaleDate is Null
 ALTER TABLE #cursorTable1 DROP Column SaleDate, units
 
+-- Sum the units sold for periods of price change 
 drop table #cursorTable2
 select * 
 into #cursorTable2 
 from (select SaleDate, sum(units) as 'units' from VANSQL13t  group by SaleDate) Z
 left join #cursorTable1 on Z.SaleDate=#cursorTable1.EndDate where SaleDate > '2013-07-27' order by Z.SaleDate
-
--- select * from #cursorTable2 order by SaleDate
 
 DECLARE @CurrUnits INT, @currCSPC INT, @prevCSPC INT, @sum INT = 0;
 DECLARE cursor_res CURSOR FOR
@@ -223,5 +169,10 @@ END
 CLOSE cursor_res;
 DEALLOCATE cursor_res;
 
-select saleDate, StartDate, EndDate, units from #cursorTable2 where CSPC is not null order by StartDate desc
+-- Get UnitPerCase
+declare @unitPerCase int = (select top 1 UnitsPerCase FROM vansql13.[magSales2k].[dbo].[Products] where cspc = '0257816')
+
+select StartDate, EndDate, Discount, MarginDollars, SaleDate, Units, (units / @unitPerCase) as Cases, (units/ @unitPerCase) * MarginDollars as profitTotal,
+DATEDIFF(day, StartDate, EndDate) as 'dateDif', units / DATEDIFF(day, StartDate, EndDate) as 'AvgUnits/Day', ((units/ @unitPerCase) * MarginDollars)/DATEDIFF(day, StartDate, EndDate) as 'AVGProfit/Day' 
+from #cursorTable2 where CSPC is not null order by SaleDate desc
 ````
