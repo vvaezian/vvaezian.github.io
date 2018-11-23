@@ -141,9 +141,7 @@ ALTER TABLE #cursorTable1 DROP Column SaleDate, units
 
 -- Sum the units sold for periods of price change 
 drop table #cursorTable2
-select * 
-into #cursorTable2 
-from (select SaleDate, sum(units) as 'units' from VANSQL13t  group by SaleDate) Z
+select * into #cursorTable2 from (select SaleDate, sum(units) as 'units' from VANSQL13t  group by SaleDate) Z
 left join #cursorTable1 on Z.SaleDate=#cursorTable1.EndDate where SaleDate > '2013-07-27' order by Z.SaleDate
 
 DECLARE @CurrUnits INT, @currCSPC INT, @prevCSPC INT, @sum INT = 0;
