@@ -170,7 +170,7 @@ DEALLOCATE cursor_res;
 -- Get UnitPerCase
 declare @unitPerCase int = (select top 1 UnitsPerCase FROM vansql13.[magSales2k].[dbo].[Products] where cspc = '0257816')
 
-select StartDate, EndDate, Discount, MarginDollars, SaleDate, Units, (units / @unitPerCase) as Cases, (units/ @unitPerCase) * MarginDollars as profitTotal,
+select StartDate, EndDate, Discount, MarginDollars, SaleDate, Units, (units / @unitPerCase) as Cases, (units/ @unitPerCase) * (MarginDollars - Discount) as profitTotal,
 DATEDIFF(day, StartDate, EndDate) as 'dateDif', units / DATEDIFF(day, StartDate, EndDate) as 'AvgUnits/Day', ((units/ @unitPerCase) * MarginDollars)/DATEDIFF(day, StartDate, EndDate) as 'AVGProfit/Day' 
 from #cursorTable2 where CSPC is not null order by SaleDate desc
 ````
