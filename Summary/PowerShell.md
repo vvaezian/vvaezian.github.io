@@ -1,4 +1,4 @@
-#### `grep` Equivalent
-````POWERSHELL
-findstr "string"
-````
+-  `grep` Equivalent: `findstr "string"`  
+case insensetive: `findstr /I`
+
+- Help: `Get-Help <command>`
