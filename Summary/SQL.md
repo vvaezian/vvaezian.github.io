@@ -84,31 +84,6 @@ use myDB;
 show tables;
 ````
 
-````MySQL
-select * from [dbo].[Sales] where ProvState='BC'
-select AccountID, AccountKey, PCodeZip from [dbo].[Accounts] where ProvState='BC'
-select ProductID, Description, VolPerUnit from [dbo].[Products] where IsActive=1 and ProvState='BC'
-
-drop table  #vahidtable
-select top 50000
- s.*, 
- p.[Description], 
- p.VolPerUnit,
- a.AccountKey, 
- a.PCodeZip
-into #vahidtable
-from
- [magSales2k].[dbo].[Sales] s
-  INNER JOIN [magSales2k].[dbo].[Products] p ON s.ProvState = p.ProvState AND
-                                                s.ProductID = p.ProductID
-  INNER JOIN [magSales2k].[dbo].[Accounts] a ON s.ProvState = a.ProvState AND
-                                                s.AccountID = a.AccountID
-where
- s.ProvState = 'BC' AND
- p.ISActive = 1
-
-select SaleDate, count(Units)  from #vahidtable group by SaleDate order by saleDate desc
-````
 #### Finding All Columns
 ````SQL
 /* searching all columns of a database */
