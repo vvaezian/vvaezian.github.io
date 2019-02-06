@@ -76,8 +76,8 @@ This is similar to `LIKE` but easier to work with.
 ````SQL
 ALTER TABLE table ADD FULLTEXT(col1)
 ````
-------------
-**SQL Server**
+
+## SQL Server
 ```SQL
 show databases;
 use myDB;
