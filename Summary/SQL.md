@@ -109,68 +109,58 @@ where
 
 select SaleDate, count(Units)  from #vahidtable group by SaleDate order by saleDate desc
 ````
-#### Pricing
+#### Finding All Columns
 ````SQL
-drop table #cursorTable1
-select * into #cursorTable1 from VANSQL12t
-left join (select SaleDate, sum(units) as 'units' from VANSQL13t  group by SaleDate) Z on Z.SaleDate=VANSQL12t.EndDate  order by VANSQL12t.StartDate 
+/* searching all columns of a database */
+--SELECT c.name AS ColName, t.name AS TableName, d.name AS DBname
+--FROM sys.columns c
+--    JOIN sys.tables t ON c.object_id = t.object_id
+--WHERE c.name LIKE '%chemical%';
 
--- Correct those periods of price change that their EndDate doesn't correspond with a SaleDate
-DECLARE @curStartDate DATE, @prevStartDate DATE, @curSaleDate DATE, @prevSaleDate DATE, @StoredDate DATE = (select top 1 startDate from #cursorTable1);
-DECLARE cursor_res1 CURSOR FOR
-  SELECT StartDate, SaleDate FROM #cursorTable1;
 
-OPEN cursor_res1
-FETCH NEXT FROM cursor_res1 into @curStartDate, @curSaleDate
+/* searching all columns of all databases */
+--Declare/Set required variables
+DECLARE @vchDynamicDatabaseName AS VARCHAR(MAX),
+        @vchDynamicQuery As VARCHAR(MAX),
+        @DatabasesCursor CURSOR
+
+SET @DatabasesCursor = Cursor FOR
+
+--Select * useful databases on the server
+SELECT name 
+FROM sys.databases 
+WHERE database_id > 4 
+ORDER by name
+
+
+--Open the Cursor based on the previous select
+OPEN @DatabasesCursor
+FETCH NEXT FROM @DatabasesCursor INTO @vchDynamicDatabaseName
 WHILE @@FETCH_STATUS = 0
-BEGIN 
-  IF @curSaleDate is NULL and @prevSaleDate is not null
-	SET @StoredDate = @CurStartDate;
-  IF @curSaleDate is not NULL and @prevSaleDate is null
-    UPDATE #cursorTable1 SET StartDate = @StoredDate WHERE CURRENT OF cursor_res1; 
-  SET @prevStartDate = @curStartDate
-  SET @prevSaleDate = @curSaleDate
-  FETCH NEXT FROM cursor_res1 into @curStartDate, @curSaleDate
+   BEGIN
+
+   --Insert the select statement into @DynamicQuery 
+   --This query will select the Database name, all tables/views and their columns (in a comma delimited field)
+   SET @vchDynamicQuery =
+   ('SELECT ''' + @vchDynamicDatabaseName + ''' AS ''Database_Name'',
+          B.table_name AS ''Table Name'',
+         STUFF((SELECT '', '' + A.column_name
+               FROM ' + @vchDynamicDatabaseName + '.INFORMATION_SCHEMA.COLUMNS A
+               WHERE A.Table_name = B.Table_Name
+               FOR XML PATH(''''),TYPE).value(''(./text())[1]'',''NVARCHAR(MAX)'')
+               , 1, 2, '''') AS ''Columns''
+   FROM ' + @vchDynamicDatabaseName + '.INFORMATION_SCHEMA.COLUMNS B
+   WHERE B.TABLE_NAME LIKE ''%%''
+         AND B.COLUMN_NAME LIKE ''%chemical%''
+   GROUP BY B.Table_Name
+   Order BY 1 ASC')
+
+   --Print @vchDynamicQuery
+   EXEC(@vchDynamicQuery)
+
+   FETCH NEXT FROM @DatabasesCursor INTO @vchDynamicDatabaseName
 END
-
-CLOSE cursor_res1;
-DEALLOCATE cursor_res1;
-
-DELETE FROM #cursorTable1 WHERE SaleDate is Null
-ALTER TABLE #cursorTable1 DROP Column SaleDate, units
-
--- Sum the units sold for periods of price change 
-drop table #cursorTable2
-select * into #cursorTable2 from (select SaleDate, sum(units) as 'units' from VANSQL13t  group by SaleDate) Z
-left join #cursorTable1 on Z.SaleDate=#cursorTable1.EndDate where SaleDate > '2013-07-27' order by Z.SaleDate
-
-DECLARE @CurrUnits INT, @currCSPC INT, @prevCSPC INT, @sum INT = 0;
-DECLARE cursor_res CURSOR FOR
-  SELECT units, CSPC FROM #cursorTable2;
-
-OPEN cursor_res
-FETCH NEXT FROM cursor_res into @CurrUnits, @currCSPC
-WHILE @@FETCH_STATUS = 0
-BEGIN 
-  IF @currCSPC is NULL 
-	SET @sum = @sum + @CurrUnits;
-  ELSE
-	IF @prevCSPC is null
-      BEGIN
-	    UPDATE #cursorTable2 SET units = @sum + @CurrUnits WHERE CURRENT OF cursor_res; 
-	    SET @sum = 0;
-	  END 
-  SET @prevCSPC = @currCSPC
-  FETCH NEXT FROM cursor_res into @CurrUnits, @currCSPC
-END
- 
-CLOSE cursor_res;
-DEALLOCATE cursor_res;
-
--- Get UnitPerCase
-declare @unitPerCase int = (select top 1 UnitsPerCase FROM vansql13.[magSales2k].[dbo].[Products] where cspc = '0257816')
-
-select StartDate, EndDate, Discount, MarginDollars, SaleDate, Units, (units / @unitPerCase) as Cases, (units/ @unitPerCase) * (MarginDollars - Discount) as profitTotal,
-DATEDIFF(day, StartDate, EndDate) as 'dateDif', units / DATEDIFF(day, StartDate, EndDate) as 'AvgUnits/Day', ((units/ @unitPerCase) * MarginDollars)/DATEDIFF(day, StartDate, EndDate) as 'AVGProfit/Day' 
-from #cursorTable2 where CSPC is not null order by SaleDate desc
+CLOSE @DatabasesCursor
+DEALLOCATE @DatabasesCursor
+GO
 ````
