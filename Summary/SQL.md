@@ -87,7 +87,7 @@ show tables;
 #### Finding All Columns
 ````SQL
 /* searching all columns of a database */
---SELECT c.name AS ColName, t.name AS TableName, d.name AS DBname
+--SELECT c.name AS ColName, t.name AS TableName
 --FROM sys.columns c
 --    JOIN sys.tables t ON c.object_id = t.object_id
 --WHERE c.name LIKE '%chemical%';
