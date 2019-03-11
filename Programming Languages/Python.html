@@ -698,6 +698,16 @@ zip(*data)  # [('a', 'b', 'c'), (1, 2, 3)]
 </details>
 
 <details class="details">
+    <summary><div class="wrapper"><b>Running <b>Bash</b> Commands inside Python</b></div></summary>
+    <div class="content">
+<pre class="prettyprint">
+import subprocess
+subprocess.call("BASH Command", SHELL=True)
+</pre><br>    
+</div>
+</details>
+	    
+<details class="details">
     <summary><div class="wrapper"><b>*args and **kwargs</b></div></summary>
     <div class="content">
 The general use of these is to produce higher-order functions whose inputs can accept arbitrary arguments.<br>
