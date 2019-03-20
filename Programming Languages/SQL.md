@@ -141,6 +141,10 @@ GO
 ````
 ## PostgreSQL
 ````SQL
+select avg(temp), avg(rh) from adcon_all
+where date_trunc('day', thedate) = '2010-01-01'
+````
+````SQL
 SELECT 
     TIMESTAMP '2000-01-01 00:00:00' + DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * INTERVAL '1 day' 
     ,AVG(temp)
