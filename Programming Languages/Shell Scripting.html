@@ -39,7 +39,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 			<li>Variables can be created and assigned text using an equals sign. 
 			Surround the text with double quotes (although it is not necessary unless there is space in the name):<br>
 			<code>$ FILENAME="info.txt"<br>
-			$ printf ì%s\nî ì$FILENAMEî<br>
+			$ printf ‚Äú%s\n‚Äù ‚Äú$FILENAME‚Äù<br>
 			info.txt</code><br>
 			<li>The <kbd>declare</kbd> command, in addition to creation of variable and assigning values, can add attributes to variables as well 
 			(using + instead of - turns of the attribute).<br>
@@ -51,9 +51,9 @@ All shell commands and scripts generate a return value upon finishing execution;
 			<code>$ Date=`date`<br>
 			$ printf "%s\n" "$Date"<br>
 			Thu Apr 13 08:02:19 UTC 2017 </code><br>
-			<li>Double quotes do not prevent Bash from interpreting the special characters $, ë, and \,
+			<li>Double quotes do not prevent Bash from interpreting the special characters $, ‚Äò, and \,
 			but single quotes leave all characters unchanged.
-			<li>Variable names can be enclosed in curly braces to make it clear where the variableís name begins and ends.<br>
+			<li>Variable names can be enclosed in curly braces to make it clear where the variable‚Äôs name begins and ends.<br>
 			<smap>$ TAX_MESSAGE="The tax is ${TAX}%"</samp>
 			<li>Shell variables exist in the script or interactive sessions only, where they were
 			declared. In order to make shell variables available outside of their place of origin, they have to be declared as exportable with <kbd>-x</kbd> option.<br>
@@ -103,7 +103,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 		<kbd>printf</kbd> is very similar to the C standard I/O <samp>printf()</samp> function, but they are not
 		identical. In particular, single- and double-quoted strings are treated differently in shell scripts than in C programs.<br>
 		The first parameter is a format string describing how the items being printed will be represented. 
-		For example, the special formatting code ì%dî represents an integer number, and the code ì%fî represents a floating-point number:<br>
+		For example, the special formatting code ‚Äú%d‚Äù represents an integer number, and the code ‚Äú%f‚Äù represents a floating-point number:<br>
 		<pre>$ printf "%d and %f\n" 5 5
 		5 and 5.000000</pre><br>
 	</div>
@@ -176,7 +176,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 		<li>Accessing all elements of an array can be done using index <kbd>*</kbd> or <kbd>@</kbd>. The difference (for <kbd>printf</kbd> not <kbd>echo</kbd>) is that <kbd>*</kbd> puts an space (actually the first character of IFS variable) in between elements but <kbd>@</kbd> doesn't:<br>
 		<samp>$ echo "${ARRAY1[*]}"</samp><br>
 		a 1 2
-		<li>Individual array values can be removed with the command. Erasing a value by <kbd>unset</kbd> assigning the array position an empty string doesnít destroy it:The empty string is still treated as an array item whenever the items are counted.
+		<li>Individual array values can be removed with the command. Erasing a value by <kbd>unset</kbd> assigning the array position an empty string doesn‚Äôt destroy it:The empty string is still treated as an array item whenever the items are counted.
 		<li>The <kbd>read</kbd> command can read a list into an array using an <kbd>-a</kbd> switch. When this switch is used, each item on the line of input is read into a separate array position.
 	</div>
 </details>
@@ -197,7 +197,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 		<kbd>!!</kbd>repeats the last command. A negative number indicates the relative line number. That is, it indicates the number
 		of commands to move back in the history to find the one to execute. <kbd>!!</kbd> is the same as <kbd>!-1</kbd>.<br>
 		<br>
-		The <kbd>!#</kbd> repeats the content of the current command line. (Donít confuse this with <kbd>#!</kbd>) 
+		The <kbd>!#</kbd> repeats the content of the current command line. (Don‚Äôt confuse this with <kbd>#!</kbd>) 
 		Use this to run a set of commands twice.<br>
 		<br>
 		<kbd>history n</kbd> lists the last n commands.
@@ -209,7 +209,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 		<li> Two commands separated by a semicolon (<kbd>;</kbd>), are executed consecutively, one after another. 
 		Two commands separated by <kbd>&&</kbd>, are executed until one of them fails or until all the commands are executed. Similarly for <kbd>||</kbd>.
 		<li> <kbd>sleep n</kbd> makes a n second delay.
-		<li> Using the minus sign (ñ) with <kbd>cd</kbd>, you can switch between the current directory and the last directory. 
+		<li> Using the minus sign (‚Äì) with <kbd>cd</kbd>, you can switch between the current directory and the last directory. 
 		(~ and - are features of Bash and only work with Bash and Bash scripts.)
 		</ul>
 	</div>
@@ -268,7 +268,7 @@ echo "The sum of $i numbers is: $sum"
 		<details class="details">
 			<summary><div class="wrapper"><h4>Debugging</h4></div></summary>
 			<div class="content">
-				We can run a script in debug mode by <kbd>bash ñx ./script_file</kbd>.<br>
+				We can run a script in debug mode by <kbd>bash ‚Äìx ./script_file</kbd>.<br>
 				Inside a sccript we can do it by<br>
 				<code>
 					set -x    # turns on debugging<br>
