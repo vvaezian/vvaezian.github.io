@@ -139,3 +139,14 @@ CLOSE @DatabasesCursor
 DEALLOCATE @DatabasesCursor
 GO
 ````
+## PostgreSQL
+````SQL
+SELECT 
+    TIMESTAMP '2000-01-01 00:00:00' + DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * INTERVAL '1 day' 
+    ,AVG(temp)
+    ,AVG(rh)
+from adcon_all
+GROUP BY TIMESTAMP '2000-01-01 00:00:00' + DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * INTERVAL '1 day' 
+ORDER BY TIMESTAMP '2000-01-01 00:00:00' + DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * INTERVAL '1 day' 
+LIMIT 10
+````
