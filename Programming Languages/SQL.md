@@ -154,3 +154,18 @@ GROUP BY TIMESTAMP '2000-01-01 00:00:00' + DATE_PART('day', theDate - TIMESTAMP 
 ORDER BY TIMESTAMP '2000-01-01 00:00:00' + DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * INTERVAL '1 day' 
 LIMIT 10
 ````
+````SQL
+SELECT CASE WHEN {{t_interval}} = 'Yearly' THEN SUBSTRING((TIMESTAMP '2000-01-01 00:00:00' + ((DATE_PART('year', theDate) - DATE_PART('year', TIMESTAMP '2000-01-01 00:00:00')) || ' year')::INTERVAL)::TEXT, 1, 4)
+            WHEN {{t_interval}} = 'Monthly' THEN SUBSTRING((TIMESTAMP '2000-01-01 00:00:00' + ((DATE_PART('year', theDate) - DATE_PART('year', TIMESTAMP '2000-01-01 00:00:00')) * 12 
+                                                                                            + (DATE_PART('month', theDate) - DATE_PART('month', TIMESTAMP '2000-01-01 00:00:00')) || ' month')::INTERVAL)::TEXT, 1, 7)
+            WHEN {{t_interval}} = 'Daily' THEN SUBSTRING((TIMESTAMP '2000-01-01 00:00:00' + (DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') || ' day')::INTERVAL)::TEXT, 1, 10)
+            WHEN {{t_interval}} = 'Hourly' THEN SUBSTRING((TIMESTAMP '2000-01-01 00:00:00' + (DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * 24 
+                                                                                            + DATE_PART('hour', theDate - TIMESTAMP '2000-01-01 00:00:00') || ' hour')::INTERVAL)::TEXT, 1, 13)
+      END AS "Date"
+    , AVG(temp) AS "Avg Temperature"
+    , AVG(rh) AS "Avg RH"
+FROM adcon_all
+[[WHERE {{d}}]]
+GROUP BY "Date"
+ORDER BY "Date"
+````
