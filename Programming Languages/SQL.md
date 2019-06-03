@@ -43,31 +43,28 @@ use myDB;
 show tables;
 ````
 
-#### Finding All Columns
+#### Finding Columns
 ````SQL
 /* searching all columns of a database */
---SELECT c.name AS ColName, t.name AS TableName
---FROM sys.columns c
---    JOIN sys.tables t ON c.object_id = t.object_id
---WHERE c.name LIKE '%chemical%';
+select * from INFORMATION_SCHEMA.COLUMNS
+where COLUMN_NAME like '%type%'
+order by TABLE_NAME
 
-
-/* searching all columns of all databases */
---Declare/Set required variables
+/* Searching all columns of all databases */
+-- Declare/Set required variables
 DECLARE @vchDynamicDatabaseName AS VARCHAR(MAX),
         @vchDynamicQuery As VARCHAR(MAX),
         @DatabasesCursor CURSOR
 
 SET @DatabasesCursor = Cursor FOR
 
---Select * useful databases on the server
+-- Select useful databases on the server
 SELECT name 
 FROM sys.databases 
 WHERE database_id > 4 
 ORDER by name
 
-
---Open the Cursor based on the previous select
+-- Open the Cursor based on the previous select
 OPEN @DatabasesCursor
 FETCH NEXT FROM @DatabasesCursor INTO @vchDynamicDatabaseName
 WHILE @@FETCH_STATUS = 0
@@ -99,19 +96,17 @@ DEALLOCATE @DatabasesCursor
 GO
 ````
 ## PostgreSQL
-table size without index
 ````SQL
+-- table size without index
 SELECT pg_size_pretty (pg_relation_size('table_name'));
-````
-table size with index
-````SQL
+
+-- table size with index
 SELECT pg_size_pretty (pg_total_relation_size('table_name'));
-````
-Get query plan and costs and see whether index is being used
-````SQL
+
+-- Get query plan and costs and see whether index is being used
 EXPLAIN SELECT ...
-````
-````SQL
+
+-- Date trunc
 select avg(temp), avg(rh) from adcon_all
 where date_trunc('day', thedate) = '2010-01-01'
 ````
