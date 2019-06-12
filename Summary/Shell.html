@@ -196,9 +196,7 @@ bgill 	ttyp7 	1:32pm 19 	      bash</pre>
 			To eliminate those lines that start with c or d (possibly with some spaces before c or d):<br> <kbd>sed '/^ *c\|^ *d/s/.*//'</kbd><br>
 			To delete empty lines:<br> <kbd>sed '/^$/d'</kbd> (also <kbd>grep .</kbd> and <kbd>grep -v '^$'</kbd>)<br>
 			To add # to the beginning of all lines:<br> <kbd> sed 's/^/#/'</kbd> (for adding at the end of each line use <samp>$</samp> instead of <samp>^</samp>)<br>
-			<br>
-			<kbd>*</kbd> matches between zero and unlimited times, as many times as possible.<br>
-			<kbd>*?</kbd> matches between zero and unlimited times, as few times as possible.
+						
 		</li><br>
 
 		<li><b>AWK</b><br>
