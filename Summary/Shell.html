@@ -206,7 +206,8 @@ bgill 	ttyp7 	1:32pm 19 	      bash</pre>
 			<br>
 			* In an awk rule, either the pattern or the action can be omitted, but not both. If the pattern is omitted, then the action is performed for every input line. 
 			If the action is omitted, the default action is to print all lines that match the pattern. So the first example can be written as<br>
-			<kbd> $ awk '/REGEXP/' FILENAME</kbd>
+			<kbd> $ awk '/REGEXP/' FILENAME</kbd><br>
+			<kbd>echo 3,5,12,4 | awk -F ',' 'NR>1 {print $1+$2+$3 "," $4}'</kbd> print sum of first three fields and the fourth field.<br>
 		</li><br>
 		<li><b>cut</b><br>
 			<kbd>cut</kbd> is used for manipulating column-based files and is designed to extract specific columns. <br>
