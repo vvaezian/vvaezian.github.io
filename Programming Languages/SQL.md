@@ -96,6 +96,9 @@ DEALLOCATE @DatabasesCursor
 GO
 ````
 ## PostgreSQL
+`\l` lists databases  
+`\dt` lists tables  
+`\c DBNAME` connect to a database 
 ````SQL
 -- table size without index
 SELECT pg_size_pretty (pg_relation_size('table_name'));
