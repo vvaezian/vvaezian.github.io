@@ -16,5 +16,12 @@ $dir = $namespace.Folders.Item('test$test.com').Folders.Item('testDir')
 # Get the list of emails in the folder defined above and reversing the order of emails (by default starts with the oldest)
 $emails = $dir.Items | Sort-Object -Descending ReceivedTime # | convertTo-Json | Out-File test.json -Encoding UTF8
 
-
+# Important attributes:
+# SenderName
+# To
+# SentOn
+# Subject
+# Body
+# HTMLBody
+# AutoForwarded
 ````
