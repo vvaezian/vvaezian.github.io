@@ -173,7 +173,7 @@ bgill 	ttyp7 	1:32pm 19 	      bash</pre>
 			</code>
 			<code>	TEST<br>
 					John<br>
-					This is or testing<br>
+					This is for testing<br>
 					432234<br>
 					[Remove all non-printable characters]
 			</code>
@@ -190,6 +190,7 @@ bgill 	ttyp7 	1:32pm 19 	      bash</pre>
 			<br>
 			<kbd>^</kbd> within <kbd>[...]</kbd> &nbsp negates the match of the list.<br>
 			Adding <kbd>!</kbd> at the end of ADDRESS negates the match: <kbd>sed '/ADDRESS/!s/REGEXP/REPLACEMENT/'</kbd><br>
+			<kbd>&</kbd> refers to the whole matched pattern.<br>
 
 			<br>
 			To eliminate (replace with blank) lines that start with a number:<br> <kbd>sed 's/^[0-9].*//' input > output</kbd><br>
