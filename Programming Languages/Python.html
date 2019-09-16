@@ -218,6 +218,10 @@ a = ''.join('{}{}'.format(key, str(val)) for key, val in dict1.items())</pre><br
 
 <kbd>iteritems()</kbd> to <kbd>items()</kbd> is like <kbd>xrange</kbd> to <kbd>range</kbd>.<br>
 <br>
+Sort a dictionary by values: 
+<pre>sorted(myDict.items(), key=lambda item: item[1], reverse=True)
+</pre><br>
+	    
 <b>defaultdict</b><br>
 A defaultdict is like a regular dictionary, except that when you try to look up a key it doesn't contain, it first adds a value for it using a zero-argument function you provided when you created it.<br>
 
