@@ -11,10 +11,10 @@
 - SELECT statement acquire S lock by default. To run a SELECT statement without any lock use either `NOLOCK` or `TRANSACTION ISOLATION LEVEL READ UNCOMMITTED`. A SELECT statement with NOLOCK results in *dirtyreading*, i.e. it doesn't care whether data is committed or not. While `NOBLOCK` is applied on one table, `TRANSACTION ISOLATION LEVEL READ UNCOMMITTED` gets applied to a transaction:
 ```SQL
 SELECT * from myTbl WITH (NOLUCK)
+```
 
 
-
-### Primitive functions
+### Basic functions
 ````SQL
 -- Create table
 CREATE TABLE table(
