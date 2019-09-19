@@ -22,8 +22,9 @@ SELECT ...
 
 SET TRANSACTION ISOLATION LEVEL READ COMMITTED; -- turn it off
 ```
-* Note that even with NOLOCK or TRANSACTION ISOLATION LEVEL, the query still requests SCH-S lock, so it will block any query that requests SCH-M lock.
-
+* Note that even with NOLOCK or TRANSACTION ISOLATION LEVEL, the query still requests SCH-S lock, so it will block any query that requests SCH-M lock.  
+  
+We can see all locks by running `sp_lock [SPID]`
 ### Basic functions
 ````SQL
 -- Create table
