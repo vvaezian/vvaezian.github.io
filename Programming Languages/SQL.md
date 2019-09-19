@@ -10,10 +10,10 @@
 #### Remarks
 - Given the above facts, a SELECT statement will block an UPDATE stement (unless the SELECT statement acquire its S lock as row-level and the UPDATE statement acquire its X lock as row-level and these rows don't overlap). 
 - SELECT statements acquire S lock by default. To run a SELECT statement without S lock use either `NOLOCK` (same as `READUNCOMMITTED`) or `TRANSACTION ISOLATION LEVEL READ UNCOMMITTED`. A SELECT statement with NOLOCK results in *dirtyreading*, i.e. it doesn't care whether data is committed or not. While `NOBLOCK` is applied on one table, `TRANSACTION ISOLATION LEVEL READ UNCOMMITTED` gets applied to a transaction:
-```SQL
-SELECT * from myTbl WITH (NOLUCK)
-```
-```SQL
+````SQL
+SELECT * from myTbl WITH (NOLOCK)
+````
+````SQL
 SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED; -- turn it on
 
 SELECT ... 
@@ -21,7 +21,7 @@ UPDATE ...
 SELECT ...
 
 SET TRANSACTION ISOLATION LEVEL READ COMMITTED; -- turn it off
-```
+````
 - Note that even with NOLOCK or TRANSACTION ISOLATION LEVEL, the query still requests SCH-S lock, so it will block any query that requests SCH-M lock.  
 - We can see all locks by running `sp_lock [SPID]`
 
