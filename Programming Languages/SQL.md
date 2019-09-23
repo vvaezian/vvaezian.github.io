@@ -1,3 +1,4 @@
+
 ### Locks
 #### Lock Modes
 - The basic lock modes are S (shared), U (update) and X (exclusive). 
@@ -25,43 +26,6 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED; -- turn it off
 - Note that even with NOLOCK or TRANSACTION ISOLATION LEVEL, the query still requests SCH-S lock, so it will block any query that requests SCH-M lock.  
 - We can see all locks by running `sp_lock [SPID]`
 
-### Basic functions
-````SQL
--- Create table
-CREATE TABLE table(
-col1 int AUTO_INCREMENT,
-col2 varchar(30),           #max string length=30
-col3 varchar(10) NOT NULL,
-PRIMARY KEY(col1)
-)
--- Delete table
-DROP TABLE table
-
--- Rename table
-RENAME TABLE table_old TO table_new
-
--- Insert row
-INSERT INTO table VALUES('col1a','col2a'),('col1b','col2b') #inserted two rows
-INSERT INTO table(col1_name,col2_name) VALUES('col1','col2')
-
--- Insert rows from another table (same column names)
-INSERT INTO table(col1_name,col2_name) SELECT sol1_name,col2_name FROM table2 WHERE ...
-
--- Delete rows
-DELETE FROM table WHERE col_name=100 (e.x. id=100, deletes the rows with id=100)
-
--- Add column
-ALTER TABLE table ADD col varchar(10)
-
--- Delete column
-ALTER TABLE table DROP COLUMN col
-
--- Create View
-CREATE VIEW view AS SELECT id FROM table 1 ORDER BY col2 DESC LIMIT 10
- ````
-`_` represents a single character, `%` represents 0 or more characters  
-`REGEXP`  E.x: . | [123] [^123] [1-7]  
-
 
 ## Command-Line
 ```SQL
@@ -69,6 +33,54 @@ show databases;
 use myDB;
 show tables;
 ````
+
+## PostgreSQL
+`\l` lists databases  
+`\dt` lists tables  
+`\c DBNAME` connect to a database 
+````SQL
+-- table size without index
+SELECT pg_size_pretty (pg_relation_size('table_name'));
+
+-- table size with index
+SELECT pg_size_pretty (pg_total_relation_size('table_name'));
+
+-- Get query plan and costs and see whether index is being used
+EXPLAIN SELECT ...
+
+-- Date trunc
+select avg(temp), avg(rh) from adcon_all
+where date_trunc('day', thedate) = '2010-01-01'
+````
+````SQL
+SELECT 
+    TIMESTAMP '2000-01-01 00:00:00' + DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * INTERVAL '1 day' 
+    ,AVG(temp)
+    ,AVG(rh)
+from adcon_all
+GROUP BY TIMESTAMP '2000-01-01 00:00:00' + DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * INTERVAL '1 day' 
+ORDER BY TIMESTAMP '2000-01-01 00:00:00' + DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * INTERVAL '1 day' 
+LIMIT 10
+````
+````SQL
+SELECT CASE WHEN (SELECT the_interval FROM adcon_all WHERE {{t_interval}}) = 'Yearly' 
+                THEN SUBSTRING((TIMESTAMP '2000-01-01 00:00:00' + ((DATE_PART('year', theDate) - DATE_PART('year', TIMESTAMP '2000-01-01 00:00:00')) || ' year')::INTERVAL)::TEXT, 1, 4)
+            WHEN (SELECT the_interval FROM adcon_all WHERE {{t_interval}}) = 'Monthly' 
+                THEN SUBSTRING((TIMESTAMP '2000-01-01 00:00:00' + ((DATE_PART('year', theDate) - DATE_PART('year', TIMESTAMP '2000-01-01 00:00:00')) * 12 
+                                                                    + (DATE_PART('month', theDate) - DATE_PART('month', TIMESTAMP '2000-01-01 00:00:00')) || ' month')::INTERVAL)::TEXT, 1, 7)
+            WHEN (SELECT the_interval FROM adcon_all WHERE {{t_interval}}) = 'Daily' 
+                THEN SUBSTRING((TIMESTAMP '2000-01-01 00:00:00' + (DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') || ' day')::INTERVAL)::TEXT, 1, 10)
+            WHEN (SELECT the_interval FROM adcon_all WHERE {{t_interval}}) = 'Hourly' 
+                THEN SUBSTRING((TIMESTAMP '2000-01-01 00:00:00' + (DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * 24 
+                                                                    + DATE_PART('hour', theDate - TIMESTAMP '2000-01-01 00:00:00') || ' hour')::INTERVAL)::TEXT, 1, 13)
+      END AS "Date"
+    , AVG(temp) AS "Avg Temperature"
+    , AVG(rh) AS "Avg RH"
+FROM adcon_all
+GROUP BY "Date"
+ORDER BY "Date"
+````
+
 
 #### Finding Columns
 ````SQL
@@ -122,49 +134,4 @@ CLOSE @DatabasesCursor
 DEALLOCATE @DatabasesCursor
 GO
 ````
-## PostgreSQL
-`\l` lists databases  
-`\dt` lists tables  
-`\c DBNAME` connect to a database 
-````SQL
--- table size without index
-SELECT pg_size_pretty (pg_relation_size('table_name'));
 
--- table size with index
-SELECT pg_size_pretty (pg_total_relation_size('table_name'));
-
--- Get query plan and costs and see whether index is being used
-EXPLAIN SELECT ...
-
--- Date trunc
-select avg(temp), avg(rh) from adcon_all
-where date_trunc('day', thedate) = '2010-01-01'
-````
-````SQL
-SELECT 
-    TIMESTAMP '2000-01-01 00:00:00' + DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * INTERVAL '1 day' 
-    ,AVG(temp)
-    ,AVG(rh)
-from adcon_all
-GROUP BY TIMESTAMP '2000-01-01 00:00:00' + DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * INTERVAL '1 day' 
-ORDER BY TIMESTAMP '2000-01-01 00:00:00' + DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * INTERVAL '1 day' 
-LIMIT 10
-````
-````SQL
-SELECT CASE WHEN (SELECT the_interval FROM adcon_all WHERE {{t_interval}}) = 'Yearly' 
-                THEN SUBSTRING((TIMESTAMP '2000-01-01 00:00:00' + ((DATE_PART('year', theDate) - DATE_PART('year', TIMESTAMP '2000-01-01 00:00:00')) || ' year')::INTERVAL)::TEXT, 1, 4)
-            WHEN (SELECT the_interval FROM adcon_all WHERE {{t_interval}}) = 'Monthly' 
-                THEN SUBSTRING((TIMESTAMP '2000-01-01 00:00:00' + ((DATE_PART('year', theDate) - DATE_PART('year', TIMESTAMP '2000-01-01 00:00:00')) * 12 
-                                                                    + (DATE_PART('month', theDate) - DATE_PART('month', TIMESTAMP '2000-01-01 00:00:00')) || ' month')::INTERVAL)::TEXT, 1, 7)
-            WHEN (SELECT the_interval FROM adcon_all WHERE {{t_interval}}) = 'Daily' 
-                THEN SUBSTRING((TIMESTAMP '2000-01-01 00:00:00' + (DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') || ' day')::INTERVAL)::TEXT, 1, 10)
-            WHEN (SELECT the_interval FROM adcon_all WHERE {{t_interval}}) = 'Hourly' 
-                THEN SUBSTRING((TIMESTAMP '2000-01-01 00:00:00' + (DATE_PART('day', theDate - TIMESTAMP '2000-01-01 00:00:00') * 24 
-                                                                    + DATE_PART('hour', theDate - TIMESTAMP '2000-01-01 00:00:00') || ' hour')::INTERVAL)::TEXT, 1, 13)
-      END AS "Date"
-    , AVG(temp) AS "Avg Temperature"
-    , AVG(rh) AS "Avg RH"
-FROM adcon_all
-GROUP BY "Date"
-ORDER BY "Date"
-````
