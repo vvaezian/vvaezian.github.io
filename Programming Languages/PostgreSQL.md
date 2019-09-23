@@ -1,3 +1,6 @@
+* Postgres commands are case-insensitive, to force case sensetivity we need to wrap the name in double-quotes.  
+
+
 ### Basic Functions
 ````SQL
 -- lists databases  
