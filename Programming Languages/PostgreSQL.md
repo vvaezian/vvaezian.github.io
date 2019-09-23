@@ -1,5 +1,5 @@
 
-*Postgres commands are are converted to lower-case and then evaluated. To force case sensetivity we need to wrap the names in double-quotes.  
+*Postgres commands get converted to lower-case and then evaluated. To force case sensetivity we need to wrap the names in double-quotes.  
 E.g. the command `select * from myTable` tries to get data from the table `mytable` (which is different from the table `myTable`.*
 
 
