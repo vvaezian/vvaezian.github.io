@@ -29,6 +29,8 @@ Estimates of read operations for each step: (assuming 100 index entries per page
 2. The doubly linked list: `[rows read from index] / 100`
 3. The table: `[rows read from table]`
 
+Worst case scenario: all rows of interest are in different blocks, i.e. the worst possible clustering factor.
+
 ### `include` statement
 *PostgreSQL since release 11 supports include statement.*  
   
