@@ -60,7 +60,8 @@ Then B-tree index has both the columns and there is no need to access the table.
   
 The include clause allows us to make a distinction between columns we would like to have in the entire index (key columns) and columns we only need in the leaf nodes (include columns).  
 That means it allows us to remove columns from the non-leaf nodes if we don’t need them there.  
-This results in shallower B-tree smaller index size. But the most important effect is that it can make the index an *index-only scan* 
+This results in shallower B-tree smaller index size. But the most important effect is that it can make the index an *index-only scan*  
+
 ![include](/Pic/index2.png)
 
 ```SQL
