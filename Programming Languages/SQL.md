@@ -16,4 +16,5 @@ So I think there are three levels here:
 
 B-tree Traversal
 
-![index B-tree](https://use-the-index-luke.com/static/fig01_03_tree_traversal.en.niC7Q5jq.png)
+![index B-tree](https://use-the-index-luke.com/static/fig01_03_tree_traversal.en.niC7Q5jq.png) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+![traverse](/Pic/index1.png)
