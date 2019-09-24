@@ -14,7 +14,11 @@ So I think there are three levels here:
 
 ![index B-tree](https://use-the-index-luke.com/static/fig01_02_tree_structure.en.BdEzalqw.png)
 
-B-tree Traversal
+### B-tree Traversal
+In the general case, 
+1. the database software starts traversing the B-tree to find the first matching entry at the leaf node level. 
+2. It then follows the doubly linked list until it has found all matching entries.
+3. Finally it fetches each of those matching entries from the table. (the last two steps can be interleaved)
 
 ![index B-tree](https://use-the-index-luke.com/static/fig01_03_tree_traversal.en.niC7Q5jq.png) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ![traverse](/Pic/index1.png)
