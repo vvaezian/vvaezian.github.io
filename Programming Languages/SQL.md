@@ -1,4 +1,4 @@
-## Indexing ([source](https://use-the-index-luke.com/))
+# Indexing ([source](https://use-the-index-luke.com/))
 The primary purpose of an index is to provide an ordered representation of the indexed data.  
 Since it is not efficient to store the data sequentially (because an insert statement would need to move the following entries to make room for the new one), we need to establish a logical order that is independent of physical order in memory.  
 The logical order is established via a doubly linked list. It is used to connect B-tree leaf nodes. Index is represented as a B-tree. Each leaf node is stored in a database block (or page; the database's smallest storage unit).  
@@ -14,7 +14,7 @@ So I think there are three levels here:
 
 ![index B-tree](https://use-the-index-luke.com/static/fig01_02_tree_structure.en.BdEzalqw.png)
 
-### B-tree Traversal
+## B-tree Traversal
 In the general case, 
 1. the database software starts traversing the B-tree to find the first matching entry at the leaf node level. 
 2. It then follows the doubly linked list until it has found all matching entries.
@@ -31,7 +31,7 @@ Estimates of read operations for each step: (assuming 100 index entries per page
 
 Worst case scenario: all rows of interest are in different blocks, i.e. the worst possible clustering factor.
 
-### index-only scans
+## index-only scans
 
 ```SQL
 SELECT SUM(col2)
@@ -39,7 +39,7 @@ FROM tbl
 WHERE col1 = ?
 ```
 
-### `include` statement
+## `include` statement
 *PostgreSQL since release 11 supports include statement.*  
   
 The include clause allows us to make a distinction between columns we would like to have in the entire index (key columns) and columns we only need in the leaf nodes (include columns).  
