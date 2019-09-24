@@ -10,11 +10,11 @@ E.g. the command `select * from myTable` tries to get data from the table `mytab
 -- lists tables
 \dt   
 -- list columns and indexes of a table
-\d myTbl
+\d table_name
 -- list indexes of a table
-\di myTbl
+\di table_name
 -- connect to a database 
-\c DBNAME
+\c db_name
 
 -- get table size without index
 SELECT pg_size_pretty (pg_relation_size('table_name'));
