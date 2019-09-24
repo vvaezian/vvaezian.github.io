@@ -20,9 +20,11 @@ B-tree Traversal
 ![traverse](/Pic/index1.png)
 
 ### `include` statement
+*PostgreSQL since release 11 supports include statement.*  
+  
 The include clause allows us to make a distinction between columns we would like to have in the entire index (key columns) and columns we only need in the leaf nodes (include columns).  
 That means it allows us to remove columns from the non-leaf nodes if we don’t need them there.  
-This results in shallower B-tree smaller index size. But the most important effect is that it can make the index an *index-only scan* (aka *covering index*), meaning that the quert doesn't need to access the table as all the data is in the index.
+This results in shallower B-tree smaller index size. But the most important effect is that it can make the index an *index-only scan* (aka *covering index*), meaning that the quert doesn't need to access the table as all the data is in the index.  
 ![include](/Pic/index2.png)
 
 ```SQL
