@@ -23,6 +23,12 @@ In the general case,
 ![index B-tree](https://use-the-index-luke.com/static/fig01_03_tree_traversal.en.niC7Q5jq.png) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ![traverse](/Pic/index1.png)
 
+Estimates of read operations for each step: (assuming 100 index entries per page/block)
+
+1. The B-tree: `log100([rows in table])`, often less than 5
+2. The doubly linked list: `[rows read from index] / 100`
+3. The table: `[rows read from table]`
+
 ### `include` statement
 *PostgreSQL since release 11 supports include statement.*  
   
