@@ -20,7 +20,8 @@ B-tree Traversal
 ![traverse](/Pic/index1.png)
 
 ### `include` statement
-
+The include clause allows us to make a distinction between columns we would like to have in the entire index (key columns) and columns we only need in the leaf nodes (include columns). 
+That means it allows us to remove columns from the non-leaf nodes if we don’t need them there.
 ![include](/Pic/index2.png)
 
 ```SQL
