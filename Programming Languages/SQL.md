@@ -13,3 +13,5 @@ So I think there are three levels here:
 3. The linked list at the B-tree's leaf node which has connections with the heap.
 
 ![index B-tree](https://use-the-index-luke.com/static/fig01_02_tree_structure.en.BdEzalqw.png)
+B-tree Traversal
+![index B-tree](https://use-the-index-luke.com/static/fig01_03_tree_traversal.en.niC7Q5jq.png)
