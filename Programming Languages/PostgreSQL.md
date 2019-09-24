@@ -9,6 +9,10 @@ E.g. the command `select * from myTable` tries to get data from the table `mytab
 \l 
 -- lists tables
 \dt   
+-- list columns and indexes of a table
+\d myTbl
+-- list indexes of a table
+\di myTbl
 -- connect to a database 
 \c DBNAME
 
