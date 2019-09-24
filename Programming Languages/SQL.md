@@ -31,6 +31,14 @@ Estimates of read operations for each step: (assuming 100 index entries per page
 
 Worst case scenario: all rows of interest are in different blocks, i.e. the worst possible clustering factor.
 
+### index-only scans
+
+```SQL
+SELECT SUM(col2)
+FROM tbl
+WHERE col1 = ?
+```
+
 ### `include` statement
 *PostgreSQL since release 11 supports include statement.*  
   
@@ -41,7 +49,7 @@ This results in shallower B-tree smaller index size. But the most important effe
 
 ```SQL
 CREATE INDEX idx
-    ON table_name ( col1 )
-     INCLUDE ( col2 )
+ON tbl ( col1 )
+INCLUDE ( col2 )
 ```
 Note that the order of the leaf node entries does not take the include columns into account. The index is solely ordered by its key columns.
