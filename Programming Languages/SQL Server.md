@@ -36,8 +36,8 @@ SELECT DbSize_GB = (SELECT CONVERT(DECIMAL(18,2), SUM(CAST(df.size as float))*8/
                       FROM sys.database_files AS df 
                       WHERE df.type in (1, 3))
 FROM sys.partitions p 
-   JOIN sys.allocation_units a 
-   ON p.partition_id = a.container_id;
+     JOIN sys.allocation_units a 
+     ON p.partition_id = a.container_id;
 ```
 
 ### Finding Columns
