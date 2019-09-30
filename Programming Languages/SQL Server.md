@@ -26,6 +26,20 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED; -- turn it off
 - Note that even with NOLOCK or TRANSACTION ISOLATION LEVEL, the query still requests SCH-S lock, so it will block any query that requests SCH-M lock.  
 - We can see all locks by running `sp_lock [SPID]`
 
+### DB disk usage
+```sql
+SELECT
+(SELECT CONVERT(DECIMAL(18,2), SUM(CAST(df.size as float))*8/(1024.0 * 1024))
+   FROM sys.database_files AS df 
+   WHERE df.type in ( 0, 2, 4 ) ) AS [DbSize_GB],
+CONVERT(DECIMAL(18,2), SUM(a.total_pages)*8/(1024.0 * 1024)) AS [SpaceUsed_GB],
+(SELECT CONVERT(DECIMAL(18,2), SUM(CAST(df.size as float))*8/(1024.0 * 1024))
+   FROM sys.database_files AS df 
+   WHERE df.type in (1, 3)) AS [LogSize_GB]
+FROM sys.partitions p join sys.allocation_units a 
+  on p.partition_id = a.container_id;
+```
+
 ### Finding Columns
 ````SQL
 /* searching all columns of a database */
