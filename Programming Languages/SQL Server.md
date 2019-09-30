@@ -28,16 +28,16 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED; -- turn it off
 
 ### DB disk usage
 ```sql
-SELECT
-(SELECT CONVERT(DECIMAL(18,2), SUM(CAST(df.size as float))*8/(1024.0 * 1024))
-   FROM sys.database_files AS df 
-   WHERE df.type in ( 0, 2, 4 ) ) AS [DbSize_GB],
-CONVERT(DECIMAL(18,2), SUM(a.total_pages)*8/(1024.0 * 1024)) AS [SpaceUsed_GB],
-(SELECT CONVERT(DECIMAL(18,2), SUM(CAST(df.size as float))*8/(1024.0 * 1024))
-   FROM sys.database_files AS df 
-   WHERE df.type in (1, 3)) AS [LogSize_GB]
-FROM sys.partitions p join sys.allocation_units a 
-  on p.partition_id = a.container_id;
+SELECT DbSize_GB = (SELECT CONVERT(DECIMAL(18,2), SUM(CAST(df.size as float))*8/(1024.0 * 1024))
+                    FROM sys.database_files AS df 
+                    WHERE df.type in ( 0, 2, 4 ) )
+      , SpaceUsed_GB = CONVERT(DECIMAL(18,2), SUM(a.total_pages)*8/(1024.0 * 1024))
+      , LogSize_GB = (SELECT CONVERT(DECIMAL(18,2), SUM(CAST(df.size as float))*8/(1024.0 * 1024))
+                      FROM sys.database_files AS df 
+                      WHERE df.type in (1, 3))
+FROM sys.partitions p 
+   JOIN sys.allocation_units a 
+   ON p.partition_id = a.container_id;
 ```
 
 ### Finding Columns
