@@ -25,10 +25,15 @@ SELECT pg_size_pretty (pg_total_relation_size('table_name'));
 -- get query plan and costs and see whether index is being used
 EXPLAIN SELECT ...
 
+-- Show active connections
+select * from pg_stat_activity
+order by datname
+
 -- Date trunc
 select avg(temp), avg(rh) from adcon_all
 where date_trunc('day', thedate) = '2010-01-01'
 ````
+
 
 ### Copy from CSV
 ```SQL
