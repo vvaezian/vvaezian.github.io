@@ -47,7 +47,7 @@ bcp [database_name].[dbo].[table_name] in "C:\path\to\file" -S server_name -U us
 - We can use -T (Trusted Connection) for windows Authentication instead of providing user/pass
 - Line endings may be tricky to deal with. For `$` as line ending use `-r "0x0a"`. If `^M$` at the end it should work fine without -r option.
 - `-F` option indicated which line to start. So use `-F 2` to exclude header.
-- Speed test: ~6-9 MB/s local. 10% less from EC2
+- Speed test: ~6 MB/s from local. ~3 MB/s from EC2
 
 ### Finding Columns
 ````SQL
