@@ -45,7 +45,7 @@ FROM sys.partitions p
 bcp [database_name].[dbo].[table_name] in "C:\path\to\file" -S server_name -U user_name -P password -c -t ','
 ```
 - We can use -T (Trusted Connection) for windows Authentication instead of providing user/pass
-
+- Line endings may be tricky to deal with. For `$` as line ending use `-r "0x0a"`. If `^M$` at the end it should work fine without -r option.
 
 ### Finding Columns
 ````SQL
