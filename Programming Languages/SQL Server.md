@@ -40,6 +40,13 @@ FROM sys.partitions p
      ON p.partition_id = a.container_id;
 ```
 
+### Bulk Copy
+```powershell
+bcp [database_name].[dbo].[table_name] in "C:\path\to\file" -S server_name -U user_name -P password -c -t ','
+```
+- We can use -T (Trusted Connection) for windows Authentication instead of providing user/pass
+
+
 ### Finding Columns
 ````SQL
 /* searching all columns of a database */
