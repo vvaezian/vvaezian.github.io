@@ -45,13 +45,20 @@ FROM sys.partitions p
 bcp [database_name].[dbo].[table_name] in "C:\path\to\file" -S server_name -U user_name -P password -c -t ','
 ```
 - Installation `sudo yum install mssql-tools`
+- The table need to be present. So if we want to empty if beforehand use `truncate` statement: `truncate table my_table`
 - We can use -T (Trusted Connection) for windows Authentication instead of providing user/pass
 - Line endings may be tricky to deal with. For `$` as line ending use `-r "0x0a"`. If `^M$` at the end it should work fine without -r option.
 - `-F` option indicated which line to start. So use `-F 2` to exclude header.
 - Speed test: ~6 MB/s from local. ~3 MB/s from EC2
 - To run from Python
 ```python
-subprocess.call('bcp {t} in {f} -S {s} -U {u} -P {p} -c -t "{sep}" '.format(t='db_name.dbo.table_name', f='out.csv', s='server_name', u='user_name', p="pass", sep='\t'), shell=True)`
+subprocess.call('bcp {t} in {f} -S {s} -U {u} -P {p} -c -t "{sep}" '.format(t='db_name.dbo.table_name', 
+                                                                     f='out.csv', 
+                                                                     s='server_name', 
+                                                                     u='user_name', 
+                                                                     p="pass", 
+                                                                     sep='\t'), 
+                 shell=True)
 ```
 ### Finding Columns
 ````SQL
