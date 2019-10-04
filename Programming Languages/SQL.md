@@ -77,5 +77,5 @@ Note that the order of the leaf node entries does not take the include columns i
 - The leaf node of a Clustered Index contains data pages of the table on which it is created.
 - The leaf nodes of a Nonclustered index consists of index pages which contain Clustering Key (if Clustered index is present on the table) or row ID (RID) (if there is no Clustered index) to locate Data Row.
 - Clustered Index enforces a logical order on the rows. Rows are ordered based on Clustering Key.
-![clustered](https://i.stack.imgur.com/TnLMf.png)
+<img src="https://i.stack.imgur.com/TnLMf.png" width="700">
 <img src="https://i.stack.imgur.com/ojZjo.png" width="700">
