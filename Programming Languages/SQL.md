@@ -5,7 +5,7 @@ The logical order is established via a doubly linked list. It is used to connect
 So the index order is maintained on two different levels: the index entries within each leaf node (because B-tree is ordered), and the leaf nodes among each other using a doubly linked list (because linked_lists are ordered).  
 The table data is stored in a heap structure and is not sorted at all. 
 
-<img src="ttps://use-the-index-luke.com/static/fig01_01_index_leaf_nodes.en.MMHwYDFb.png" width="600">
+<img src="https://use-the-index-luke.com/static/fig01_01_index_leaf_nodes.en.MMHwYDFb.png" width="600">
 
 So I think there are three levels here: 
 1. Physical storage that has the bits in the storage.
