@@ -6,6 +6,7 @@ So the index order is maintained on two different levels: the index entries with
 The table data is stored in a heap structure and is not sorted at all. 
 
 ![index-table-connection](https://use-the-index-luke.com/static/fig01_01_index_leaf_nodes.en.MMHwYDFb.png))
+<img src="ttps://use-the-index-luke.com/static/fig01_01_index_leaf_nodes.en.MMHwYDFb.png" width="600">
 
 So I think there are three levels here: 
 1. Physical storage that has the bits in the storage.
