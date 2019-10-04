@@ -60,6 +60,19 @@ subprocess.call('bcp {t} in {f} -S {s} -U {u} -P {p} -c -t "{sep}" '.format(t='d
                                                                             sep='\t'), 
                  shell=True)
 ```
+### Add Primary Key
+```SQL
+-- First need to make the columns non-null if not already
+ALTER TABLE tbl_name
+alter column col1 varchar(10) not null
+
+ALTER TABLE tbl_name
+alter column col2 varchar(10) not null
+
+ALTER TABLE tbl_name
+ADD PRIMARY KEY(col1, col2)
+```
+
 ### Finding Columns
 ````SQL
 /* searching all columns of a database */
