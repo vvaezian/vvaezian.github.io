@@ -20,7 +20,7 @@ In the general case,
 2. It then follows the doubly linked list until it has found all matching entries.
 3. Finally it fetches each of those matching entries from the table. (the last two steps can be interleaved)
 
-<img src="https://use-the-index-luke.com/static/fig01_03_tree_traversal.en.niC7Q5jq.png" width="600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://use-the-index-luke.com/static/fig01_03_tree_traversal.en.niC7Q5jq.png" width="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <img src="/Pic/index1.png" width="600">
 
 Estimates of read operations for each step: (assuming 100 index entries per page/block)
