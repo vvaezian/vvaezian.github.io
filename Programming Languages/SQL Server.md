@@ -53,11 +53,11 @@ bcp [database_name].[dbo].[table_name] in "C:\path\to\file" -S server_name -U us
 - To run from Python
 ```python
 subprocess.call('bcp {t} in {f} -S {s} -U {u} -P {p} -c -t "{sep}" '.format(t='db_name.dbo.table_name', 
-                                                                     f='out.csv', 
-                                                                     s='server_name', 
-                                                                     u='user_name', 
-                                                                     p="pass", 
-                                                                     sep='\t'), 
+                                                                            f='out.csv', 
+                                                                            s='server_name', 
+                                                                            u='user_name', 
+                                                                            p="pass", 
+                                                                            sep='\t'), 
                  shell=True)
 ```
 ### Finding Columns
