@@ -12,7 +12,7 @@ So I think there are three levels here:
 2. The heap that holds the records and has pointers to phisycal storage
 3. The linked list at the B-tree's leaf node which has connections with the heap.
 
-![index B-tree](https://use-the-index-luke.com/static/fig01_02_tree_structure.en.BdEzalqw.png)
+<img src="https://use-the-index-luke.com/static/fig01_02_tree_structure.en.BdEzalqw.png" width="600">
 
 ## B-tree Traversal
 In the general case, 
@@ -20,8 +20,8 @@ In the general case,
 2. It then follows the doubly linked list until it has found all matching entries.
 3. Finally it fetches each of those matching entries from the table. (the last two steps can be interleaved)
 
-![index B-tree](https://use-the-index-luke.com/static/fig01_03_tree_traversal.en.niC7Q5jq.png) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-![traverse](/Pic/index1.png)
+<img src="https://use-the-index-luke.com/static/fig01_03_tree_traversal.en.niC7Q5jq.png" width="600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="/Pic/index1.png" width="600">
 
 Estimates of read operations for each step: (assuming 100 index entries per page/block)
 
@@ -61,7 +61,7 @@ Then B-tree index has both the columns and there is no need to access the table.
 The include clause allows us to make a distinction between columns we would like to have in the entire index (key columns) and columns we only need in the leaf nodes (include columns).  
 That means it allows us to remove columns from the non-leaf nodes if we don’t need them there.  
 
-![include](/Pic/index2.png)
+<img src="/Pic/index2.png" width="600">
 
 ```SQL
 CREATE INDEX idx_2
@@ -77,5 +77,5 @@ Note that the order of the leaf node entries does not take the include columns i
 - The leaf node of a Clustered Index contains data pages of the table on which it is created.
 - The leaf nodes of a Nonclustered index consists of index pages which contain Clustering Key (if Clustered index is present on the table) or row ID (RID) (if there is no Clustered index) to locate Data Row.
 - Clustered Index enforces a logical order on the rows. Rows are ordered based on Clustering Key.
-<img src="https://i.stack.imgur.com/TnLMf.png" width="700">
-<img src="https://i.stack.imgur.com/ojZjo.png" width="700">
+<img src="https://i.stack.imgur.com/TnLMf.png" width="600">
+<img src="https://i.stack.imgur.com/ojZjo.png" width="600">
