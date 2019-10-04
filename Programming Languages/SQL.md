@@ -79,3 +79,4 @@ Note that the order of the leaf node entries does not take the include columns i
 - Clustered Index enforces a logical order on the rows. Rows are ordered based on Clustering Key.
 ![clustered](https://i.stack.imgur.com/TnLMf.png)
 ![nonclustered](https://i.stack.imgur.com/ojZjo.png){:width="100px"}
+<img src="https://i.stack.imgur.com/ojZjo.png" width="100">
