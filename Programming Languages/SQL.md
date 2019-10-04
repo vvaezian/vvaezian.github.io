@@ -71,7 +71,7 @@ INCLUDE ( col2 )
 This results in shallower B-tree, smaller index size, and most importantly can make the index an *index-only scan*.  
 Note that the order of the leaf node entries does not take the include columns into account. The index is solely ordered by its key columns.
 
-## Clustered vs Nonclustered 
+## Clustered vs Nonclustered ([source](https://www.c-sharpcorner.com/blogs/differences-between-clustered-index-and-nonclustered-index1))
 - In SQL Server there is a distinction between Clustered and Nonclustered  indexes (TODO: How Postgres indexing relates to this distinction).
 - Nonclustered indexes are slower than Clustered ones for reads but faster for write and update.
 - The leaf node of a Clustered Index contains data pages of the table on which it is created.
