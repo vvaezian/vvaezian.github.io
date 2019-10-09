@@ -60,10 +60,6 @@ subprocess.call('bcp {t} in {f} -S {s} -U {u} -P {p} -c -t "{sep}" '.format(t='d
                                                                             sep='\t'), 
                  shell=True)
 ```
-### Export to CSV
-After exporting do the following to convert from utf16 to utf8:  
-`iconv -f UTF-16LE -t UTF-8 file.csv -o file_utf8.csv`
-
 ### Add Primary Key
 ```SQL
 -- First need to make the columns non-null if not already
