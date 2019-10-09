@@ -39,5 +39,5 @@ where date_trunc('day', thedate) = '2010-01-01'
 ```SQL
 \copy tbl_name from '~/myFile.csv' delimiter E'\t' csv;
 ```
-- Including `csv` in the command causes empty strings to be imported as NULL. E.g. `,,` or `\t\t` depending on the delimiter.
+- Including `csv` in the command causes empty strings to be imported as NULL (empty string is like `,,` or `\t\t` in the file, depending on the delimiter).
 - Add `header` if the csv has header row.
