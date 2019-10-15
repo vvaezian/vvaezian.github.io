@@ -34,7 +34,50 @@ select avg(temp), avg(rh) from adcon_all
 where date_trunc('day', thedate) = '2010-01-01'
 ````
 
+### Custom Function
 
+```sql
+CREATE FUNCTION update_block(old text, new text) RETURNS void AS $$
+BEGIN
+    UPDATE adcon_all 
+    SET theblock = $2
+    WHERE theblock = $1;
+
+END; $$
+LANGUAGE PLPGSQL;
+```
+Call it with `select update_block('SF02 D','Osoyoos 2 D')`.  
+
+#### Multi-Dimentional Array
+```SQL
+CREATE FUNCTION update_block_name(arr TEXT[]) RETURNS void AS $$
+DECLARE
+  x varchar[];
+BEGIN
+  FOREACH x SLICE 1 IN ARRAY arr
+  LOOP
+    UPDATE adcon_all
+    SET theblock = x[2]
+    WHERE theblock = x[1];
+  END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+```
+call it this way
+```SQL
+DO
+$$ declare arr TEXT[] := array[
+				 ['SF02 D','Osoyoos 2 D']
+				,['SF10 A','Oliver North 10 A']
+				,['SF10 AA','Oliver North 10 A']
+				,['SF10 C','Oliver North 10 C']
+				,['SF10 Q','Oliver North 10 Q']
+				,['SF10 T','Oliver North 10 T']
+  				];
+begin
+	perform update_block_name( arr );
+end $$; 
+```
 ### Copy from CSV
 ```SQL
 \copy tbl_name from '~/myFile.csv' delimiter E'\t' csv;
