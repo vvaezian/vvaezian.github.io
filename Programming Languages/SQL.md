@@ -109,4 +109,4 @@ INCLUDE ( col2 )
 This results in shallower B-tree, smaller index size, and most importantly can make the index an *index-only scan*.  
 Note that the order of the leaf node entries does not take the include columns into account. The index is solely ordered by its key columns.  
 
-- In SQL Server, *include* statement are only available for non-clustered indexes.
+- In SQL Server, *include* statement are only available for non-clustered indexes, because clustered indexes alread have all the data in their leaf nodes.
