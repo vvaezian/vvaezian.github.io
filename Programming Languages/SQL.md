@@ -85,8 +85,8 @@ Then B-tree index has both the columns and there is no need to access the table.
 ### Clustered vs Nonclustered ([source](https://www.c-sharpcorner.com/blogs/differences-between-clustered-index-and-nonclustered-index1))
 - In SQL Server there is a distinction between Clustered and Nonclustered  indexes (TODO: How Postgres indexing relates to this distinction).
 - Nonclustered indexes are slower than Clustered ones for reads but faster for write and update.
-- The leaf node of a Clustered Index contains data pages of the table on which it is created.
-- The leaf nodes of a Nonclustered index consists of index pages which contain Clustering Key (if Clustered index is present on the table) or row ID (RID) (if there is no Clustered index) to locate Data Row.
+- The leaf node of a Clustered Index contains data pages of the table on which it is created (it kind of replaces the table, as it has all the columns' data in its leaf nodes).
+- The leaf nodes of a Nonclustered index consists of index pages which contains Clustering Key (if Clustered index is present on the table) or row ID (RID) (if there is no Clustered index) as pointer to the data. It also contains included columns, if any.
 - Clustered Index enforces a logical order on the rows. Rows are ordered based on Clustering Key.
 - In the following example ([source](https://stackoverflow.com/a/41070976/2445273)) we want to retrieve Lname data (the last one is `covering` AKA `index-only`):
 <img src="https://i.stack.imgur.com/TnLMf.png" width="600">
