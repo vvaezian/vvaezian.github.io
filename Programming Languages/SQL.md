@@ -1,4 +1,31 @@
-# Indexing ([source](https://use-the-index-luke.com/))
+## Locks
+### Lock Modes
+- The basic lock modes are S (shared), U (update) and X (exclusive). 
+- Shared locks allow other processes requesting shared lock to access the data (we say S is compatible with S). Typical example of S is a `SELECT` statement (a *read* request). 
+- The U mode is acquired when inspecting a row that might be later updated or deleted (hence the lock may be upgraded to X). Acquiring U locks do not block reads, but blocks other queries from also inspecting the row for a potential update/delete. Without a U mode two queries attempting to update the same row would deadlock as they would both attempt to escalate the S mode to X mode. And having the update queries acquire directly X mode on all rows, even those that turn out not to qualify for the update, would result in unnecessary blocking of reads.
+- Two other important locks are SCH-S (schema stability lock) and SCH-M (schema modification lock, e.g. dropping a column). Any query requests SCH-S lock. SCH-M is the most restrictive lock. It basically blocks everything.
+### Lock Levels
+- Locks can be row-level, table-level, page-level (8K data) and Hobt-level (partition-level lock, stands for Heap or B-Tree, disabled by default)
+- If a small portion of table is being affected, it results in row-level lock, but if the porion be big enough the lock will be table-level instead of a high number of row-level locks.
+### Remarks
+- Given the above facts, a SELECT statement will block an UPDATE stement (unless the SELECT statement acquire its S lock as row-level and the UPDATE statement acquire its X lock as row-level and these rows don't overlap). 
+- SELECT statements acquire S lock by default. To run a SELECT statement without S lock use either `NOLOCK` (same as `READUNCOMMITTED`) or `TRANSACTION ISOLATION LEVEL READ UNCOMMITTED`. A SELECT statement with NOLOCK results in *dirtyreading*, i.e. it doesn't care whether data is committed or not. While `NOLOCK` is applied on one table, `TRANSACTION ISOLATION LEVEL READ UNCOMMITTED` gets applied to a transaction:
+````SQL
+SELECT * from myTbl WITH (NOLOCK)
+````
+````SQL
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED; -- turn it on
+
+SELECT ... 
+UPDATE ...
+SELECT ...
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED; -- turn it off
+````
+- Note that even with NOLOCK or TRANSACTION ISOLATION LEVEL, the query still requests SCH-S lock, so it will block any query that requests SCH-M lock.  
+- We can see all locks by running `sp_lock [SPID]`
+
+## Indexing ([source](https://use-the-index-luke.com/))
 The primary purpose of an index is to provide an ordered representation of the indexed data. This reduces the read time, but increase the write time, as the order need to be preserved.   
 Since it is not efficient to store the data sequentially (because an insert statement would need to move the following entries to make room for the new one), we need to establish a logical order that is independent of physical order in memory.  
 The logical order is established via a doubly linked list. It is used to connect B-tree leaf nodes. Index is represented as a B-tree. Each leaf node is stored in a database block (or page; the database's smallest storage unit).  
@@ -14,7 +41,7 @@ So I think there are three levels here:
 
 <img src="https://use-the-index-luke.com/static/fig01_02_tree_structure.en.BdEzalqw.png" width="600">
 
-## B-tree Traversal
+### B-tree Traversal
 In the general case, 
 1. the database software starts traversing the B-tree to find the first matching entry at the leaf node level. 
 2. It then follows the doubly linked list until it has found all matching entries.
@@ -31,7 +58,7 @@ Estimates of read operations for each step: (assuming 100 index entries per page
 
 Worst case scenario: all rows of interest are in different blocks, i.e. the worst possible clustering factor.
 
-## Multi-Column index
+### Multi-Column index
 This is when index is defined on multiple columns. 
 ```SQL
 CREATE INDEX idx_1
@@ -40,7 +67,7 @@ ON tbl ( col1, col2 )
 Note that the order of columns is important. The index is used for queries on `col1, col2` or on `col1` only.  
 It is like the phone book. It is sorted by lastName, FirstName, PhoneNumber. We cannot search by firstName at first.
 
-## index-only scans
+### index-only scans
 index-only scan (aka *covering index*), means that the quert doesn't need to access the table as all the data is in the index.  
 Consider the following query
 ```SQL
@@ -55,7 +82,7 @@ ON tbl ( col1, col2 )
 ```
 Then B-tree index has both the columns and there is no need to access the table.
 
-## `include` statement
+### `include` statement
 *PostgreSQL since release 11 supports include statement.*  
   
 The include clause allows us to make a distinction between columns we would like to have in the entire index (key columns) and columns we only need in the leaf nodes (include columns).  
@@ -71,7 +98,7 @@ INCLUDE ( col2 )
 This results in shallower B-tree, smaller index size, and most importantly can make the index an *index-only scan*.  
 Note that the order of the leaf node entries does not take the include columns into account. The index is solely ordered by its key columns.
 
-## Clustered vs Nonclustered ([source](https://www.c-sharpcorner.com/blogs/differences-between-clustered-index-and-nonclustered-index1))
+### Clustered vs Nonclustered ([source](https://www.c-sharpcorner.com/blogs/differences-between-clustered-index-and-nonclustered-index1))
 - In SQL Server there is a distinction between Clustered and Nonclustered  indexes (TODO: How Postgres indexing relates to this distinction).
 - Nonclustered indexes are slower than Clustered ones for reads but faster for write and update.
 - The leaf node of a Clustered Index contains data pages of the table on which it is created.
