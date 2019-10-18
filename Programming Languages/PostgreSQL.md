@@ -19,6 +19,11 @@ E.g. the command `select * from myTable` tries to get data from the table `mytab
 -- create index
 CREATE INDEX index_name ON table_name ( col_name [ASC | DESC] [NULLS {FIRST | LAST }], ...  );
 
+-- cluster a table
+CLUSTER VERBOSE table_name USING index
+-- in subsequest clusterings, we don't need to mention the index, because there can be only one cluster on a table.
+-- the command `CLUSTER` (without any argument) will recluster all previously defined clusters in the current database.
+
 -- get table size without index
 SELECT pg_size_pretty (pg_relation_size('table_name'));
 
