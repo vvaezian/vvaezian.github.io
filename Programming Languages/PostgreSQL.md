@@ -16,6 +16,9 @@ E.g. the command `select * from myTable` tries to get data from the table `mytab
 -- connect to a database 
 \c db_name
 
+-- create index
+CREATE INDEX index_name ON table_name ( col_name [ASC | DESC] [NULLS {FIRST | LAST }], ...  );
+
 -- get table size without index
 SELECT pg_size_pretty (pg_relation_size('table_name'));
 
