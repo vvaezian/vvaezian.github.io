@@ -35,8 +35,8 @@ The table data is stored in a heap structure and is not sorted at all.
 <img src="https://use-the-index-luke.com/static/fig01_01_index_leaf_nodes.en.MMHwYDFb.png" width="600">
 
 So I think there are three levels here: 
-1. Physical storage that has the bits in the storage.
-2. The heap that holds the records and has pointers to phisycal storage
+1. Physical storage that has the bits in memory addresses.
+2. The heap that holds the records and has pointers to phisycal storage (data in this stage is called "data rows")
 3. The linked list at the B-tree's leaf node which has connections with the heap.
 
 <img src="https://use-the-index-luke.com/static/fig01_02_tree_structure.en.BdEzalqw.png" width="600">
