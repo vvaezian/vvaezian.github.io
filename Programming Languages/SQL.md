@@ -111,3 +111,13 @@ This results in shallower B-tree, smaller index size, and most importantly can m
 Note that the order of the leaf node entries does not take the include columns into account. The index is solely ordered by its key columns.  
 
 - In SQL Server, *include* statement are only available for non-clustered indexes, because clustered indexes alread have all the data in their leaf nodes.
+
+### PostgreSQL
+In Postgres all indexes are non-clustered. Although there is a command `CLUSTER` which has similar effects:
+```SQL
+CLUSTER VERBOSE table_name USING index
+```
+It creates a temp table where the columns are ordered based on the index. It also creates all indexes that were on the original table to the new table. At the end it drops the original table.
+- The difference with SQL Server's clustered index is that the order is not maintained after the table is edited. In this case we need to recluster. (there may also be a difference in a way the data is stored. Here clustered table is stored as a heap, because it is a redular table. Need to look into how SQL Server's Clustered indexes are stored.)
+- In subsequest clusterings, we don't need to mention the index, because there can be only one cluster on a table.
+- The command `CLUSTER` (without any argument) will recluster all previously defined clusters in the current database.
