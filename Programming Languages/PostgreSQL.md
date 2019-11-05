@@ -94,3 +94,6 @@ end $$;
 - Add `header` if the csv has header row.
 - If the file is in utf16 format (e.g. exported from SQL Server), use the following to convert it to utf8:  
 `iconv -f UTF-16LE -t UTF-8 file.csv -o file_utf8.csv`
+
+### TODO
+-[ ] check the multi-valued data types `array`, `jsonb` and `tsvector`.
