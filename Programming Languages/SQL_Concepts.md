@@ -58,7 +58,7 @@ Estimates of read operations for each step: (assuming 100 index entries per page
 
 Worst case scenario: all rows of interest are in different blocks, i.e. the worst possible clustering factor.
 
-### Multi-Column index
+### Multi-Column (AKA composite) index
 This is when index is defined on multiple columns. 
 ```SQL
 CREATE INDEX idx_1
@@ -100,7 +100,7 @@ Then B-tree index has both the columns and there is no need to access the table.
  
 The include clause allows us to make a distinction between columns we would like to have in the entire index (key columns) and columns we only need in the leaf nodes (include columns).  
 That means it allows us to remove columns from the non-leaf nodes if we don’t need them there.  
-For example if the following query is run frequently and we want to define an index for it, having a multi-column index on both OrderID and OrderDate is redundant. We just need an index on OrderID where *includes*  OrderDate:
+For example if the following query is run frequently and we want to define an index for it, having a multi-column index on both OrderID and OrderDate is not the most efficient approach. We just need an index on OrderID where *includes*  OrderDate:
 ```SQL
 SELECT OrderID, OrderDate
 FROM Sales
