@@ -56,7 +56,7 @@ EXPLAIN SELECT ...
 ```
 
 - Everytime an index is scanned, it is noted by the statistics manager and a cumulative count is available in the system catalog view `pg_stat_user_indexes` as the value `idx_scan`. 
-Monitoring this value over a period of time (say, a month) gives a good idea of which indexes are unused and can be removed. [source](https://pgdash.io/blog/postgres-indexes.html)
+Monitoring this value over a period of time (say, a month) gives a good idea of which indexes are unused and can be removed. ([source](https://pgdash.io/blog/postgres-indexes.html))
 
 ```sql
 SELECT relname, indexrelname, idx_scan
