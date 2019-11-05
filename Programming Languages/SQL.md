@@ -94,6 +94,7 @@ Then B-tree index has both the columns and there is no need to access the table.
 <img src="https://i.stack.imgur.com/ojZjo.png" width="600">
 <img src="https://i.stack.imgur.com/rSDOI.png" width="600">
 - Indexes are automatically created when `PRIMARY KEY` and `UNIQUE` constraints are defined on table columns. For `PRIMARY KEY` a clustered index is created (unless there is already a clustered index. In this case primary key constraint is enforced by a non-clustered index). 
+
 ### `include` statement
 *PostgreSQL since release 11 supports include statement.*  
  
