@@ -62,9 +62,9 @@ Monitoring this value over a period of time (say, a month) gives a good idea of 
 SELECT relname, indexrelname, idx_scan
 FROM   pg_catalog.pg_stat_user_indexes
 WHERE  schemaname = 'public';
-### Custom Function
 ```
 
+### Custom Function
 ```sql
 CREATE FUNCTION update_block(old text, new text) RETURNS void AS $$
 BEGIN
