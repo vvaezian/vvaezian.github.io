@@ -100,7 +100,7 @@ Then B-tree index has both the columns and there is no need to access the table.
  
 The include clause allows us to make a distinction between columns we would like to have in the entire index (key columns) and columns we only need in the leaf nodes (include columns).  
 That means it allows us to remove columns from the non-leaf nodes if we don’t need them there.  
-For example if the following query is run frequently and we want to define an index for it, having a multi-column index on both OrderID and OrderDate is not the most efficient approach. We just need an index on OrderID where *includes*  OrderDate:
+For example if the following query is run frequently and we want to define an index for it, having a multi-column index on both OrderID and OrderDate is not the most efficient approach. We just need an index on OrderID where *includes*  OrderDate: ([source](https://www.red-gate.com/simple-talk/sql/performance/14-sql-server-indexing-questions-you-were-too-shy-to-ask/))
 ```SQL
 SELECT OrderID, OrderDate
 FROM Sales
