@@ -99,7 +99,8 @@ Then B-tree index has both the columns and there is no need to access the table.
 *PostgreSQL since release 11 supports include statement.*  
  
 The include clause allows us to make a distinction between columns we would like to have in the entire index (key columns) and columns we only need in the leaf nodes (include columns).  
-That means it allows us to remove columns from the non-leaf nodes if we don’t need them there. E.g. if the following query is run frequently and we want to define an index for it, having a multi-column index on both OrderID and OrderDate is redundant. We just need an index on OrderID where *includes*  OrderDate:
+That means it allows us to remove columns from the non-leaf nodes if we don’t need them there.  
+For example if the following query is run frequently and we want to define an index for it, having a multi-column index on both OrderID and OrderDate is redundant. We just need an index on OrderID where *includes*  OrderDate:
 ```SQL
 SELECT OrderID, OrderDate
 FROM Sales
