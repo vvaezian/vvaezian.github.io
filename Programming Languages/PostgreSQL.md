@@ -2,7 +2,9 @@
 ### TODO
 - [ ] check the multi-valued data types *array*, *jsonb* and *tsvector*.  
 E.g Say the table `film` has a column `special_feature` that has *array* data type. To search a text in all array elements of all rows of that column we do:  
-`SELECT title FROM film WHERE special_features @> '{"test_text"}';`
+`SELECT title FROM film WHERE special_features @> '{"test_text"}';`  
+(`@>` checks if the left hand side is a superset of the right hand side)
+
 
 ### Remarks
 - Postgres commands get converted to lower-case and then evaluated. To force case sensetivity we need to wrap the names in double-quotes.  
