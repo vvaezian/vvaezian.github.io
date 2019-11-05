@@ -39,9 +39,6 @@ SELECT pg_size_pretty (pg_relation_size('table_name'));
 -- get table size with index
 SELECT pg_size_pretty (pg_total_relation_size('table_name'));
 
--- get query plan and costs and see whether index is being used
-EXPLAIN SELECT ...
-
 -- Show active connections
 select * from pg_stat_activity
 order by datname
@@ -51,7 +48,22 @@ select avg(temp), avg(rh) from adcon_all
 where date_trunc('day', thedate) = '2010-01-01'
 ````
 
+### Indexes
+
+-  Get query plan and costs and see whether index is being used:  
+```sql
+EXPLAIN SELECT ...
+```
+
+- Everytime an index is scanned, it is noted by the statistics manager and a cumulative count is available in the system catalog view `pg_stat_user_indexes` as the value `idx_scan`. 
+Monitoring this value over a period of time (say, a month) gives a good idea of which indexes are unused and can be removed. [source](https://pgdash.io/blog/postgres-indexes.html)
+
+```sql
+SELECT relname, indexrelname, idx_scan
+FROM   pg_catalog.pg_stat_user_indexes
+WHERE  schemaname = 'public';
 ### Custom Function
+```
 
 ```sql
 CREATE FUNCTION update_block(old text, new text) RETURNS void AS $$
