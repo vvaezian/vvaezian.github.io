@@ -96,4 +96,4 @@ end $$;
 `iconv -f UTF-16LE -t UTF-8 file.csv -o file_utf8.csv`
 
 ### TODO
--[ ] check the multi-valued data types `array`, `jsonb` and `tsvector`.
+- [ ] check the multi-valued data types `array`, `jsonb` and `tsvector`.
