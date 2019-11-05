@@ -1,6 +1,7 @@
 
 ### TODO
-- [ ] check the multi-valued data types `array`, `jsonb` and `tsvector`.  
+- [ ] check the multi-valued data types *array*, *jsonb* and *tsvector*.  
+E.g Say the table `film` has a column `special_feature` that has *array* data type. To search a text in all array elements of all rows of that column we do:  
 `SELECT title FROM film WHERE special_features @> '{"Behind The Scenes"}';`
 
 ### Remarks
