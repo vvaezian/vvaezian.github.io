@@ -1,6 +1,7 @@
 
 ### TODO
-- [ ] check the multi-valued data types `array`, `jsonb` and `tsvector`.
+- [ ] check the multi-valued data types `array`, `jsonb` and `tsvector`.  
+`SELECT title FROM film WHERE special_features @> '{"Behind The Scenes"}';
 
 ### Remarks
 - Postgres commands get converted to lower-case and then evaluated. To force case sensetivity we need to wrap the names in double-quotes.  
