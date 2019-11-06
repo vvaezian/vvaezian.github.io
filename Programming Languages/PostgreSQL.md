@@ -46,6 +46,10 @@ order by datname
 -- Date trunc
 select avg(temp), avg(rh) from adcon_all
 where date_trunc('day', thedate) = '2010-01-01'
+
+-- See connections and activities
+SELECT * FROM pg_stat_activity
+where datname = 'myDBname'
 ````
 
 ### Indexes
@@ -53,6 +57,12 @@ where date_trunc('day', thedate) = '2010-01-01'
 -  Get query plan and costs and see whether index is being used:  
 ```sql
 EXPLAIN SELECT ...
+```
+- See defined indexes
+```sql
+SELECT *
+FROM pg_indexes
+where schemaname = 'public'
 ```
 
 - Everytime an index is scanned, it is noted by the statistics manager and a cumulative count is available in the system catalog view `pg_stat_user_indexes` as the value `idx_scan`. 
