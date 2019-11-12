@@ -1,3 +1,26 @@
+## Window Functions ([source](https://www.postgresql.org/docs/current/tutorial-window.html))
+A window function performs a calculation across a set of table rows that are somehow related to the current row. This is similar to GROUP BY but now the result is not squished as done with Group By. 
+```SQL
+-- add a column containing avg(salary) where avg is applied to those rows that have the same depname as the current row
+SELECT depname, empno, salary, avg(salary) OVER (PARTITION BY depname) FROM empsalary;
+
+-- add a column containing sum(salary), which is the same for all rows
+SELECT salary, sum(salary) OVER () FROM empsalary;
+
+-- add a column containing sum(salary) up until that row (and those with the same value as the current row)
+SELECT salary, sum(salary) OVER (ORDER BY salary) FROM empsalary;
+
+-- add a column containg the rank of the row with respect to highest salary, where comparision is done with rows that have the same depname
+SELECT depname, empno, salary,
+       rank() OVER (PARTITION BY depname ORDER BY salary DESC)
+FROM empsalary;
+
+-- several functions on the same window
+SELECT sum(salary) OVER w, avg(salary) OVER w
+FROM empsalary
+WINDOW w AS (PARTITION BY depname ORDER BY salary DESC);
+```
+
 ## Locks
 ### Lock Modes (SQL Server)
 - The basic lock modes are S (shared), U (update) and X (exclusive). 
