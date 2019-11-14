@@ -211,6 +211,9 @@ bgill 	ttyp7 	1:32pm 19 	      bash</pre>
 			If the action is omitted, the default action is to print all lines that match the pattern. So the first example can be written as<br>
 			<kbd> $ awk '/REGEXP/' FILENAME</kbd><br>
 			<kbd>echo 3,5,12,4 | awk -F ',' 'NR>1 {print $1+$2+$3 "," $4}'</kbd> print sum of first three fields and the fourth field.<br>
+			
+			<br>To delete commas inside double quotes:<br>
+			<kbd>awk -F'"' -v OFS='' '{ for (i=2; i&lt;=NF; i+=2) gsub(",", "", $i) } 1' infile </kbd> (<a href="https://unix.stackexchange.com/a/48675/40343">source</a>)<br>
 		</li><br>
 		<li><b>cut</b><br>
 			<kbd>cut</kbd> is used for manipulating column-based files and is designed to extract specific columns. <br>
