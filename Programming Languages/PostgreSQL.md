@@ -122,7 +122,7 @@ end $$;
 \copy tbl_name from '~/myFile.csv' delimiter E'\t' csv;
 ```
 - Including `csv` in the command causes empty strings to be imported as NULL (empty string is like `,,` or `\t\t` in the file, depending on the delimiter).
-- Add `header` if the csv has header row.
+- Add `header` if the csv has header row (this will ignore the first row).
 - If the file is in utf16 format (e.g. exported from SQL Server), use the following to convert it to utf8:  
 `iconv -f UTF-16LE -t UTF-8 file.csv -o file_utf8.csv`
 
