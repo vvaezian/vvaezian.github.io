@@ -9,7 +9,7 @@ We need *GIN index* for indexing this column.
 
 ### Remarks
 - Postgres commands get converted to lower-case and then evaluated. To force case sensetivity we need to wrap the names in double-quotes.  
-E.g. the command `select * from myTable` tries to get data from the table `mytable` (which is different from the table `myTable`.*
+E.g. the command `select * from myTable` tries to get data from the table `mytable` (which is different from the table `myTable`).
 
 
 ### Basic Functions
