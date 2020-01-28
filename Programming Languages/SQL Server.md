@@ -247,9 +247,13 @@ FROM
 ORDER BY [JobName]
 
 select *
+#into #tt2
 from #tt
 where isenabled = 'yes'
 and isscheduled = 'yes'
 and Recurrence is not null
 order by Recurrence
+
+delete FROM #tt2
+where Recurrence = 'Occurs every 1 week(s) on Sunday'
 ```
