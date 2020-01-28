@@ -230,6 +230,7 @@ SELECT [sJOB].[name] AS [JobName]
     , [sJSTP].subsystem
     , [sJSTP].command
 		, h.message
+into #tt
 FROM
     [msdb].[dbo].[sysjobs] AS [sJOB]
     LEFT JOIN [msdb].[sys].[servers] AS [sSVR] ON [sJOB].[originating_server_id] = [sSVR].[server_id]
@@ -245,6 +246,10 @@ FROM
 		left JOIN msdb.dbo.sysjobhistory AS h ON h.job_id = l.job_id AND h.instance_id = l.instance_id
 ORDER BY [JobName]
 
---select * from [msdb].[dbo].[sysjobsteps]
---order by job_id
+select *
+from #tt
+where isenabled = 'yes'
+and isscheduled = 'yes'
+and Recurrence is not null
+order by Recurrence
 ```
