@@ -815,7 +815,7 @@ plt.clabel(c, inline=1, fontsize=10)
 </details>
 
 <details class="details">
-    <summary><div class="wrapper"><h4>Regular Expressions</h4></div></summary>
+    <summary><div class="wrapper"><h4>re</h4></div></summary>
     <div class="content">
         <pre class=prettyprint>
 import re
@@ -823,6 +823,8 @@ msg = "hi, this is a test"
 re.findall('.*s', msg)[0]  # ['hi, this is a tes']
 re.findall('.*?s', msg)[0]  # ['hi, this', ' is', ' a tes']  non-greedy search
 re.findall('\w+', msg)[0]  # ['hi', 'this', 'is', 'a', 'test'] \w = [A-Za-z0-9_]
+re.match('.*"(.*),(.*).*"', row)  # if it doesn't match anything returns None. So it can be used in conditionals
+re.sub('(.*)abc(.*)"', '"\g<1>\g<2>"', row)  # refer to matched groups using \g<n> 
 </pre><br>
 Matching the part that starts with an space followed by / (without including the space in the result) until a space 
 (without including the space):<br>
