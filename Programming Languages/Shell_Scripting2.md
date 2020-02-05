@@ -85,6 +85,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 </details>
 
 
+
 <details class="details">
 	<summary>Reading Keyboard Input</summary>
 
@@ -95,6 +96,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 		The <samp>-r</samp> (raw input) option disables the backslash escaping of special characters. 
 	</div>
 </details>
+
 
 
 <details class="details">
@@ -108,6 +110,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 		5 and 5.000000```  
 	</div>
 </details>
+
 
 
 <details class="details">
@@ -158,6 +161,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 
 
 
+
 <details class="details">
 	<summary>Arrays</summary>
 
@@ -180,6 +184,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 		<li>The `read` command can read a list into an array using an `-a` switch. When this switch is used, each item on the line of input is read into a separate array position.
 	</div>
 </details>
+
 
 
 <details class="details">
@@ -215,6 +220,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 	</div>
 </details>
 
+
 <details class="details">
 	<summary>Looping Constructs</summary>
 
@@ -248,6 +254,7 @@ echo "The sum of $i numbers is: $sum"
 
 
 
+
 <details class="details">
 	<summary>Security</summary>
 
@@ -259,6 +266,7 @@ echo "The sum of $i numbers is: $sum"
 		The <samp>XXXXXXXX</samp> is replaced with random characters by the <samp>mktemp</samp> utility.
 	</div>
 </details>
+
 
 
 
@@ -277,6 +285,7 @@ echo "The sum of $i numbers is: $sum"
 				```
 			</div>
 		</details>	
+    
 		<details class="details">
 			<summary>Quick Refference Table</summary>
 
@@ -300,7 +309,10 @@ echo "The sum of $i numbers is: $sum"
 				</table>
 			</div>
 		</details>
+    
 	</div>
 </details>
+
+
 </body>
 </html>
