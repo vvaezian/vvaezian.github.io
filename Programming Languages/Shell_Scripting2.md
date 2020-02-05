@@ -21,10 +21,10 @@
 
 <h4>A Simple Shell Script</h4>
 	
-<pre class="prettyprint">#!/bin/bash
+  ``` class="prettyprint">#!/bin/bash
 clear
 echo "Hello world!"
-</pre>  
+```  
 The first line tells the operating system what shell to use to interpret the script and the location of the shell.  
 We need the following command to make the file <a href="http://en.wikipedia.org/wiki/File_system_permissions#Numeric_notation">executable</a>: `$ chmod 755 script_name` (or `$ chmod +x script_name`).  
 We can then run the script by `$ ./script_name`.  
@@ -35,7 +35,6 @@ All shell commands and scripts generate a return value upon finishing execution;
 <details class="details">
 	<summary><h4>Variables</h4></summary>
 
-	<div class="content">
 		<ul>
 			<li>Variables can be created and assigned text using an equals sign. 
 			Surround the text with double quotes (although it is not necessary unless there is space in the name):  
@@ -89,8 +88,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 <details class="details">
 	<summary><h4>Reading Keyboard Input</h4></summary>
 
-	<div class="content">
-		<pre class="prettyprint">read -p "Please enter your name: " USER_NAME</pre>  
+		  ``` class="prettyprint">read -p "Please enter your name: " USER_NAME```  
 		With <samp>-p</samp> option we can provide a message before the user input.  
 		<samp>read -t 5 FILENAME # wait up to 5 seconds to read a filename </samp>  
 		<samp>-n 10 FILENAME # read no more than 10 characters</samp>  
@@ -102,7 +100,6 @@ All shell commands and scripts generate a return value upon finishing execution;
 <details class="details">
 	<summary><h4>printf</h4></summary>
 
-	<div class="content">
 		`printf` is very similar to the C standard I/O <samp>printf()</samp> function, but they are not
 		identical. In particular, single- and double-quoted strings are treated differently in shell scripts than in C programs.  
 		The first parameter is a format string describing how the items being printed will be represented. 
@@ -116,7 +113,6 @@ All shell commands and scripts generate a return value upon finishing execution;
 <details class="details">
 	<summary><h4><samp>if</samp> command</h4></summary>
 
-	<div class="content">
 		```
 			if test Condition; then  
 			&emsp; Expression1  
@@ -165,7 +161,6 @@ All shell commands and scripts generate a return value upon finishing execution;
 <details class="details">
 	<summary><h4>Arrays</h4></summary>
 
-	<div class="content">
 		<ul><li>Array is like a variable. So it is created using declare, with `-a` option or just direct assignment:  
 		<samp>$ declare -a ARRAY0$</samp>  
 		<samp>$ ARRAY1=(0 1 2)</samp>  
@@ -190,7 +185,6 @@ All shell commands and scripts generate a return value upon finishing execution;
 <details class="details">
 	<summary><h4>Command History</h4></summary>
 
-	<div class="content">
 		<p>The easiest way to browse the command history is with the Up and Down arrow
 		keys. The history can also be searched with an exclamation mark (`!`). This denotes the
 		start of a command name to be completed by Bash. Bash executes the most recent command
@@ -224,20 +218,19 @@ All shell commands and scripts generate a return value upon finishing execution;
 <details class="details">
 	<summary><h4>Looping Constructs</h4></summary>
 
-	<div class="content">
 ```
 for i in list
 do
 	something
 done```
-<pre class="prettyprint">
+  ``` class="prettyprint">
 sum=0
 for i in 1 2 3 4
 do
 	sum=$(($sum+$i))
 done
 echo "The sum of $i numbers is: $sum"
-</pre>  
+```  
 		```
 			while condition is true  
 			do  
@@ -258,7 +251,6 @@ echo "The sum of $i numbers is: $sum"
 <details class="details">
 	<summary><h4>Security</h4></summary>
 
-	<div class="content">
         Create random and unpredictable filenames for temporary storage with the `mktemp` utility:  
         ```
         	TEMP=$(mktemp /tmp/tempfile.XXXXXXXX)  # To create a temporary file  
@@ -273,11 +265,9 @@ echo "The sum of $i numbers is: $sum"
 <details class="details">
 	<summary><h4>Misc.</h4></summary>
 
-	<div class="content">
 		<details class="details">
 			<summary><h4>Debugging</h4></summary>
 
-			<div class="content">
 				We can run a script in debug mode by `bash –x ./script_file`.  
 				Inside a sccript we can do it by  
 				```
@@ -290,7 +280,6 @@ echo "The sum of $i numbers is: $sum"
 		<details class="details">
 			<summary><h4>Quick Refference Table</h4></summary>
 
-			<div class="content">
 				<table class="EveryOtherOne">
 					<tr>
 						<td><samp>${#str}</samp>
