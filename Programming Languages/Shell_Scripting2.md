@@ -85,7 +85,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 						<td>Generates a random integer number (0 - 32767)
 					</tr>
 		</table>
-	</div>
+	
 </details>
 
 
@@ -98,7 +98,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 		<samp>read -t 5 FILENAME # wait up to 5 seconds to read a filename </samp>  
 		<samp>-n 10 FILENAME # read no more than 10 characters</samp>  
 		The <samp>-r</samp> (raw input) option disables the backslash escaping of special characters. 
-	</div>
+	
 </details>
 
 
@@ -113,7 +113,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 		
     ```$ printf "%d and %f\n" 5 5
 		5 and 5.000000```  
-	</div>
+	
 </details>
 
 
@@ -167,7 +167,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 			> &ltrest of code&gt   
 			> fi  
 		```
-	</div>
+	
 </details>
 
 
@@ -193,7 +193,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 		a 1 2
 		<li>Individual array values can be removed with the command. Erasing a value by `unset` assigning the array position an empty string doesn’t destroy it:The empty string is still treated as an array item whenever the items are counted.
 		<li>The `read` command can read a list into an array using an `-a` switch. When this switch is used, each item on the line of input is read into a separate array position.
-	</div>
+	
 </details>
 
 
@@ -229,7 +229,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 		<li> Using the minus sign (–) with `cd`, you can switch between the current directory and the last directory. 
 		(~ and - are features of Bash and only work with Bash and Bash scripts.)
 		</ul>
-	</div>
+	
 </details>
 
 
@@ -264,7 +264,7 @@ echo "The sum of $i numbers is: $sum"
 			    &emsp; something  
 			done
 		```  
-	</div>
+	
 </details>
 
 
@@ -280,7 +280,7 @@ echo "The sum of $i numbers is: $sum"
 			TEMPDIR=$(mktemp -d /tmp/tempdir.XXXXXXXX)  # To create a temporary directory
 		```  
 		The <samp>XXXXXXXX</samp> is replaced with random characters by the <samp>mktemp</samp> utility.
-	</div>
+	
 </details>
 
 
@@ -300,7 +300,7 @@ echo "The sum of $i numbers is: $sum"
 					...  
 					set +x    # turns off debugging  
 				```
-			</div>
+			
 </details>	
 
 <details class="details">
@@ -324,12 +324,9 @@ echo "The sum of $i numbers is: $sum"
 						<td> Referring to the nth argument that is given alongside the command
 					</tr>
 				</table>
-			</div>
+			
 </details>
 
-	</div>
+	
 </details>
 
-
-</body>
-</html>
