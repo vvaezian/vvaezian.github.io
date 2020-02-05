@@ -38,7 +38,8 @@ All shell commands and scripts generate a return value upon finishing execution;
 		<ul>
 			<li>Variables can be created and assigned text using an equals sign. 
 			Surround the text with double quotes (although it is not necessary unless there is space in the name):  
-			```$ FILENAME="info.txt"  
+			
+      ```$ FILENAME="info.txt"  
 			$ printf “%s\n” “$FILENAME”  
 			info.txt```  
 			<li>The `declare` command, in addition to creation of variable and assigning values, can add attributes to variables as well 
@@ -48,7 +49,8 @@ All shell commands and scripts generate a return value upon finishing execution;
 			  
 			The <samp>declare</samp> command without any options list all pre-defined variables of system.  
 			<li>The results of a command can be assigned to a variable using backquotes.  
-			```$ Date=`date`  
+			
+      ```$ Date=`date`  
 			$ printf "%s\n" "$Date"  
 			Thu Apr 13 08:02:19 UTC 2017 ```  
 			<li>Double quotes do not prevent Bash from interpreting the special characters $, ‘, and \,
@@ -62,7 +64,8 @@ All shell commands and scripts generate a return value upon finishing execution;
 			declares an exported variable and runs a second script, any changes made to the variable by the second script are invisible to the first.There is no way for a second script to assign a new value to a variable that the first script will see. Unlike other programming languages, exporting shell variables is a one-way street.  
 			The only way to return a value to the calling program is to write it to a file (or standard output) and have the calling program read (or assign) the value back into a variable.
 			<li>Before a command is executed, Bash searches the command for all dollar signs and inserts the value of variables before the command is carried out. Bash performs this substitution once. `eval` command do this another time:  
-			```#!/bin/bash  
+			
+      ```#!/bin/bash  
 				VAR1=25  
 				VAR2='$VAR1'  
 				VAR3='$VAR2'  
@@ -71,7 +74,8 @@ All shell commands and scripts generate a return value upon finishing execution;
 				eval eval echo "$VAR3"
 			```  
 			Output of the script above:  
-			```$VAR2  
+			
+      ```$VAR2  
 				$VAR1  
 				25```
 		</ul>
@@ -106,7 +110,8 @@ All shell commands and scripts generate a return value upon finishing execution;
 		identical. In particular, single- and double-quoted strings are treated differently in shell scripts than in C programs.  
 		The first parameter is a format string describing how the items being printed will be represented. 
 		For example, the special formatting code “%d” represents an integer number, and the code “%f” represents a floating-point number:  
-		```$ printf "%d and %f\n" 5 5
+		
+    ```$ printf "%d and %f\n" 5 5
 		5 and 5.000000```  
 	</div>
 </details>
@@ -124,13 +129,15 @@ All shell commands and scripts generate a return value upon finishing execution;
 			fi  
 		```  
 		We can use square brackets instead of <samp>test</samp>:   
-		```
+		
+    ```
 			if [ Condition ]; then  
 			&emsp; ...  
 			fi  
 		```  
 		We can use carriage return instead of semi-colon <samp>(;)</samp> :  
-		```
+		
+    ```
 			if [ Condition ]  
 			then  
 			&emsp; Expression1  
@@ -140,19 +147,23 @@ All shell commands and scripts generate a return value upon finishing execution;
 		```  
 		Make richer Conditions by using `-a` <samp>(and)</samp>, `-o` <samp>(or)</samp>, `!` <samp>(not)</samp>.  
 		Unlike most programming languages, in BASH the "not" operator doesn't take precedence over "and" and "or". So use parenthesis if needed.  
-		```
+		
+    ```
 			if [ \( ! -f "$TMP1" \) -a -f "$TMP2" ]  
 		```  
 		Alternatively we can use <samp>&&, ||</samp> for 'and', 'or'.  
-		```
+		
+    ```
 			if [ \( ! -f "$TMP1" \) ] && [ -f "$TMP2" ]  
 		```  
 		* `help test` gives useful options.  
 		Writing <samp>if</samp> commands in terminal:  
-		```if [ condition ]; then &ltrest of code&gt ; fi
+		
+    ```if [ condition ]; then &ltrest of code&gt ; fi
 		```  
 		Alternatively,  
-		```$ if [ condition ]; then  
+		
+    ```$ if [ condition ]; then  
 			> &ltrest of code&gt   
 			> fi  
 		```
@@ -194,7 +205,8 @@ All shell commands and scripts generate a return value upon finishing execution;
 		keys. The history can also be searched with an exclamation mark (`!`). This denotes the
 		start of a command name to be completed by Bash. Bash executes the most recent command
 		that matches. For example,  
-		```
+		
+    ```
 			$ !d  
 			date  
 			Thu Apr 13 08:24:51 UTC 2017  
@@ -229,6 +241,7 @@ for i in list
 do
 	something
 done```
+  
   ``` class="prettyprint">
 sum=0
 for i in 1 2 3 4
@@ -237,13 +250,15 @@ do
 done
 echo "The sum of $i numbers is: $sum"
 ```  
-		```
+		
+    ```
 			while condition is true  
 			do  
 				&emsp; something  
 			done
 		```  
-		```
+		
+    ```
 			until condition is false  
 			do  
 			    &emsp; something  
@@ -259,6 +274,7 @@ echo "The sum of $i numbers is: $sum"
 	<summary>Security</summary>
 
         Create random and unpredictable filenames for temporary storage with the `mktemp` utility:  
+        
         ```
         	TEMP=$(mktemp /tmp/tempfile.XXXXXXXX)  # To create a temporary file  
 			TEMPDIR=$(mktemp -d /tmp/tempdir.XXXXXXXX)  # To create a temporary directory
@@ -278,14 +294,15 @@ echo "The sum of $i numbers is: $sum"
 
 				We can run a script in debug mode by `bash –x ./script_file`.  
 				Inside a sccript we can do it by  
-				```
+				
+        ```
 					set -x    # turns on debugging  
 					...  
 					set +x    # turns off debugging  
 				```
 			</div>
 		</details>	
-    
+
 		<details class="details">
 			<summary>Quick Refference Table</summary>
 
@@ -309,7 +326,7 @@ echo "The sum of $i numbers is: $sum"
 				</table>
 			</div>
 		</details>
-    
+
 	</div>
 </details>
 
