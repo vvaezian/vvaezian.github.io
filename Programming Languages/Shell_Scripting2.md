@@ -32,8 +32,7 @@ Alternatively, we could use `$ bash script_name`. In This method we don't need t
   
 All shell commands and scripts generate a return value upon finishing execution; the value can be set with the exit statement (default 0). The return value is always stored in the `$?` variable.
 
-<details class="details">
-	<summary>Variables</summary>
+details class="details">	<summary>Variables</summary>
 
 		<ul>
 			<li>Variables can be created and assigned text using an equals sign. 
@@ -90,8 +89,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 
 
 
-<details class="details">
-	<summary>Reading Keyboard Input</summary>
+details class="details">	<summary>Reading Keyboard Input</summary>
 
 		  ``` class="prettyprint">read -p "Please enter your name: " USER_NAME```  
 		With <samp>-p</samp> option we can provide a message before the user input.  
@@ -103,8 +101,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 
 
 
-<details class="details">
-	<summary>printf</summary>
+details class="details">	<summary>printf</summary>
 
 		`printf` is very similar to the C standard I/O <samp>printf()</samp> function, but they are not
 		identical. In particular, single- and double-quoted strings are treated differently in shell scripts than in C programs.  
@@ -118,8 +115,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 
 
 
-<details class="details">
-	<summary><samp>if</samp> command</summary>
+details class="details">	<summary><samp>if</samp> command</summary>
 
 		```
 			if test Condition; then  
@@ -173,8 +169,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 
 
 
-<details class="details">
-	<summary>Arrays</summary>
+details class="details">	<summary>Arrays</summary>
 
 		<ul><li>Array is like a variable. So it is created using declare, with `-a` option or just direct assignment:  
 		<samp>$ declare -a ARRAY0$</samp>  
@@ -198,8 +193,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 
 
 
-<details class="details">
-	<summary>Command History</summary>
+details class="details">	<summary>Command History</summary>
 
 		<p>The easiest way to browse the command history is with the Up and Down arrow
 		keys. The history can also be searched with an exclamation mark (`!`). This denotes the
@@ -233,8 +227,7 @@ All shell commands and scripts generate a return value upon finishing execution;
 </details>
 
 
-<details class="details">
-	<summary>Looping Constructs</summary>
+details class="details">	<summary>Looping Constructs</summary>
 
 ```
 for i in list
@@ -270,8 +263,7 @@ echo "The sum of $i numbers is: $sum"
 
 
 
-<details class="details">
-	<summary>Security</summary>
+details class="details">	<summary>Security</summary>
 
         Create random and unpredictable filenames for temporary storage with the `mktemp` utility:  
         
@@ -286,11 +278,9 @@ echo "The sum of $i numbers is: $sum"
 
 
 
-<details class="details">
-	<summary>Misc.</summary>
+details class="details">	<summary>Misc.</summary>
 
-		<details class="details">
-			<summary>Debugging</summary>
+<details class="details">			<summary>Debugging</summary>
 
 				We can run a script in debug mode by `bash –x ./script_file`.  
 				Inside a sccript we can do it by  
@@ -303,8 +293,7 @@ echo "The sum of $i numbers is: $sum"
 			</div>
 		</details>	
 
-		<details class="details">
-			<summary>Quick Refference Table</summary>
+<details class="details">			<summary>Quick Refference Table</summary>
 
 				<table class="EveryOtherOne">
 					<tr>
