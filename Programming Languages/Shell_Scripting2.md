@@ -263,7 +263,7 @@ echo "The sum of $i numbers is: $sum"
 
 
 <details class="details">
-	<summary><h4>Misc.</h4></summary>
+	<summary>Misc.</summary>
 
 		<details class="details">
 			<summary><h4>Debugging</h4></summary>
