@@ -663,8 +663,8 @@ where
 <pre class="prettyprint">import time
 from datetime import datetime
 time.time()  # returns the value of time in seconds since the Epoch.
-time.strftime("%Y-%m-%d %H:%M:%S")  # convert current time in epoch to str
-datetime.strptime(myDateSTR, "%Y-%m-%d %H:%M:%S.%f")  # convert date string to datetime
+datetime.fromtimestamp(t).strftime('%Y-%m-%d %H:%M:%S')  # convert time in epoch to str
+datetime.strptime(t, "%Y-%m-%d %H:%M:%S.%f")  # convert date string to datetime
 myDate.timestamp()  # convert datetime to epoch
 </pre>
 </div>
