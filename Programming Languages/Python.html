@@ -655,15 +655,23 @@ where
 </div>
 </details>
 
+	    
+	    
 <details class="details">
-    <summary><div class="wrapper">Reference to the <b>current time</b></div></summary>
+    <summary><div class="wrapper">time</div></summary>
     <div class="content">
 <pre class="prettyprint">import time
-print time.strftime("%Y-%m-%d %H:%M:%S")</pre><br>
-If we don't care about the representation, <kbd>time.time()</kbd> is good enough. It returns the value of time in seconds since the Epoch.
+from datetime import datetime
+time.time()  # returns the value of time in seconds since the Epoch.
+time.strftime("%Y-%m-%d %H:%M:%S")  # convert current time in epoch to str
+datetime.strptime(myDateSTR, "%Y-%m-%d %H:%M:%S.%f")  # convert date string to datetime
+myDate.timestamp()  # convert datetime to epoch
+</pre>
 </div>
 </details>
 
+	    
+	    
 <details class="details">
     <summary><div class="wrapper"><b>Random Numbers</b></div></summary>
     <div class="content">
