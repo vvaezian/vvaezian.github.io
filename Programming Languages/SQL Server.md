@@ -1,3 +1,7 @@
+```sql
+select dateadd(d, datediff(d, 0, current_timestamp), 0)
+```
+
 ### DB disk usage
 ```sql
 SELECT DbSize_GB = (SELECT CONVERT(DECIMAL(18,2), SUM(CAST(df.size as float))*8/(1024.0 * 1024))
