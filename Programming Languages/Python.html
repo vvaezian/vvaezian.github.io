@@ -567,22 +567,17 @@ For printing members of <samp>myList</samp> line by line: <samp>print(*myList, s
     <summary><div class="wrapper"><b>Input</b></div></summary>
     <div class="content">
 <pre class=prettyprint>
-f = open('pathToFile', [option])
-fs = f.read()	# turns f into one string
-fl = f.readlines()  # turns f into a list of strings, each item of list is one line of f (defined by '\n')
-for line in f:
-    print(line.rstrip('\n'))  # rstrip('\n') is for ignoring newline symbols
-                              # which causes to print an empty line between lines</pre><br>
+with open('pathToFile', [option]) as f:
+  fl = f.readlines()
+data = [ eval(line.rstrip('\n')) for line in fl ]
+X1, ..., Xn = zip(*data) 
+<br>
 [option] can be <samp>'r'</samp> (read) [default], <samp>'w'</samp> (write), <samp>'r+'</samp> (read and write) and <samp>'a'</samp> (append).<br>
 <br>
-We can use <samp>lines = f.readline()</samp> to turn <samp>f</samp> into a list.<br>
+<kbd>fl = f.readlines()</kbd>  turns f into a list of strings, each item of list is one line of f (defined by '\n')<br>
+<kbd>fs = f.read()</kbd> turns f into one string<br>
+<kbd>l = f.readline()</kbd>  read the first line as a string<br>
 <br>
-Using <samp>with</samp> block, closes the file automatically afterwards:<br>
-<pre class="prettyprint">
-with open('pathToFile', [option]) as f:
-    do something
-</pre><br>
-
 <pre class=prettyprint>guess = 50
 x = raw_input('Is your number ' + str(guess) + '?' + '\n Enter \'Yes\' or \'No\': ')
 
