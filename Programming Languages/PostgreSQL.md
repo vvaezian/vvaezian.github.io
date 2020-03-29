@@ -55,7 +55,7 @@ psql --host metabase-data.cztt4nrxp7n3.us-west-2.rds.amazonaws.com --port 5432 -
 \di table_name
 # connect to a database 
 \c db_name
-
+```
 ### Indexes
 
 -  Get query plan and costs and see whether index is being used:  
