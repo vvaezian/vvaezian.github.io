@@ -14,13 +14,9 @@ E.g. the command `select * from myTable` tries to get data from the table `mytab
 
 ### Basic Functions
 ````SQL
--- create index
-CREATE INDEX index_name ON table_name ( col_name [ASC | DESC] [NULLS {FIRST | LAST }], ...  );
-
--- cluster a table
-CLUSTER VERBOSE table_name USING index
--- in subsequest clusterings, we don't need to mention the index, because there can be only one cluster on a table.
--- the command `CLUSTER` (without any argument) will recluster all previously defined clusters in the current database.
+-- Date trunc
+select avg(temp), avg(rh) from adcon_all
+where date_trunc('day', thedate) = '2010-01-01'
 
 -- get table size without index
 SELECT pg_size_pretty (pg_relation_size('table_name'));
@@ -32,13 +28,14 @@ SELECT pg_size_pretty (pg_total_relation_size('table_name'));
 select * from pg_stat_activity
 order by datname
 
--- Date trunc
-select avg(temp), avg(rh) from adcon_all
-where date_trunc('day', thedate) = '2010-01-01'
-
 -- See connections and activities
 SELECT * FROM pg_stat_activity
 where datname = 'myDBname'
+
+-- cluster a table
+CLUSTER VERBOSE table_name USING index
+-- in subsequest clusterings, we don't need to mention the index, because there can be only one cluster on a table.
+-- the command `CLUSTER` (without any argument) will recluster all previously defined clusters in the current database.
 ````
 ### `psql`
 ```bash
@@ -57,7 +54,10 @@ psql --host metabase-data.cztt4nrxp7n3.us-west-2.rds.amazonaws.com --port 5432 -
 \c db_name
 ```
 ### Indexes
-
+- Create index
+```sql
+CREATE INDEX index_name ON table_name ( col_name [ASC | DESC] [NULLS {FIRST | LAST }], ...  );
+```
 -  Get query plan and costs and see whether index is being used:  
 ```sql
 EXPLAIN SELECT ...
