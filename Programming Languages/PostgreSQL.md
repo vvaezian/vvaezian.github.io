@@ -14,17 +14,6 @@ E.g. the command `select * from myTable` tries to get data from the table `mytab
 
 ### Basic Functions
 ````SQL
--- lists databases  
-\l 
--- lists tables
-\dt   
--- list columns and indexes of a table
-\d table_name
--- list indexes of a table
-\di table_name
--- connect to a database 
-\c db_name
-
 -- create index
 CREATE INDEX index_name ON table_name ( col_name [ASC | DESC] [NULLS {FIRST | LAST }], ...  );
 
@@ -51,6 +40,21 @@ where date_trunc('day', thedate) = '2010-01-01'
 SELECT * FROM pg_stat_activity
 where datname = 'myDBname'
 ````
+### `psql`
+```bash
+psql --host metabase-internal-database.cztt4nrxp7n3.us-west-2.rds.amazonaws.com --port 5432 --username vvAdmin --password --dbname MetabaseApplicationDB
+psql --host metabase-data.cztt4nrxp7n3.us-west-2.rds.amazonaws.com --port 5432 --username vvAdmin --password --dbname ca_account_performance
+
+# lists databases  
+\l 
+# lists tables
+\dt   
+# list columns and indexes of a table
+\d table_name
+# list indexes of a table
+\di table_name
+# connect to a database 
+\c db_name
 
 ### Indexes
 
