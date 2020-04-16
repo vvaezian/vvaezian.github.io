@@ -39,27 +39,6 @@ class LinkedList:
     print("Didn't find a node with value {}".format(val1))
     return False
 
-    def insertAfter(self, val_1, val_2):
-        """ Assuming all values are distinct. If not, we need to use "keys" for nodes.
-            inserts a node with value val_1 after the node with value val_2"""
-        if self.head is None:
-            print "There is no node with value " + str(val_2)
-            return
-        else:
-            cur = self.head
-            while True:
-                if cur.val == val_2:
-                    tmp = Node(val_1)
-                    tmp.nxt = cur.nxt
-                    cur.nxt = tmp
-                    break
-                else:
-                    if cur.nxt is not None:
-                        cur = cur.nxt
-                    else:
-                        print "There is no node with value " + str(val_2)
-                        return
-
     def insertBehind(self, val_1, val_2):
         """ Assuming all values are distinct. If not, we need to use "keys" for nodes.
             inserts a node with value val_1 behind the node with value val_2"""
