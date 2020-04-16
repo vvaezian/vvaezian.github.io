@@ -23,6 +23,22 @@ class LinkedList:
         cur = cur.nxt
       cur.nxt = n
 
+  def insert_after(self, val1, val2):
+    """ inserts a node with value val_1 after the node with value val_2
+    Assuming all values are distinct. If this is not the case, inserts after the first occurence.
+    We need to use "keys" for nodes, if we want a general approach for nodes with duplicate values.
+    """
+    cur = self.head
+    while cur:
+      if cur.val == val1:
+        n = Node(val2)
+        n.nxt = cur.nxt
+        cur.nxt = n
+        return True
+      cur = cur.nxt
+    print("Didn't find a node with value {}".format(val1))
+    return False
+
     def insertAfter(self, val_1, val_2):
         """ Assuming all values are distinct. If not, we need to use "keys" for nodes.
             inserts a node with value val_1 after the node with value val_2"""
