@@ -5,25 +5,23 @@ class Node:
 
 
 class LinkedList:
-    def __init__(self):
-        self.head = None
+  def __init__(self):
+    self.head = None
 
-    def insertAtFront(self, val):
-        tmp = self.head
-        self.head = Node(val)
-        self.head.nxt = tmp
+  def insertAtFront(self, val):
+    n = Node(val)
+    n.nxt = self.head
+    self.head = n
 
-    def insertAtEnd(self, val):
-        if self.head:
-            tmp = self.head
-            while True:
-                if tmp.nxt is None:
-                    tmp.nxt = Node(val)
-                    break
-                else:
-                    tmp = tmp.nxt
-        else:
-            self.head = Node(val)
+  def append_to_end(self, val):
+    n = Node(val)
+    if not self.head:
+      self.head = n
+    else:
+      cur = self.head
+      while cur.nxt:
+        cur = cur.nxt
+      cur.nxt = n
 
     def insertAfter(self, val_1, val_2):
         """ Assuming all values are distinct. If not, we need to use "keys" for nodes.
