@@ -99,17 +99,6 @@ class LinkedList:
 
       return self
 
-  def __str__(self):
-    if self.head is None:
-      return "The linked list is empty."
-    else:
-      cur = self.head
-      output = []
-      while cur is not None:
-        output.append(cur.val)
-        cur = cur.nxt
-      return ''.join(str(i) + ' -> ' for i in output)[:-4]  # '-4' is for excluding the last arrow
-
   def delete_node(self, val1):
     if self.head.val == val1:
       self.head = self.head.nxt
@@ -124,6 +113,18 @@ class LinkedList:
     print("Didn't find a node with val {}".format(val1))
     return False
 
+  def __str__(self):
+    if self.head is None:
+      return "The linked list is empty."
+    else:
+      cur = self.head
+      output = []
+      while cur is not None:
+        output.append(cur.val)
+        cur = cur.nxt
+      return ''.join(str(i) + ' -> ' for i in output)[:-4]  # '-4' is for excluding the last arrow
+  
+  
 ll = LinkedList()
 ll.append_to_end(1)
 ll.append_to_end(2)
