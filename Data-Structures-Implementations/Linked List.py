@@ -1,7 +1,7 @@
-class Node:
-    def __init__(self, val):
-        self.val = val
-        self.nxt = None
+class Node():
+  def __init__(self, val):
+    self.val = val
+    self.nxt = None
 
 
 class LinkedList:
@@ -62,30 +62,53 @@ class LinkedList:
                             print "There is no node with value " + str(val_2)
                             break
 
-    def reverse(self):
-        cur = self.head
-        prev = None
-        next = cur.nxt
-        while True:
-            cur.nxt = prev
-            if next is None:
-                break
-            prev = cur
-            cur = next
-            next = next.nxt
-        self.head = cur
+  def reverse(self, in_place=True):
+    import copy
+    if not in_place: # returns a copy with the order reversed
+      ll = LinkedList()
+      if not self.head:
+        return ll
+      node_list = []
+      cur = self.head
+      while cur:
+        node_list.append(cur)
+        cur = cur.nxt
+      
+      ll.head = node_list[-1]
+      node_list[0].nxt = None
+      for index, _ in enumerate(node_list[1:]):
+        index += 1  # because we excluded the first element
+        node_list[index].nxt = node_list[index - 1]
 
-    def __str__(self):
-        if self.head is None:
-            return "The linked list is empty"
-        else:
-            cur = self.head
-            output = []
-            while cur is not None:
-                output.append(cur.val)
-                cur = cur.nxt
-            return ''.join(str(i) + ' -> ' for i in output)[:-4]
-            # '-4' is for excluding the last arrow and spaces
+      return ll
+
+    else:
+      if not self.head or not self.head.nxt:
+        return self
+      
+      prev = self.head
+      cur = self.head.nxt
+      self.head.nxt = None
+      while cur:
+        next_node = cur.nxt  # save the next node pointer
+        cur.nxt = prev       # reverse the arrow
+        prev = cur           # update prev
+        cur = next_node      # update cur
+      
+      self.head = prev
+
+      return self
+
+  def __str__(self):
+    if self.head is None:
+      return "The linked list is empty."
+    else:
+      cur = self.head
+      output = []
+      while cur is not None:
+        output.append(cur.val)
+        cur = cur.nxt
+      return ''.join(str(i) + ' -> ' for i in output)[:-4]  # '-4' is for excluding the last arrow
 
 
 ll = LinkedList()
