@@ -110,6 +110,19 @@ class LinkedList:
         cur = cur.nxt
       return ''.join(str(i) + ' -> ' for i in output)[:-4]  # '-4' is for excluding the last arrow
 
+  def delete_node(self, val1):
+    if self.head.val == val1:
+      self.head = self.head.nxt
+      return True
+
+    cur =  self.head
+    while cur.nxt:
+      if cur.nxt.val == val1:
+        cur.nxt = cur.nxt.nxt
+        return True
+      cur = cur.nxt
+    print("Didn't find a node with val {}".format(val1))
+    return False
 
 ll = LinkedList()
 ll.append_to_end(1)
