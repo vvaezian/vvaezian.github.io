@@ -1,4 +1,4 @@
-class Node():
+class Node:
   def __init__(self, val):
     self.val = val
     self.nxt = None
@@ -112,15 +112,15 @@ class LinkedList:
 
 
 ll = LinkedList()
-ll.insertAtEnd(1)
-ll.insertAtEnd(2)
-ll.insertAtEnd(3)
-ll.insertAtFront(0)
-print ll
-ll.insertAfter(6, 1)
-ll.insertAfter(7, 3)
-print ll
-ll.insertBehind(9, 6)
-print ll
+ll.append_to_end(1)
+ll.append_to_end(2)
+ll.append_to_end(3)
+ll.insert_at_start(0)
+ll.insert_after(0, 5)
+ll.insert_behind(1, 9)
+ll.insert_behind(0, -1)
+print(ll)
 ll.reverse()
-print ll
+print(ll)
+print(ll.reverse(in_place=False))
+
