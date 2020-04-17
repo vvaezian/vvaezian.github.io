@@ -68,7 +68,6 @@ class LinkedList:
 
 
   def reverse(self, in_place=True):
-    import copy
     if not in_place: # returns a copy with the order reversed
       ll = LinkedList()
       if not self.head:
