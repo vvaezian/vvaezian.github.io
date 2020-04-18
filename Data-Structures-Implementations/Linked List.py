@@ -27,7 +27,7 @@ class LinkedList:
 
       
   def insert_after(self, val1, val2):
-    """ inserts a node with value val_1 after the first node with value val_2 """
+    """Insert a node with value val_1 after the first node with value val_2"""
     cur = self.head
     while cur:
       if cur.val == val1:
@@ -41,7 +41,7 @@ class LinkedList:
 
   
   def insert_behind(self, val1, val2):
-    """ inserts a node with value val_1 after the node with value val_2 """
+    """Insert a node with value val_1 after the node with value val_2"""
     if not self.head:
       print('The linkedlist is empty.')
       return False
