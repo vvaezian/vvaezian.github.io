@@ -27,10 +27,7 @@ class LinkedList:
 
       
   def insert_after(self, val1, val2):
-    """ inserts a node with value val_1 after the node with value val_2
-    Assuming all values are distinct. If this is not the case, inserts after the first occurence.
-    We need to use "keys" for nodes, if we want a general approach for nodes with duplicate values.
-    """
+    """ inserts a node with value val_1 after the first node with value val_2 """
     cur = self.head
     while cur:
       if cur.val == val1:
@@ -44,9 +41,7 @@ class LinkedList:
 
   
   def insert_behind(self, val1, val2):
-    """ inserts a node with value val_1 after the node with value val_2
-    Same remarks as for the insert_after function
-    """
+    """ inserts a node with value val_1 after the node with value val_2 """
     if not self.head:
       print('The linkedlist is empty.')
       return False
