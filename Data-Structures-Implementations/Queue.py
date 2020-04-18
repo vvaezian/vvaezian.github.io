@@ -46,12 +46,13 @@ class Queue:
       n.nxt = self.head
       self.head.prev = n
       self.head = n
+    self.size += 1
   
   def dequeue(self):
     if self.isEmpty():
       print('The queue is empty.')
       return False
-    elif self.head = self.tail:  # there is only one item in the queue
+    elif self.head == self.tail:  # there is only one item in the queue
       self.head = self.tail = None
     else:
       self.tail.prev.nxt = None
@@ -63,3 +64,13 @@ class Queue:
       return False
     else:
       return self.tail.val
+
+  def __str__(self):
+    if self.head is None:
+      return "The linked list is empty."
+    cur = self.head
+    output = []
+    while cur is not None:
+      output.append(cur.val)
+      cur = cur.nxt
+    return ''.join(str(i) + ' -> ' for i in output)[:-4]  # '-4' is for excluding the last arrow
