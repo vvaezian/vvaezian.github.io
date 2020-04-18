@@ -105,6 +105,8 @@ class LinkedList:
 
     
   def delete_node(self, val1):
+    if not self.head:
+      return False  # didn't find the node
     if self.head.val == val1:
       self.head = self.head.nxt
       return True
@@ -115,8 +117,7 @@ class LinkedList:
         cur.nxt = cur.nxt.nxt
         return True
       cur = cur.nxt
-    print("Didn't find a node with val {}".format(val1))
-    return False
+    return False  # didn't find the node
 
   
   def __str__(self):
