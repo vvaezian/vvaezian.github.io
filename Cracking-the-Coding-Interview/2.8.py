@@ -7,7 +7,6 @@ def loopDetect(head):
   aDict[cur] = 1
   while cur.nxt:
     if cur.nxt in aDict:
-      print(cur.nxt.val)
       return cur.nxt
     cur = cur.nxt
     aDict[cur] = 1
