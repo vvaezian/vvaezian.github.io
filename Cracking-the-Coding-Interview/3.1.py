@@ -1,7 +1,5 @@
 ### 3.1. Describe how you could use a single aray to implement three stacks.
 
-
-
 # The first three cells of the self.items list hold the index of the top item in each stack.
 # The cells after that hold stacks data. 
 # We need to have a history of the members in each stack. So every time we add an item to a stack, 
