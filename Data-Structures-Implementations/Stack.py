@@ -15,8 +15,7 @@ class Stack:
     if self.isEmpty():
       print('The stack is empty. Cannot perform pop().')
       return False
-    self.items.pop()
-    return True
+    return self.items.pop()
   
   def push(self, item):
     self.items.append(item)
