@@ -1,3 +1,5 @@
+### MinHeap using `heapq`
+```python
 from heapq import heappop, heappush
 
 
@@ -33,3 +35,4 @@ h.insert(25)
 print h
 h.extract_min()
 print h
+```
