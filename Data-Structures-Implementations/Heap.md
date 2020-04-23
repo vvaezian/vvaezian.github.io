@@ -30,7 +30,7 @@ print(h)
 h.extract_min()
 print(h)
 ```
-MinHeap without `heapq`
+### MinHeap without `heapq`
 ```python
 class MinHeap(object):
     def __init__(self):
@@ -91,7 +91,7 @@ class MinHeap(object):
                 self.swap(child, cur_index)
             cur_index += 1
 ```
-### MaxHeap using heapq
+### MaxHeap using `heapq`
 Since heapq methods work for MinHeap, here for MaxHeap we use them for negated values. At the end we negate again to get the desired output.  
 If values are not numbers (int, float) we need to redefine `__lt__` (see https://stackoverflow.com/a/40455775/2445273).
 ```python
