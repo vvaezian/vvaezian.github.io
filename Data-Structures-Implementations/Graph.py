@@ -15,17 +15,19 @@ def dfs(n):
     if not node.visited:
       dfs(node)
 
-def bfs(root):
+def bfs(n):
   q = Queue()
-  q.enqueue(root)
-
+  q.enq(n)
+  print(n.val)
+  n.visited = True
+    
   while not q.isEmpty():
-    n = q.dequeue()
-    print(n.val) 
-    n.visited = True
-    for node in n.neighbors:
-      if not node.visited:
-        q.enqueue(node)
+    node = q.deq()
+    for neighbor in node.neighbors:
+      if not neighbor.visited:
+        q.enq(neighbor)
+        print(neighbor.val)
+        neighbor.visited = True
 
         
 def unidirectional_search(s, t):
