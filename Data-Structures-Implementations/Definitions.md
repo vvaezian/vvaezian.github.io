@@ -8,3 +8,8 @@ level has the maximum number of nodes.
 - A **binary search tree** is a binary tree in which every node fits a specific ordering property: all left
 descendents <= n < all right descendents.
 - A **min-heap** is a complete binary tree where each node is smaller than its children.
+- A **trie** (sometimes called a **prefix tree**) is a variant of an n-ary tree in which characters are stored at each node. Each path down the tree may represent a word.  
+The * nodes (sometimes called "null nodes") are often used to indicate complete words. The actual implementation of these * nodes might be a special type of child (such as a `TerminatingTrieNode`, which inherits from TrieNode). Or, we could use just a boolean flag `terminates` within the "parent" node.  
+Very commonly, a trie is used to store the entire (English) language for quick prefix lookups. While a hash
+table can quickly look up whether a string is a valid word, it cannot tell us if a string is a prefix of any valid
+words. A trie can do this very quickly.
