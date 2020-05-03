@@ -7,3 +7,4 @@ last level. To the extent that the last level is filled, it is filled left to ri
 level has the maximum number of nodes.
 - A **binary search tree** is a binary tree in which every node fits a specific ordering property: all left
 descendents <= n < all right descendents.
+- A **min-heap** is a complete binary tree where each node is smaller than its children.
