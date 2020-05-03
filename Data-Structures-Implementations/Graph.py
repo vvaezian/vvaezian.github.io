@@ -8,15 +8,12 @@ class Node(object):
         self.visited = False
         self.parent = None  # Is needed for finding the shortest path using BFS
 
-def dfs(root):
-  if root is None:
-    return
-  else:
-    if not root.visited:
-      print(root.val)
-      root.visited = True
-      for node in root.neighbors:
-        dfs(node)
+def dfs(n):
+  print(n.key) 
+  n.visited = True
+  for node in n.neighbors:
+    if not node.visited:
+      dfs(node)
 
 def bfs(root):
   q = Queue()
