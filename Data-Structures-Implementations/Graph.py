@@ -18,15 +18,14 @@ def dfs(n):
 def bfs(n):
   q = Queue()
   q.enq(n)
-  print(n.val)
   n.visited = True
-    
+
   while not q.isEmpty():
     node = q.deq()
+    print(node.val)
     for neighbor in node.neighbors:
       if not neighbor.visited:
         q.enq(neighbor)
-        print(neighbor.val)
         neighbor.visited = True
 
         
