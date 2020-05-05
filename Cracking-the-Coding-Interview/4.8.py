@@ -13,22 +13,22 @@
 
 def firstCommonAncestor(BinaryTreeInstance, n1, n2):
 
-  def _findPathToNodeKey(key, rootNode, path=[]):
+  def _findPathToNodeKey(node, rootNode, path=[]):
     if rootNode:
-      if rootNode.key == key:
+      if rootNode.key == node.key:
         global returnPath
         returnPath = path[:]
         return
       path2 = path[:]
       path2.append('L')
-      _findPathToNodeKey(key, rootNode.left, path2)
+      _findPathToNodeKey(node, rootNode.left, path2)
       path2 = path[:]
       path2.append('R')
-      _findPathToNodeKey(key, rootNode.right, path2)
+      _findPathToNodeKey(node, rootNode.right, path2)
     return returnPath
   
-  path1 = _findPathToNodeKey(key1, BinaryTreeInstance.root)
-  path2 = _findPathToNodeKey(key2, BinaryTreeInstance.root)
+  path1 = _findPathToNode(n1, BinaryTreeInstance.root)
+  path2 = _findPathToNode(n2, BinaryTreeInstance.root)
   cur = BinaryTreeInstance.root
   i = 0
   while True:
