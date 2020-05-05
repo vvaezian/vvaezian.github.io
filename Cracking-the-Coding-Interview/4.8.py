@@ -6,8 +6,7 @@
 # If it hadn't said "Avoid storing additional nodes in a data structure." we could simulate the tree with another identical tree
 # but where nodes have parents (building a mapping between original nodes and simulated nodes along the way) 
 # and then solve the problem similar to the case when nodes have parents.
-# But since we clearly have been instructed not to do that we can use the follwoing approach (assumes we have access to the 
-# root of the tree):
+# But since we clearly have been instructed not to do that, we use the follwoing approach:
 # We first find the paths to the nodes from the root. Then we compare the path and find the the first common ancesstor
 # based on that
 
