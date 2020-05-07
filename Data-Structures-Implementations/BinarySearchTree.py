@@ -1,3 +1,11 @@
+# To delete a node from a BST:
+# If the node to be deleted is leaf: Simply remove from the tree. 
+# If the node to be deleted has only one child: Copy the child to the node and delete the child 
+# IF the node to be deleted has two children: 
+#   - Find inorder successor of the node (this is a leaf node). 
+#   - Update the the ins and outs of the to be deleted node to use this new node. 
+#
+
 class Node(object):
     def __init__(self, value):
         self.value = value
