@@ -7,15 +7,13 @@ def q4_3(btInstance):
     if node:
       if not node.visited:
         node.visited = True
-        aDict[index].add(node.key)  # 'add' is a method of LinkedList class
+        aDict[index].add(node)  # 'add' is a method of LinkedList class
       index += 1
       linkedListOfDepths(node.left, index, aDict)
       linkedListOfDepths(node.right, index, aDict)
     return aDict
 
+  
   from collections import defaultdict
   aDict = defaultdict(LinkedList) # keys are levels, and values are LinkedLists of the nodes at that level
-  returnedDict = linkedListOfDepths(btInstance.root, 0, aDict)
-  
-  for key, value in returnedDict.items():
-    print(key, ': ', value)
+  return linkedListOfDepths(btInstance.root, 0, aDict)
