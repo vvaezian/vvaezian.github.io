@@ -6,3 +6,26 @@ def step(n):
   for i in range(3, n):
     m.append(m[i-1] + m[i-2] + m[i-3])
   return m[-1]
+
+#######################
+###### Recursive ######
+#######################
+def stairs(n, mem=None):
+  '''we regard n as the number of steps left to climb
+  '''
+  # make a list of zeros to act as a cache
+  if mem is None:
+    mem = [0]*n
+  # if the value is in the cache return it
+  if mem[n-1] != 0:
+    return mem[n-1]
+  # base cases
+  if n == 1 or n == 2:
+    mem[n-1] = n
+    return n
+  if n == 3:
+    mem[n-1] = 4
+    return 4
+  # recursive step
+  mem[n-1] = stairs(n - 1, mem) + stairs(n - 2, mem) + stairs(n - 3, mem)
+  return mem[n-1]
