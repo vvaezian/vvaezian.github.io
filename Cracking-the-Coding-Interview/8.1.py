@@ -6,6 +6,7 @@ def step(n):
   m = [1, 2, 4] # initial values for 1, 2 and 3 steps
   if n < 4:
     return m[n -1]
+  
   for i in range(3, n):
     m.append(m[i-1] + m[i-2] + m[i-3])
   return m[-1]
@@ -14,6 +15,7 @@ def step(n):
 def step2(n):
   if n < 4:
     return [1, 2, 4][n - 1]
+  
   a, b, c = 1, 2, 4
   for _ in range(3, n):
     d = a + b + c
