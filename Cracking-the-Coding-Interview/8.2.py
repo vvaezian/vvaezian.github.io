@@ -2,6 +2,37 @@
 # The robot can only move in two directions, right and down, but certain cells are "off limits" such that
 # the robot cannot step on them. Design an algorithm to find a path for the robot from the top left to the bottom right.
 
+# The explanation in the book that says the first version's runtime is exponential doesn't seems right. 
+# The program doesn't try all branchs as BFS, it does it like DFS, so it is basically a stack,
+# it goes deep, when reaches a deadlock it backtracks. The runtime is O(RC)
+def find_path(maze):
+
+  def _find_path(r, c, path=[]):
+    if r < 0 or c < 0 or maze[r][c] == 0:
+      return False
+    if r == c == 0 or _find_path(r-1, c, path) or _find_path(r, c-1, path):
+      path.append((r, c))
+      return True
+    failed_cells.append((r, c))
+    return False
+
+  path = []
+  if _find_path(len(maze) - 1, len(maze[0]) - 1, path):
+    return path
+  return False
+
+maze = [
+  [1, 1, 1, 1, 1, 1, 1, 1] ,
+  [1, 1, 1, 1, 1, 1, 1, 1] ,
+  [1, 1, 1, 1, 1, 1, 1, 0] ,
+  [1, 1, 1, 1, 1, 1, 0, 1] ,
+  [1, 1, 1, 1, 1, 1, 1, 1] ,
+  [1, 1, 1, 1, 1, 1, 1, 1] 
+]
+
+print(find_path(maze))
+
+
 # iterative approach
 
 def findPath(maze):
