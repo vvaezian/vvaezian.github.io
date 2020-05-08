@@ -4,7 +4,8 @@
 
 # The explanation in the book that says the first version's runtime is exponential doesn't seems right. 
 # The program doesn't try all branchs as BFS, it does it like DFS, so it is basically a stack,
-# it goes deep, when reaches a deadlock it backtracks. The runtime is O(RC)
+# it goes deep, when reaches a deadlock it backtracks. The runtime is O(RC).
+# It would have been exponential if we wanted to find out all the paths.
 def find_path(maze):
 
   def _find_path(r, c, path=[]):
