@@ -1,9 +1,6 @@
 def bi_search(x, array):
 
   def _bi_search(lo, hi):
-    if lo == hi:
-      if array[lo] == x:
-        return lo
     if lo > hi:
       return False
             
