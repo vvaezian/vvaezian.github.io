@@ -2,20 +2,20 @@
 
 
 ### Recursive
-def subset(array):
+def powerset(array):
 
-  def _subset(array, out):
+  def _powerset(array, out):
     if len(array) == 0:
       return [[]]
-    for item in [ i + [array[-1]] for i in _subset(array[:-1], out) ]:
+    for item in [ i + [array[-1]] for i in _powerset(array[:-1], out) ]:
       out.append(item)
     return out
   
-  return _subset(array, [[]])
+  return _powerset(array, [[]])
 
 
 ### Iterative
-def subsets(list1):
+def powerset(list1):
     import copy
     output = [[]]
     for i in list1:
@@ -25,4 +25,4 @@ def subsets(list1):
             output.append(j)
     return output
 
-print(subsets(['a', 'b', 'c']))
+print(powerset(['a', 'b', 'c']))
