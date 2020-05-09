@@ -25,7 +25,7 @@ def hanoi(stacks):
     
   return _hanoi(0, 2, len(stacks[0]))
 
-a, b, c = ['XXL', 'XL', 'L', 'Sl', 'XS', 'XXS'], [], []
+a, b, c = ['XXL', 'XL', 'L', 'M', 'S', 'XS', 'XXS'], [], []
 stacks = [a, b, c]
 
 print(hanoi(stacks))
