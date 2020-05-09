@@ -13,6 +13,7 @@ def hanoi(stacks):
     stacks[j].append(item)
 
   def _hanoi(i, j, n):
+    '''move the top n disks from tower i to tower j'''
     if n == 1:
       move(i, j)  
     else:
