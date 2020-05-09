@@ -19,5 +19,3 @@ def bi_search(x, array):
     return False
   return _bi_search(0, len(array) - 1)
 
-
-print(bi_search(10, [10, 20]))
