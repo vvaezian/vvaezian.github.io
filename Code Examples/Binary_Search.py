@@ -12,7 +12,5 @@ def bi_search(x, array):
     else:
       return _bi_search(lo + 1, hi)
 
-  if len(array) == 0:
-    return False
   return _bi_search(0, len(array) - 1)
 
