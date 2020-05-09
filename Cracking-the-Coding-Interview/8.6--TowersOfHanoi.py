@@ -6,44 +6,27 @@
 # (3) A disk cannot be placed on top of a smaller disk.
 # Write a program to move the disks from the first tower to the last using Stacks.
 
-class Stack(object):
-    def __init__(self):
-        self.items = []
-    def push(self, item):
-        self.items.append(item)
-    def pop(self):
-        return self.items.pop()
-    def size(self):
-        return len(self.items)
-    def __str__(self):
-        return str(self.items)
+def hanoi(stacks):
 
-def other_tower(tower1, tower2):
-    """given two towers (= stacks), returns the other tower"""
-    return [i for i in stacks if i not in [tower1, tower2]][0]
+  def move(i, j):
+    item = stacks[i].pop()
+    stacks[j].append(item)
 
-def move(i, j):  # moves the top disk in tower i, to tower j
-    tmp = i.pop()
-    j.push(tmp)
-
-def hanoi(n, i, j):  # moves the n top disks from tower i to tower j
+  def _hanoi(i, j, n):
     if n == 1:
-        move(i, j)
+      move(i, j)  
     else:
-        other = other_tower(i, j)
-        hanoi(n - 1, i, other)
-        move(i, j)
-        hanoi(n - 1, other, j)
+      other_stack_num = 3 - i - j
+      _hanoi(i, other_stack_num, n - 1)
+      move(i, j)
+      _hanoi(other_stack_num, j, n - 1)
+    return stacks
+    
+  return _hanoi(0, 2, len(stacks[0]))
 
-s1 = Stack()
-s2 = Stack()
-s3 = Stack()
-stacks = [s1, s2, s3]
-s1.push('XL')
-s1.push('L')
-s1.push('M')
-s1.push('S')
-s1.push('XS')
-hanoi(s1.size(), s1, s3)
+a, b, c = ['XXL', 'XL', 'L', 'Sl', 'XS', 'XXS'], [], []
+stacks = [a, b, c]
+
+print(hanoi(stacks))
 
 # Let d(n) be the number of moves required for n disks. Then we have d(n) = 2 * d(n-1) + 1, d(1) = 1. This results in d(n) = 2^n - 1
