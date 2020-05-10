@@ -1,6 +1,5 @@
 # Permutations without Dups: Write a method to compute all permutations of a string of unique characters.
 
-
 def insertChar(char, array):
   out = []
   for string in array:
@@ -8,7 +7,6 @@ def insertChar(char, array):
       out.append(string[:i] + char + string[i:])
   return out
     
-
 def perm(string):
   if len(string) == 1:
     return string
