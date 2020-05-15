@@ -15,6 +15,11 @@ SELECT depname, empno, salary,
        rank() OVER (PARTITION BY depname ORDER BY salary DESC)
 FROM empsalary;
 
+-- 90th percentile (i.e. the samellest value which is greater than or equal 90% of that column) 
+-- of salaries in each department (if we don't want to partition, we should write `OVER ()`
+SELECT DISTINCT depname, PERCENTILE_CONT(0.9) WITHIN GROUP (ORDER BY salary) OVER (partition by depname)
+FROM AB_performance_last_month
+
 -- several functions on the same window
 SELECT sum(salary) OVER w, avg(salary) OVER w
 FROM empsalary
