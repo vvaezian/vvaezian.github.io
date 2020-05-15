@@ -27,13 +27,6 @@ def serialize(root):
           out += ' None'
   return out
 
-
-class Node:
-  def __init__(self, val, left_node=None, right_node=None):
-    self.val = val
-    self.left = left_node
-    self.right = right_node
-
 # the idea is that in a binary tree represented as a list (BFS), for the node at index n, its children are at indeces 2*n+1 and 2*n+2
 def deSerialize(string):
 
