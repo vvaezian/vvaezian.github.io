@@ -12,6 +12,7 @@ assert deserialize(serialize(node)).left.left.val == 'left.left'
 
 ################################
 
+# to serialize, we use BFS (but since there is no cycle in a tree, we don't need to set the 'visited' attribute for nodes
 def serialize(root):
   out = str(root.val)
   q = Queue()
