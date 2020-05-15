@@ -12,14 +12,8 @@ assert deserialize(serialize(node)).left.left.val == 'left.left'
 
 ################################
 
-class Node:
-  def __init__(self, val, left_node=None, right_node=None):
-    self.val = val
-    self.left = left_node
-    self.right = right_node
-
 def serialize(root):
-  out = ''
+  out = str(root.val)
   q = Queue()
   q.enq(root)
   while not q.isEmpty():
@@ -30,9 +24,16 @@ def serialize(root):
         out += ' ' + node.val
       else:
           out += ' None'
-          return out
+  return out
 
 
+class Node:
+  def __init__(self, val, left_node=None, right_node=None):
+    self.val = val
+    self.left = left_node
+    self.right = right_node
+
+# the idea is that in a binary tree represented as a list (BFS), for the node at index n, its children are at indeces 2*n+1 and 2*n+2
 def deSerialize(string):
 
   def populate(array, index):
@@ -43,8 +44,8 @@ def deSerialize(string):
     root.right = populate(array, 2 * index + 2)
     return root
 
-    node_val_list = string.split()
-    return populate(node_val_list, 0)
+  node_val_list = string.split()
+  return populate(node_val_list, 0)
 
 r = deSerialize('0 1 2 3 4 5 6 7 8 9 10 11 12 13 14')  # 2^n - 1
 print(r.val)
