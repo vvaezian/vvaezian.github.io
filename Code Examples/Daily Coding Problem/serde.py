@@ -41,7 +41,7 @@ def deSerialize(string):
   node_val_list = string.split()
   return populate(node_val_list, 0)
 
-r = deSerialize('0 1 2 3 4 5 6 7 8 9 10 11 12 13 14')  # 2^n - 1
+r = deSerialize('0 1 2 3 4 5 6 7 8 9 10 11 12 13 14') 
 print(r.val)
 print(r.left.val, r.right.val)
 print(r.left.left.val, r.left.right.val, r.right.left.val, r.right.right.val)
