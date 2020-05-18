@@ -17,6 +17,7 @@ FROM empsalary;
 
 -- 90th percentile (i.e. the samellest value which is greater than or equal 90% of that column) 
 -- of salaries in each department (if we don't want to partition, we should write `OVER ()`
+-- PERCENTILE_CONT interpolates but PERCENTILE_DISC doesn't
 SELECT DISTINCT depname, PERCENTILE_CONT(0.9) WITHIN GROUP (ORDER BY salary) OVER (partition by depname)
 FROM AB_performance_last_month
 
