@@ -10,8 +10,8 @@ def decode(string:str) -> int:
       return 1
     count = 0
     if 1 <= int(string[n-1]) <= 9:  # if the last character is valid
-      # count = cache.get(n-1, _decode(string, n - 1, cache)) first evaluates the _decode
-      # because .get like any other func first evaluates its args. So the cache becomes irrelevant
+      # if we use count = cache.get(n-1, _decode(string, n - 1, cache)), it first evaluates the _decode,
+      # because .get like any other function first evaluates its args. So the cache becomes irrelevant.
       count = cache.get(n-1) or _decode(string, n - 1, cache)
     if 10 <= int(string[n - 2: n]) <= 26:  # if the last two characters are valid
       count += cache.get(n-2) or _decode(string, n - 2, cache) 
