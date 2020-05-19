@@ -23,14 +23,14 @@ def decode(string:str) -> int:
 
 # iterative O(n) runtime, O(n) space
 def decode(string:str) -> int:
-  m = [1] * (len(string) + 1)
+  m = [1] * (len(string) + 1)  # m[i] is for the solution for the first i characters of string
   if int(string[0]) == 0:
     return 0
   for i in range(2, len(string) + 1):
     count = 0
     if int(string[i-1]) > 0:
       count = m[i - 1]
-    if 10 <= int(string[i-2:i]) <= 26:
+    if 10 <= int(string[i - 2:i]) <= 26:
       count += m[i - 2]
     m[i] = count
   return m[-1]
