@@ -36,3 +36,16 @@ def decode(string:str) -> int:
   return m[-1]
 
 # iterative O(n) runtime, O(1) space
+def decode(string:str) -> int:
+  a, b = 1, 1
+  if int(string[0]) == 0:
+    return 0
+  for i in range(2, len(string) + 1):
+    count = 0
+    if int(string[i-1]) > 0:
+      count = b
+    if 10 <= int(string[i-2:i]) <= 26:
+      count += a
+    a = b
+    b = count
+  return b
