@@ -1,6 +1,7 @@
 # Given the mapping a = 1, b = 2, ... z = 26, and an encoded message, count the number of ways it can be decoded.
 # For example, the message '111' would give 3, since it could be decoded as 'aaa', 'ka', and 'ak'.
 
+# recursive O(n) runtime, O(n) space
 def decode(string:str) -> int:
 
   def _decode(string:str, n:int, cache:dict) -> int:
@@ -20,4 +21,18 @@ def decode(string:str) -> int:
     
   return _decode(string, len(string), {})
 
-# O(n) runtime, O(n) space
+# iterative O(n) runtime, O(n) space
+def decode(string:str) -> int:
+  m = [1] * (len(string) + 1)
+  if int(string[0]) == 0:
+    return 0
+  for i in range(2, len(string) + 1):
+    count = 0
+    if int(string[i-1]) > 0:
+      count = m[i - 1]
+    if 10 <= int(string[i-2:i]) <= 26:
+      count += m[i - 2]
+    m[i] = count
+  return m[-1]
+
+# iterative O(n) runtime, O(1) space
