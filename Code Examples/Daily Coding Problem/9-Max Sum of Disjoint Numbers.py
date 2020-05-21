@@ -38,4 +38,11 @@ def max_disjoint_sum(arr):
 
 # O(n) time, O(1) space (memoization and space-efficient)
 # since we are only looking at last three elements of m, we don't need to use the whole  m
-
+def max_disjoint_sum(arr):
+  a = arr[0]
+  b = max(arr[0], arr[1])
+  c = max(arr[0] + arr[2], arr[1])
+  for i in arr[3:]:
+    new_val = max(c, max(arr[i] + b, arr[i] + a))
+    a, b, c = b, c, new_val
+  return c
