@@ -1,3 +1,8 @@
+# Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. Numbers can be 0 or negative.
+# E.g. [2, 4, 6, 2, 5] should return 13.
+
+
+# O(3^n) time, O(1) space
 def max_disjoint_sum(array):
 
   def helper(arr, i):
@@ -13,3 +18,7 @@ def max_disjoint_sum(array):
             )
 
   return helper(array, len(array) - 1)
+
+# O(n) time, O(n) space
+
+# O(n) time, O(1) space
