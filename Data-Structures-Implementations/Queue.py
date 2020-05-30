@@ -1,3 +1,16 @@
+# queue has already been implemented as a built-in library 
+# (it is implemented using `deque` which is Doubly Ended Queue and has append(), appendleft(), pop(), popleft() )
+
+import queue
+q = queue.Queue()
+q.put(item)
+item = q.get()
+
+# In the sequel we implement it anyway
+
+#####################################
+#####################################
+
 ### Implemeting using a list
 class Queue:
   def __init__(self):
