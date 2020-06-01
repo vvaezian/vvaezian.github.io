@@ -12,6 +12,7 @@ heappush(h, 18)
 heappush(h, 25)
 print(h)
 m = heappop(h)
+print(m)
 print(h)
 ```
 ### MinHeap without `heapq`
