@@ -15,4 +15,31 @@
 #      6  6  5  4   5    
 
 # Method 2: O(n) time, O(k) space
-# Analysis: 
+# Analysis: We use a deque to store index of useful element. The index of the current max is kept at the leftmost element of queue.
+# In the following explanation we say value of the element is in the deque, while if fact the index of that element is in the deque. 
+# We do this to simplify the explanation:
+# Let's say {5, 3, 2} are already in the deque. 
+# If the next element we read from the array is bigger than 5 (remeber, the leftmost elemet of deque holds the max), say 7: We delete the deque and create a new one with only 7 in it
+# If the next element is less than 2, say 1: We add it to the right ({5, 3, 2, 1})
+# If the next element is bigger than 2 but less than 5, say 4: We remove element from right that are smaller than the element and then add the elemet from right ({5, 4}).
+# Also we keep elements of the current window only.
+
+def max_subarray(array, k):
+  deq = deque()
+  for index, item in enumerate(array):
+    if len(deq) == 0:
+      deq.append(index)
+    elif index - deq[0] >= k:
+      deq.popleft()
+    elif item > array[deq[0]]:
+      deq = deque()
+      deq.append(index)
+    elif item < array[deq[-1]]:
+      deq.append(index)
+    elif item > array[deq[-1]] and item < array[deq[0]]:
+      while item > array[deq[-1]]:
+        deq.pop()
+      deq.append(index)
+    
+    if index >= k - 1:
+      print(array[deq[0]])
