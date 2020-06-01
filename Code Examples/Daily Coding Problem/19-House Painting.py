@@ -31,8 +31,8 @@ def min_cost(array):
           second_best_cost = item
           second_best_cost_index = index
     
-    return min( first_best_cost + _min_cost(array_copy[1:], first_best_cost_index)
-              , second_best_cost + _min_cost(array_copy[1:], second_best_cost_index)
+    return min( first_best_cost + _min_cost(array[1:], first_best_cost_index)
+              , second_best_cost + _min_cost(array[1:], second_best_cost_index)
               ) 
 
   return _min_cost(array)
