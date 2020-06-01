@@ -2,23 +2,6 @@
 ```python
 from heapq import heappop, heappush, heapify
 
-class MinHeap(object):
-    def __init__(self):
-        self.items = []
-
-    def insert(self, val):
-        heappush(self.items, val)
-
-    def extract_min(self):
-        heappop(self.items)
-
-    def get_min(self):
-        return self.items[0]
-
-    def __str__(self):
-        return str(self.items)
-
-
 h = []
 heapify(h)
 heappush(h, 20)
