@@ -1,6 +1,6 @@
 ### MinHeap using `heapq`
 ```python
-from heapq import heappop, heappush
+from heapq import heappop, heappush, heapify
 
 class MinHeap(object):
     def __init__(self):
@@ -19,15 +19,16 @@ class MinHeap(object):
         return str(self.items)
 
 
-h = MinHeap()
-h.insert(20)
-h.insert(30)
-h.insert(10)
-h.insert(15)
-h.insert(18)
-h.insert(25)
+h = []
+heapify(h)
+heappush(h, 20)
+heappush(h, 30)
+heappush(h, 10)
+heappush(h, 15)
+heappush(h, 18)
+heappush(h, 25)
 print(h)
-h.extract_min()
+m = heappop(h)
 print(h)
 ```
 ### MinHeap without `heapq`
