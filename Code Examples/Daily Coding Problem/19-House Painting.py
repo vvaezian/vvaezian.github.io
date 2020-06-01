@@ -11,7 +11,9 @@
 #      [3, 4, 3, 5],
 #      [2, 4, 5, 3]
 #     ]
+# We recursively try both approaches, then choosing the better one
 
+# without memoization
 def min_cost(array):
 
   def _min_cost(array, last_color_index=None):
@@ -34,3 +36,5 @@ def min_cost(array):
               ) 
 
   return _min_cost(array)
+
+# with memoization
