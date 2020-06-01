@@ -24,22 +24,30 @@
 # If the next element is bigger than 2 but less than 5, say 4: We remove element from right that are smaller than the element and then add the elemet from right ({5, 4}).
 # Also we keep elements of the current window only.
 
+from collections import deque
+
 def max_subarray(array, k):
   deq = deque()
+
   for index, item in enumerate(array):
+
     if len(deq) == 0:
       deq.append(index)
-    elif index - deq[0] >= k:
+
+    elif index - deq[0] >= k:  # the max element is out of the window
       deq.popleft()
-    elif item > array[deq[0]]:
+
+    elif item > array[deq[0]]:  # found a new max
       deq = deque()
       deq.append(index)
-    elif item < array[deq[-1]]:
+
+    elif item < array[deq[-1]]:  # the array item is smaller than all the deque elements
       deq.append(index)
+
     elif item > array[deq[-1]] and item < array[deq[0]]:
       while item > array[deq[-1]]:
         deq.pop()
       deq.append(index)
-    
-    if index >= k - 1:
+
+    if index >= k - 1:  # start printing when the first window is filled
       print(array[deq[0]])
