@@ -1,5 +1,8 @@
-# queue has already been implemented as a built-in library 
-# (it is implemented using `deque` which is Doubly Ended Queue and has append(), appendleft(), pop(), popleft() )
+# queue has already been implemented as a built-in library, with `put`, `get`, `empty` functions.
+# it is implemented using `deque` which is like a list but has constant-time insertion and delete from both sides
+#                                        , but linear time for elements in the middle (it is actually a doubly-linked list) 
+#                                          and has append(), appendleft(), pop(), popleft() operations.
+#                                          we can refer to elements of deque by index (e.g. d[0])
 
 import queue
 q = queue.Queue()
