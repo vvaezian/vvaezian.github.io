@@ -40,6 +40,9 @@ def eightQ():
   return total[0], answers
 
 ### Calculating only the number of possible ways (Credit: Daily Coding Problem)
+# representing the board as a 1D array of integers from 1..N, 
+# where the value at the index i represents the column the queen on row i is on.
+
 def is_valid(board):
     current_queen_row, current_queen_col = len(board) - 1, board[-1]
     # Check if any queens can attack the last queen.
