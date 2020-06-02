@@ -47,8 +47,9 @@ def is_valid(board):
     current_queen_row, current_queen_col = len(board) - 1, board[-1]
     # Check if any queens can attack the last queen.
     for row, col in enumerate(board[:-1]):
-        diff = abs(current_queen_col - col)
-        if diff == 0 or diff == current_queen_row - row:
+        col_diff = abs(current_queen_col - col)
+        row_diff = current_queen_row - row
+        if col_diff == 0 or col_diff == row_diff:
             return False
     return True
   
