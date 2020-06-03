@@ -19,6 +19,7 @@ The name of a file contains at least a period and an extension.
 The name of a directory or sub-directory will not contain a period.
 '''
 
+# We use the tabs for detecting depth. If the depth increases we add to the path, if it decreases we remove from the path.
 def longest_path(string):
 
   array = string.split('\n')
