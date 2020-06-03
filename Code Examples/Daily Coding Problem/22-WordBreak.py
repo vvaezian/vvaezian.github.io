@@ -9,10 +9,13 @@ For example, given the set of words 'quick', 'brown', 'the', 'fox', and the stri
 # Add words in a greedy fashion, if not all characters of the string are used, backtrack and continue
 
 def extract_sentence(dictionary, string):
+  
   min_len, max_len = min([ len(i) for i in dictionary ]), max([ len(i) for i in dictionary ])
   cur_sentence = []
   start_idx = 0
+  
   def _extract_sentence(cur_sentence=cur_sentence, start_idx=start_idx, excluded_item=None):
+    '''excluded_item is used when we backtrack. We don't want to use the same item again'''
     length = min_len
     while start_idx < len(string) and min_len <= length <= max_len:
       substring = string[start_idx:start_idx + length]
@@ -21,9 +24,14 @@ def extract_sentence(dictionary, string):
         start_idx += length
         length = min_len
       else:
+        # the substring didn't match, choose a bigger substring
         length += 1
+    
+    # checking whether we succeeded
     if cur_sentence[-1][1][-1] == string[-1]:
       return [ i[1] for i in cur_sentence ]
+    
+    # backtrack
     start_idx, excluded_item = cur_sentence.pop()
     return _extract_sentence(cur_sentence, start_idx, excluded_item)
 
