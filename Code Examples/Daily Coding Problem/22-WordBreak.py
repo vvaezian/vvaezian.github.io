@@ -6,7 +6,8 @@ For example, given the set of words 'quick', 'brown', 'the', 'fox', and the stri
 '''
 
 # Solution using stack
-# AAdd words in a greedy fashion, if not all characters of the string are used, backtrack and continue
+# Add words in a greedy fashion, if not all characters of the string are used, backtrack and continue
+
 def extract_sentence(dictionary, string):
   min_len, max_len = min([ len(i) for i in dictionary ]), max([ len(i) for i in dictionary ])
   cur_sentence = []
