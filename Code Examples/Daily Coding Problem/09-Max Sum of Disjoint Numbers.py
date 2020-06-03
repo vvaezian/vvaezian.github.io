@@ -1,5 +1,7 @@
-# Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. Numbers can be 0 or negative.
-# E.g. [2, 4, 6, 2, 5] should return 13.
+'''
+Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. Numbers can be 0 or negative.
+E.g. [2, 4, 6, 2, 5] should return 13.
+'''
 
 # Analysis: Let opt(n) be the solution for an array of n numbers. Either the nth element is part of the solution or not. 
 # If it isn't, then opt(n) = opt(n-1)
