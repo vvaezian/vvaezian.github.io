@@ -10,9 +10,11 @@ dir
 
 The directory dir contains an empty sub-directory subdir1 and a sub-directory subdir2 containing a file file.ext.
 We are interested in finding the longest (number of characters) absolute path to a file within our file system. 
-For example, in the second example above, the longest absolute path is "dir/subdir2/subsubdir2/file2.ext", and its length is 32 (not including the double quotes).
+For example, in the second example above, the longest absolute path is "dir/subdir2/subsubdir2/file2.ext", 
+and its length is 32 (not including the double quotes).
 
-Given a string representing the file system in the above format, return the length of the longest absolute path to a file in the abstracted file system. If there is no file in the system, return 0.
+Given a string representing the file system in the above format, return the length of the longest absolute path to a file 
+in the abstracted file system. If there is no file in the system, return 0.
 
 Note:
 The name of a file contains at least a period and an extension.
