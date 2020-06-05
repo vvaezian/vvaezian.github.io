@@ -1,5 +1,4 @@
-from Queue import Queue
-
+import queue
 
 class Node(object):
     def __init__(self, key, neighbours):
@@ -16,16 +15,16 @@ def dfs(n):
       dfs(node)
 
 def bfs(n):
-  q = Queue()
-  q.enq(n)
+  q = queue.Queue()
+  q.put(n)
   n.visited = True
 
-  while not q.isEmpty():
-    node = q.deq()
+  while not q.empty():
+    node = q.get()
     print(node.val)
     for neighbor in node.neighbors:
       if not neighbor.visited:
-        q.enq(neighbor)
+        q.put(neighbor)
         neighbor.visited = True
 
         
@@ -39,10 +38,10 @@ def unidirectional_search(s, t):
     return path[::-1]
   
   q = Queue()
-  q.enqueue(s)
+  q.put(s)
 
-  while not q.isEmpty():
-    n = q.dequeue()
+  while not q.empty():
+    n = q.get()
     n.visited = True
 
     if n is t:
@@ -50,7 +49,7 @@ def unidirectional_search(s, t):
     
     for node in n.neighbors:
       if not node.visited:
-        q.enqueue(node)
+        q.put(node)
         node.parent = n
     
   return False
@@ -100,14 +99,15 @@ def bidirectional_search(s, t):
       node_copy = node_copy.parent_left
     return path
   
-  q = Queue()
-  q.enqueue(s)
-  q.enqueue(t)
+
+  q = queue.Queue()
+  q.put(s)
+  q.put(t)
   s.visited_right = True
   t.visited_left = True
   
-  while not q.isEmpty():
-    n = q.dequeue()
+  while not q.empty():
+    n = q.get()
 
     if n.visited_left and n.visited_right:  # if the node visited by both BFS's
       return extract_path(n)
@@ -116,11 +116,11 @@ def bidirectional_search(s, t):
       if n.visited_left == True and not node.visited_left:
         node.parent_left = n
         node.visited_left = True
-        q.enqueue(node)
+        q.put(node)
       if n.visited_right == True and not node.visited_right: 
         node.parent_right = n
         node.visited_right = True
-        q.enqueue(node)
+        q.put(node)
     
   return False
 
