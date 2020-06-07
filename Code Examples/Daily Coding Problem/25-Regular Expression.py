@@ -76,12 +76,35 @@ def reg(string, pattern):
 
 
 #######################################
-### Method 3: DP O(mn) time, O(1) space
+### Method 3: DP O(mn) time, O(n) space
 #######################################
 # We don't need the whole matrix for the calculations.
-
+# We keep two rows only
 def reg(string, pattern):
-    pass
+  
+  m = [ [False] * (len(pattern) + 1) for i in range(min(2, len(string) + 1)) ]
+  m[0][0] = True
+  for index, char in enumerate(pattern):
+    if char == '*':
+      m[0][index + 1] = m[0][index - 2 + 1]
+
+  for s_idx, s_char in enumerate(string):
+    for p_idx, p_char in enumerate(pattern):
+      m_p_idx = p_idx + 1
+      if p_char != '*':
+        m[1][m_p_idx] = m[0][m_p_idx - 1] if p_char == s_char or p_char == '.' else False
+      else:
+        if m[1][m_p_idx - 2] == True:
+          m[1][m_p_idx] = True
+        else:
+          if pattern[p_idx - 1] == string[s_idx] or pattern[p_idx - 1] == '.':
+            m[1][m_p_idx] = m[0][m_p_idx]
+
+    if s_idx != len(string) - 1: # We don't want to swap the rows at the end, becuase it messes up the return value
+      m[0], m[1] = m[1], [False] * (len(pattern) + 1)
+  
+return m[-1][-1]
+
 
 assert reg("a", "ab*a") is False
 assert reg("","c*c*") is True
