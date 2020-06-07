@@ -9,9 +9,11 @@ That is, implement a function that takes in a string and a valid regular express
 For example, given the regular expression "ra." and the string "ray", your function should return true. The same regular expression on the string "raymond" should return false.
 '''
 
+
 ################################################
 ### Method 1: Recursive (non-efficient) solution
 ################################################
+
 def reg(string, pattern):
   
   # base case
@@ -46,6 +48,7 @@ def reg(string, pattern):
 # Although it doesn't cover how to initialize the first row if the pattern starts with x*.
 # in these cases we need to set the value of the cell corresponding to * to True if in the
 # two cell prior we have True.
+
 def reg(string, pattern):
   
   # Initializing the matrix
@@ -70,6 +73,15 @@ def reg(string, pattern):
             m[m_s_idx][m_p_idx] = m[m_s_idx - 1][m_p_idx]
   
   return m[-1][-1]
+
+
+#######################################
+### Method 3: DP O(mn) time, O(1) space
+#######################################
+# We don't need the whole matrix for the calculations.
+
+def reg(string, pattern):
+    pass
 
 assert reg("a", "ab*a") is False
 assert reg("","c*c*") is True
