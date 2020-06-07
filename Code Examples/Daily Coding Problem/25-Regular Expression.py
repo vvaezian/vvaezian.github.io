@@ -9,6 +9,9 @@ That is, implement a function that takes in a string and a valid regular express
 For example, given the regular expression "ra." and the string "ray", your function should return true. The same regular expression on the string "raymond" should return false.
 '''
 
+################################################
+### Method 1: Recursive (non-efficient) solution
+################################################
 def reg(string, pattern):
   
   # base case
@@ -34,6 +37,39 @@ def reg(string, pattern):
   
   # for the case where zero count of a in a* is used for matching
   return reg(string, pattern[2:])
+
+
+########################################
+### Method 2: DP O(mn time), O(mn) space
+########################################
+# This video is helpful for the explanation: https://www.youtube.com/watch?v=l3hda49XcDE
+# Although it doesn't cover how to initialize the first row if the pattern starts with x*.
+# in these cases we need to set the value of the cell corresponding to * to True if in the
+# two cell prior we have True.
+def reg(string, pattern):
+  
+  # Initializing the matrix
+  m = [ [False] * (len(pattern) + 1) for _ in range(len(string) + 1) ]
+  m[0][0] = True
+  # the following is explained above
+  for index, char in enumerate(pattern):
+    if char == '*':
+      m[0][index + 1] = m[0][index - 2 + 1]
+
+  for s_idx, s_char in enumerate(string):
+    m_s_idx = s_idx + 1
+    for p_idx, p_char in enumerate(pattern):
+      m_p_idx = p_idx + 1
+      if p_char != '*':
+        m[m_s_idx][m_p_idx] = m[m_s_idx - 1][m_p_idx - 1] if p_char == s_char or p_char == '.' else False
+      else:
+        if m[m_s_idx][m_p_idx - 2] == True:
+          m[m_s_idx][m_p_idx] = True
+        else:
+          if pattern[p_idx - 1] == string[s_idx] or pattern[p_idx - 1] == '.':
+            m[m_s_idx][m_p_idx] = m[m_s_idx - 1][m_p_idx]
+  
+  return m[-1][-1]
 
 assert reg("a", "ab*a") is False
 assert reg("","c*c*") is True
