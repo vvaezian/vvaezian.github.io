@@ -77,7 +77,11 @@ SELECT relname, indexrelname, idx_scan
 FROM   pg_catalog.pg_stat_user_indexes
 WHERE  schemaname = 'public';
 ```
-
+### Unique Constraint
+```sql
+ALTER TABLE myTable
+ADD CONSTRAINT test_constraint UNIQUE (col1, col2)
+```
 ### Custom Function
 ```sql
 CREATE FUNCTION update_block(old text, new text) RETURNS void AS $$
