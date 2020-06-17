@@ -42,7 +42,7 @@ def reg(string, pattern):
 
 
 ########################################
-### Method 2: DP O(mn time), O(mn) space
+### Method 2: DP O(mn) time, O(mn) space
 ########################################
 # This video is helpful for the explanation: https://www.youtube.com/watch?v=l3hda49XcDE
 # Although it doesn't cover how to initialize the first row if the pattern starts with x*.
