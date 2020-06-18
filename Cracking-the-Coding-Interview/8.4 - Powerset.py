@@ -15,10 +15,10 @@ def powerset(array):
 
 
 ### Iterative
-def powerset(list1):
+def powerset(array):
     import copy
     output = [[]]
-    for i in list1:
+    for i in array:
         tmp = copy.deepcopy(output)
         for j in tmp:
             j.append(i)
