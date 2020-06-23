@@ -8,6 +8,6 @@ def insertChar(char, array):
   return out
     
 def perm(string):
-  if len(string) == 1:
-    return string
+  if len(string) <= 1:
+    return [string]
   return insertChar(string[0], perm(string[1:]))
