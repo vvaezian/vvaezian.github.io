@@ -1,7 +1,7 @@
 # List of Depths: Given a binary tree, design an algorithm which creates a linked list of all the nodes
 # at each depth (e.g., if you have a tree with depth D, you'll have D linked lists).
 
-def q4_3(btInstance):
+def q4_3(bt_root):
 
   def linkedListOfDepths(node, level, aDict):
     if node:
@@ -16,4 +16,4 @@ def q4_3(btInstance):
   
   from collections import defaultdict
   aDict = defaultdict(LinkedList) # keys are levels, and values are LinkedLists of the nodes at that level
-  return linkedListOfDepths(btInstance.root, 0, aDict)
+  return linkedListOfDepths(bt_root, 0, aDict)
