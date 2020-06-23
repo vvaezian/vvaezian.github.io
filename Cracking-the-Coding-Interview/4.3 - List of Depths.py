@@ -5,9 +5,7 @@ def q4_3(bt_root):
 
   def linkedListOfDepths(node, level, aDict):
     if node:
-      if not node.visited:
-        node.visited = True
-        aDict[level].add(node)  # 'add' is a method of LinkedList class
+      aDict[level].add(node)  # 'add' is a method of LinkedList class
       level += 1
       linkedListOfDepths(node.left, level, aDict)
       linkedListOfDepths(node.right, level, aDict)
