@@ -3,14 +3,14 @@
 
 def q4_3(btInstance):
 
-  def linkedListOfDepths(node, index, aDict):
+  def linkedListOfDepths(node, level, aDict):
     if node:
       if not node.visited:
         node.visited = True
-        aDict[index].add(node)  # 'add' is a method of LinkedList class
-      index += 1
-      linkedListOfDepths(node.left, index, aDict)
-      linkedListOfDepths(node.right, index, aDict)
+        aDict[level].add(node)  # 'add' is a method of LinkedList class
+      level += 1
+      linkedListOfDepths(node.left, level, aDict)
+      linkedListOfDepths(node.right, level, aDict)
     return aDict
 
   
