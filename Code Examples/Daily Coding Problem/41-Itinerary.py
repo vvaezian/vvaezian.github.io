@@ -5,6 +5,15 @@ If there are multiple possible itineraries, return the lexicographically smalles
 All flights must be used in the itinerary.
 '''
 
+### Analysis: We use a dictionary to map sources to destinations. We also include a flag with the destination indicating 
+# whether it has been visited. For example for ('A', 'B'), ('A', 'C'), ('B', 'C'), ('C', 'A') initially we have
+# { 'A':[['B', 0], ['C', 0]],
+#   'B':[['C', 0]],
+#   'C':[['A', 0]]
+# }
+# We then recursively add points to the path, looking in the dict values for the next point.
+# The program runs in O(n) time and O(k) space where k is the maximum number of duplicate destinations (practically O(1))
+
 from collections import defaultdict
 
 def itinerary(flight_list, start):
