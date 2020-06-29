@@ -35,13 +35,7 @@ run migrations:
 ```bash
 python manage.py migrate
 ```
-
-run the server:
-```bash
-python manage.py runserver
-```
-
-Edit the helloapp/urls.py to include urls.py from howdy app:
+Edit the `helloapp/urls.py` to include urls.py from howdy app:
 ```python
 from django.contrib import admin
 from django.urls import path
@@ -52,7 +46,7 @@ urlpatterns = [
     path('', include('howdy.urls')),
 ]
 ```
-create the urls.py in howdy folder:
+create the `howdy/urls.py`:
 ```python
 from django.conf.urls import url
 from howdy import views
@@ -63,7 +57,7 @@ urlpatterns = [
     path('about/', views.AboutPageView.as_view()),
 ]
 ```
-create views.py in howdy folder
+create `howdy/views.py`
 ```python
 from django.shortcuts import render
 from django.views.generic import TemplateView
@@ -76,4 +70,10 @@ class HomePageView(TemplateView):
 class AboutPageView(TemplateView):
     template_name = "about.html"
 ```
-create a folder called `templates` in howdy folder and create two files `index.html` and `about.html`
+create a folder `howdy/templates` and create two files `index.html` and `about.html` in it.  
+run the server:
+```bash
+python manage.py runserver
+```
+Browse http://127.0.0.1:8000/
+
