@@ -76,3 +76,4 @@ class HomePageView(TemplateView):
 class AboutPageView(TemplateView):
     template_name = "about.html"
 ```
+create a folder called `templates` in howdy folder and create two files `index.html` and `about.html`
