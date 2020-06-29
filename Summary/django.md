@@ -28,13 +28,13 @@ python manage.py startapp howdy
 # │        ├── tests.py
 # │        └── views.py
 # └── manage.py
-```
-We should add the app name (`howdy`) to the Installed Apps list in settings.py file so it gets recognized.
 
-run migrations:
-```bash
+# Sync your database for the first time
 python manage.py migrate
+
 ```
+We should add the app name (`howdy`) to the Installed Apps list in settings.py file so it gets recognized.  
+
 Edit the `helloapp/urls.py` to include urls.py from howdy app:
 ```python
 from django.contrib import admin
