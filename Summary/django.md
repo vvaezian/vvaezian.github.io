@@ -52,3 +52,14 @@ urlpatterns = [
     path('', include('howdy.urls')),
 ]
 ```
+create the urls.py in howdy folder:
+```python
+from django.conf.urls import url
+from howdy import views
+from django.urls import path
+
+urlpatterns = [
+    path('', views.HomePageView.as_view()),
+    path('about/', views.AboutPageView.as_view()),
+]
+```
