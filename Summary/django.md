@@ -32,10 +32,12 @@ python manage.py startapp howdy
 We should add the app name (`howdy`) to the Installed Apps list in settings.py file so it gets recognized.
 
 run migrations:
-```python manage.py migrate```
+```bash
+python manage.py migrate```
 
 run the server:
-```python manage.py runserver```
+```bash
+python manage.py runserver```
 
 Edit the helloapp/urls.py to include urls.py from howdy app:
 ```python
