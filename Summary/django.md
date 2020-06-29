@@ -33,11 +33,13 @@ We should add the app name (`howdy`) to the Installed Apps list in settings.py f
 
 run migrations:
 ```bash
-python manage.py migrate```
+python manage.py migrate
+```
 
 run the server:
 ```bash
-python manage.py runserver```
+python manage.py runserver
+```
 
 Edit the helloapp/urls.py to include urls.py from howdy app:
 ```python
