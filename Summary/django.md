@@ -81,7 +81,7 @@ Browse http://127.0.0.1:8000/
 ---------------------------
 ## API Example
 - We need to install and add "rest_framework" to the list of installed apps in `settings.py` in root
-```python
+```bash
 pip install djangorestframework
 ```
 - Migrations are Django’s way of propagating changes you make to your models (like adding a field, deleting a model, etc.) into your database schema
@@ -90,7 +90,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 - Running the test:
-```python
+```bash
 python3 manage.py test
 ```
 
