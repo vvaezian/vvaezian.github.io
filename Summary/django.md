@@ -91,6 +91,6 @@ python manage.py migrate
 ```
 - Running the test:
 ```bash
-python3 manage.py test
+python manage.py test
 ```
 
