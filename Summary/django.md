@@ -77,3 +77,12 @@ python manage.py runserver
 ```
 Browse http://127.0.0.1:8000/
 
+
+---------------------------
+## API Example
+- Migrations are Django’s way of propagating changes you make to your models (like adding a field, deleting a model, etc.) into your database schema
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
