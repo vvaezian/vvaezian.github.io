@@ -89,4 +89,8 @@ pip install djangorestframework
 python manage.py makemigrations
 python manage.py migrate
 ```
+- Running the test:
+```python
+python3 manage.py test
+```
 
