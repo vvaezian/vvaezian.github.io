@@ -5,11 +5,11 @@ import time
 s = time.time()
 
 
-def mergesort(alist):
-    if len(alist) == 1:
-        return alist
-    mid = len(alist) / 2
-    return merge(mergesort(alist[:mid]), mergesort(alist[mid:]))
+def mergesort(array):
+    if len(array) == 1:
+        return array
+    mid = len(array) / 2
+    return merge(mergesort(array[:mid]), mergesort(array[mid:]))
 
 
 def merge(list1, list2):
