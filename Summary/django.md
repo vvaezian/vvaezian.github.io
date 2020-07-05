@@ -1,4 +1,4 @@
-- A view function, or **view** for short, is a Python function that takes a Web request and returns a Web response. 
+- A view function, or **view** for short, is a Python function that takes a Web request and returns a Web response. The convention is to put views in a file called `views.py`, placed in the project or application directory, but technically it can be anywhere.
 
 ```bash
 pip install virtualenv
