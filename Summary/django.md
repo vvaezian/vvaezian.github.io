@@ -96,3 +96,4 @@ python manage.py migrate
 python manage.py test
 ```
 
+Part 2 of the tutorial: https://scotch.io/tutorials/build-a-rest-api-with-django-a-test-driven-approach-part-2
