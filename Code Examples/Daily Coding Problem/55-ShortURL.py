@@ -42,8 +42,9 @@ def restore(short_url):
   return db.get(short_url)
 
 cur_id = 1  # this must be retrived from a database
-print(shorten('http://www.google.com', cur_id))
-print(shorten('http://www.google.com', cur_id))
+print(shorten('http://www.google.com', cur_id))  # 000001
+print(shorten('http://www.google.com', cur_id))  # 000001
 cur_id = 2
-print(shorten('http://www.yahoo.com', cur_id))
-print(restore('000002'))
+print(shorten('http://www.yahoo.com', cur_id))  # 000001
+print(restore('000002'))  # http://www.yahoo.com
+print(restore('000003'))  # None
