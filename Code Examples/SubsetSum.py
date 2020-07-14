@@ -2,6 +2,7 @@
 Given an array and an integer k, return whether there is a subset of the array that sums to k.
 '''
 
+# Time: O(len(array) * k), Space: O(len(array) * k)
 def subset_sum(array, k):
   array.sort()
   if k > array[-1]:
