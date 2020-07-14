@@ -1,5 +1,5 @@
 '''
-Given an array and an integer k, return whether there is a subset of the array that sums to k.
+Given an array of positive integers and an integer k, return whether there is a subset of the array that sums to k.
 '''
 # opt(n, k) = {
 #   if array[n] is part of solution then opt(n - 1, k - array[n])
