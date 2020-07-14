@@ -1,7 +1,10 @@
 '''
 Given an array and an integer k, return whether there is a subset of the array that sums to k.
 '''
-
+# opt(n, k) = {
+#   if array[n] is part of solution then opt(n - 1, k - array[n])
+#   else opt(n - 1, k)
+# }
 # Time: O(len(array) * k), Space: O(len(array) * k)
 def subset_sum(array, k):
   array.sort()
