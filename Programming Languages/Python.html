@@ -829,6 +829,10 @@ re.findall('.*?s', msg)[0]  # ['hi, this', ' is', ' a tes']  non-greedy search
 re.findall('\w+', msg)[0]  # ['hi', 'this', 'is', 'a', 'test'] \w = [A-Za-z0-9_]
 re.match('.*"(.*),(.*).*"', row)  # if it doesn't match anything returns None. So it can be used in conditionals
 re.sub('(.*)abc(.*)"', '"\g&lt;1&gt;\g&lt;2&gt;"', row)  # refer to matched groups using \g&lt;n&gt; 
+try:
+    extracted_pattern = re.search('AAA(.+?)ZZZ', text).group(1)  # equivalent of perl -pe 's/AAA(.+?)ZZZ/\1/' test
+except AttributeError:
+    extracted_pattern = ''
 </pre><br>
 Matching the part that starts with an space followed by / (without including the space in the result) until a space 
 (without including the space):<br>
