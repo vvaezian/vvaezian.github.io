@@ -10,7 +10,8 @@ SELECT salary, sum(salary) OVER () FROM empsalary;
 -- add a column containing sum(salary) up until that row (and those with the same value as the current row)
 SELECT salary, sum(salary) OVER (ORDER BY salary) FROM empsalary;
 
--- add a column containg the rank of the row with respect to highest salary, where comparision is done with rows that have the same depname
+-- add a column containg the rank of the row with respect to highest salary, 
+-- where comparision is done with rows that have the same depname
 SELECT depname, empno, salary,
        rank() OVER (PARTITION BY depname ORDER BY salary DESC)
 FROM empsalary;
