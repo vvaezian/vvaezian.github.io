@@ -36,7 +36,7 @@ WINDOW w AS (PARTITION BY depname ORDER BY salary DESC);
 - Two other important locks are SCH-S (schema stability lock) and SCH-M (schema modification lock, e.g. dropping a column). Any query requests SCH-S lock. SCH-M is the most restrictive lock. It basically blocks everything.
 ### Lock Levels
 - Locks can be row-level, table-level, page-level (8K data) and Hobt-level (partition-level lock, stands for Heap or B-Tree, disabled by default)
-- If a small portion of table is being affected, it results in row-level lock, but if the porion be big enough the lock will be table-level instead of a high number of row-level locks.
+- If a small portion of table is being affected, it results in row-level lock, but if the porion is big enough the lock will be table-level instead of a high number of row-level locks.
 ### Remarks
 - Given the above facts, a SELECT statement will block an UPDATE stement (unless the SELECT statement acquire its S lock as row-level and the UPDATE statement acquire its X lock as row-level and these rows don't overlap). 
 - SELECT statements acquire S lock by default. To run a SELECT statement without S lock use either `NOLOCK` (same as `READUNCOMMITTED`) or `TRANSACTION ISOLATION LEVEL READ UNCOMMITTED`. A SELECT statement with NOLOCK results in *dirtyreading*, i.e. it doesn't care whether data is committed or not. While `NOLOCK` is applied on one table, `TRANSACTION ISOLATION LEVEL READ UNCOMMITTED` gets applied to a transaction:
