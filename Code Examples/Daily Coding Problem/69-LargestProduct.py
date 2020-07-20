@@ -5,6 +5,8 @@ For example, if the list is [-10, -10, 5, 2], we should return 500, since that's
 '''
 
 # O(n) time, O(1) space
+# if the max happens by including negative numbers, it has to be the case that two negative numbers are used. 
+# So we compare the product of three biggest with two smallest and the biggest, and return the bigger one.
 
 def largest_product(array):
   maxA, maxA_idx = max([ (item, index) for index, item in enumerate(array) ])
