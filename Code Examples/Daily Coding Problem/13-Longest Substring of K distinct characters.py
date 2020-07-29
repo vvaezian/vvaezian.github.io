@@ -21,7 +21,7 @@ def lsd(string, k):
   
   # sliding the window
   for char in string[k:]:
-    if window_dict[char] > 0:
+    if window_dict[char] > 0:  # if char already in the window
       window_dict[char] += 1
       cur_size += 1
       cur_end += 1
