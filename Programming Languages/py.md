@@ -1,11 +1,11 @@
 
 <img src="/vvaezian.github.io/Pic/Python-logo.png" alt="Logo" height="200">
 <em>* Sources: <a href="https://courses.edx.org/courses/course-v1:MITx+6.00.1x_9+2T2016/info" target="_blank">this</a> online course, 
-	<a href="https://www.amazon.com/Data-Science-Scratch-Principles-Python/dp/149190142X" target="_blank">this</a> book, and <a href="https://medium.freecodecamp.org/an-a-z-of-useful-python-tricks-b467524ee747"> this </a> post.</em><br>
+	<a href="https://www.amazon.com/Data-Science-Scratch-Principles-Python/dp/149190142X" target="_blank">this</a> book, and <a href="https://medium.freecodecamp.org/an-a-z-of-useful-python-tricks-b467524ee747"> this </a> post.</em>
 
 
 ### Strings "123"
-String Methods<br>
+String Methods
 ```python
 s = 'abcabc'
 s.upper()
@@ -38,11 +38,11 @@ error
 ['abc', 'def', 'ghi']
 
 
-```<br>
+```
 
-While <kbd>index</kbd> works for both strings and lists, <kbd>find</kbd> works only with strings.<br>
+While <kbd>index</kbd> works for both strings and lists, <kbd>find</kbd> works only with strings.
 	    
-String Slicing<br>
+String Slicing
 ```python
 s = 'abcd'
 s[0]
@@ -55,11 +55,11 @@ a
 d
 bc
 dcba
-```<br>
+```
 
 Since strings are immutable, there is no method to replace an arbitrary character of a string 
 (e.x. replacing the second 'o' in 'foo'). But we can use the following function
-(taken from <a href="http://stackoverflow.com/a/9188460/2445273" target="_blank"> here </a>):<br>
+(taken from <a href="http://stackoverflow.com/a/9188460/2445273" target="_blank"> here </a>):
 <pre class = "prettyprint">
     def arbit_replace(s, i, c):
         return s[:i] + c + s[i + 1:]
@@ -67,9 +67,9 @@ Since strings are immutable, there is no method to replace an arbitrary characte
     print arbit_replace('foo', 2, 'z')</pre>
 ```python
 foz
-```<br>
+```
 	    
-<b>F-Strings</b> (Python 3.6+)<br>
+<b>F-Strings</b> (Python 3.6+)
 <pre class=prettyprint>
 name = 'John'
 print(f"name is {name}.")
@@ -92,7 +92,7 @@ name is John.
 0.667
 
 Date is January 01, 2018.
-```<br>
+```
 </div>
 </details>
 
@@ -114,22 +114,22 @@ list1.insert(1,63)
 ['a', 'z']
 ['a', 63, 'z']
 
-```<br>
+```
 
-<b>Enueration</b><br>
+<b>Enueration</b>
 <pre class="prettyprint">
 for index, item in my_list:
     do_something(index, item)
-</pre><br>
-If we just want the indexes:<br>
+</pre>
+If we just want the indexes:
 <pre class="prettyprint">
 for i in range(len(documents)):  # not Pythonic
     do_something(i) 
 for i, _ in enumerate(documents):  # Pythonic
     do_something(i) 
-</pre><br>
+</pre>
 
-<b>List Comprehension</b>:<br>
+<b>List Comprehension</b>:
 <pre class="prettyprint">
 list1 = [i for i in range(100) if i not in range(30, 50)]
 list2 = [(x, y)
@@ -139,17 +139,17 @@ list3 = [(x, y)
          for x in range(10)
          for y in range(x + 1, 10)]
 list4 = [0 for _ in range(5)]
-</pre><br>
-<br>
-Concatenating lists:<br>
+</pre>
+
+Concatenating lists:
 <pre class=prettyprint>
 x = [1, 2]
-x.extend([3, 4])  # x is [1, 2, 3, 4]</pre><br>
-If you don't want to modify x use list addition:<br>
+x.extend([3, 4])  # x is [1, 2, 3, 4]</pre>
+If you don't want to modify x use list addition:
 <pre class=prettyprint>
 x = [1, 2]
-y = x + [3, 4] # y is [1, 2, 3, 4]; x is unchanged</pre><br>
-Appending to lists one item at a time:<br>
+y = x + [3, 4] # y is [1, 2, 3, 4]; x is unchanged</pre>
+Appending to lists one item at a time:
 <pre class=prettyprint>
 x = [1, 2]
 x.append(0) # x is now [1, 2, 0]</pre>
@@ -159,7 +159,7 @@ x.append(0) # x is now [1, 2, 0]</pre>
 
 
 ### Tuples (1, 2, 3)
-Tuples are lists' immutable cousins. Pretty much anything you can do to a list that doesn't involve modifying it, you can do to a tuple.<br>
+Tuples are lists' immutable cousins. Pretty much anything you can do to a list that doesn't involve modifying it, you can do to a tuple.
 ```python
 
 tuple1 = (3)
@@ -173,11 +173,11 @@ type(tuple2)
 ```python
 
 3
-&lt;type 'int'&gt;<br>
+&lt;type 'int'&gt;
 (3,)
 &lt;type 'tuple'&gt;
 
-```<br>
+```
 </div>
 </details>
 
@@ -214,27 +214,27 @@ KeyError
 None
 nothing
 
-```<br>
+```
 ```python
 
 for key, value in aDict.iteritems():
     print "letter: {} Animal: {}".format(key,value)
-```<br>
+```
 ```python
 
 a = ''.join('{}{}'.format(key, str(val)) for key, val in dict1.items())
-```<br>
+```
 
-<kbd>iteritems()</kbd> to <kbd>items()</kbd> is like <kbd>xrange</kbd> to <kbd>range</kbd>.<br>
-<br>
-Sort a dictionary by values: <br>
+<kbd>iteritems()</kbd> to <kbd>items()</kbd> is like <kbd>xrange</kbd> to <kbd>range</kbd>.
+
+Sort a dictionary by values: 
 ```python
 sorted(myDict.items(), key=lambda item: item[1], reverse=True)
 
-```<br>
+```
 	    
-<b>defaultdict</b><br>
-A defaultdict is like a regular dictionary, except that when you try to look up a key it doesn't contain, it first adds a value for it using a zero-argument function you provided when you created it.<br>
+<b>defaultdict</b>
+A defaultdict is like a regular dictionary, except that when you try to look up a key it doesn't contain, it first adds a value for it using a zero-argument function you provided when you created it.
 
 <pre class=prettyprint>
 from collections import defaultdict
@@ -268,24 +268,24 @@ set([])
 [5, 8]
 [(1, [5, 8]), (2, [5, 1])]
 
-```<br>
-<br>
+```
 
-<b>Counter</b><br>
+
+<b>Counter</b>
 <ul>
-<li>A Counter turns a sequence of values into a defaultdict(int)-like object, mapping keys to counts.<br>
+<li>A Counter turns a sequence of values into a defaultdict(int)-like object, mapping keys to counts.
 <pre class="prettyprint">
 from collections import Counter
 c = Counter([0, 1, 2, 0])   # c is (basically) { 0 : 2, 1 : 1, 2 : 1 }
-</pre><br>
-<li>A useful method of <samp>Counter</samp> is <samp>most_common</samp>.<br>
+</pre>
+<li>A useful method of <samp>Counter</samp> is <samp>most_common</samp>.
 <pre class="prettyprint">
 # print the 10 most common words and their counts
 for word, count in word_counts.most_common(10):
     print word, count
-</pre><br>
-<li>Counting occurances of words/letters/symbols in a text given as a list (e.x. by myText.split()):<br>
-First approach<br>
+</pre>
+<li>Counting occurances of words/letters/symbols in a text given as a list (e.x. by myText.split()):
+First approach
 <pre class="prettyprint">
 word_counts = {}
 for word in document:
@@ -293,8 +293,8 @@ if word in word_counts:
     word_counts[word] += 1
 else:
     word_counts[word] = 1
-</pre><br>
-Second approach:<br>
+</pre>
+Second approach:
 <pre class="prettyprint">
 word_counts = {}
 for word in document:
@@ -302,32 +302,32 @@ for word in document:
         word_counts[word] += 1
     except KeyError:
         word_counts[word] = 1
-</pre><br>
-Third approach:<br>
+</pre>
+Third approach:
 <pre class="prettyprint">
 word_counts = {}
 for word in document:
     previous_count = word_counts.get(word, 0)
     word_counts[word] = previous_count + 1
-</pre><br>
-Fourth approach:<br>
+</pre>
+Fourth approach:
 <pre class="prettyprint">
 word_counts = defaultdict(int)
 for word in document:
     word_counts[word] += 1
-</pre><br>
-Fifth approach:<br>
+</pre>
+Fifth approach:
 <pre class="prettyprint">
 word_counts = Counter(document)
-</pre><br>
+</pre>
 </div>
 </details>
 
 
 
 ### Sets {1, 2, 3}
-Set is like list but repetition doesn't matter. {1,1,2} = {1,2}<br><br>
-Adding two sets a and b: <samp>a.union(b)</samp> (for lists we can simply write <samp>a + b</samp><br>
+Set is like list but repetition doesn't matter. {1,1,2} = {1,2}
+Adding two sets a and b: <samp>a.union(b)</samp> (for lists we can simply write <samp>a + b</samp>
 ** Checking membership in a set is faster compared to list. The same goes for deletting an element (<a href='https://stackoverflow.com/a/8929320/2445273'>source</a>)
 </div>
 </details>
@@ -342,8 +342,8 @@ a = [1] * 3
 ```python
 [1, 1, 1]
 
-```<br>
-The following functions do the same thing (making a zero matrix of m by n)<br>
+```
+The following functions do the same thing (making a zero matrix of m by n)
 <pre class="prettyprint">
 def matrix1(m,n):
     M = []
@@ -361,7 +361,7 @@ def matrix2(m,n):
 
 def matrix3(m,n):
     return [[0] * (n) for i in xrange(m)]
-</pre><br>
+</pre>
 </div>
 </details>
 
@@ -385,15 +385,15 @@ def listDivision(l1,l2):
             print 'listDivision called with bad arg'
     return result</pre>
 <code>
->>> listDivision([1,2,3],[4,5,6])<br>
-<span style="color:blue">[0.25, 0.4, 0.5]</span><br>
->>> listDivision([1,2,3],[4,5,0])<br>
-<span style="color:blue">float division by zero<br>
-[0.25, 0.4, 'NaN']</span><br>
->>> listDivision([1,2,3],[4,5,'a'])<br>
-<span style="color:blue">listDivision called with bad arg<br>
+>>> listDivision([1,2,3],[4,5,6])
+<span style="color:blue">[0.25, 0.4, 0.5]</span>
+>>> listDivision([1,2,3],[4,5,0])
+<span style="color:blue">float division by zero
+[0.25, 0.4, 'NaN']</span>
+>>> listDivision([1,2,3],[4,5,'a'])
+<span style="color:blue">listDivision called with bad arg
 [0.25, 0.4, 'Bad Arg']</span>
-</code><br>
+</code>
 </div>
 </details>
 
@@ -408,8 +408,8 @@ class Coordinate(object):
 
 c = Coordinate(3,4)
 Origin = Coordinate(0,0)
-</pre><br>
-<img src="Pic/frame.png" alt="frame" height="300"><br>
+</pre>
+<img src="Pic/frame.png" alt="frame" height="300">
 ```python
 isinstance(c, Coordinate)
 
@@ -417,7 +417,7 @@ isinstance(c, Coordinate)
 ```python
 True
 
-```<br>
+```
 <pre class=prettyprint>
 class Coordinate(object):
     def __init__(self, x0, y0):
@@ -427,29 +427,29 @@ class Coordinate(object):
         return "<"+str(self.x)+","+str(self.y)+">"
     def xDifference(self,other):
         return (self.x - other.x)
-</pre><br>
+</pre>
 <ul>
 <li>The <kbd>__init__()</kbd> method (AKA initialization method or class constructor) is called immediately after an instance of the class is created.</br>
 <li>In all class methods, <kbd>self</kbd> refers to the instance whose method was called. But in the specific case of the <kbd>__init__()</kbd> method, the instance whose method was called is also the newly created object.
 <li>Python interpreter translates <kbd>obj1 &lt obj2</kbd> into a method call on <kbd>obj1</kbd> (namely <kbd>obj1.__lt__(obj2)</kbd>). 
-To enable sort operation on instances of a class we should implement the <em>__lt__</em> special method. e.x.:<br>
+To enable sort operation on instances of a class we should implement the <em>__lt__</em> special method. e.x.:
 <pre class=prettyprint>
 def __lt__(self, other):
     """return True if self's name is lexicographically
        less than other's name, and False otherwise"""
     if self.lastName == other.lastName:
         return self.name < other.name
-    return self.lastName < other.lastName</pre><br>
-<li>Assume we have a class which defines operations on a set. If we want <kbd>len(s)</kbd> return the number of members of s, then we need to define <em>len</em> using underscores:<br>
+    return self.lastName < other.lastName</pre>
+<li>Assume we have a class which defines operations on a set. If we want <kbd>len(s)</kbd> return the number of members of s, then we need to define <em>len</em> using underscores:
 <pre class=prettyprint>
 def __len__(self):
     count = 0
     for i in self.vals:
         count += 1
     return count
-</pre><br>
+</pre>
 If we don't use underscores, we have to get the length using <kbd>s.len()</kbd></li>
-<li><b>Inheritance</b><br>
+<li><b>Inheritance</b>
 <pre class='prettyprint'>
 class Person(object):
     def __init__(self, name):
@@ -477,7 +477,7 @@ class Grad(MITPerson):
     pass
 
 def isStudent(obj):
-    return isinstance(obj,UG) or isinstance(obj,Grad)</pre><br>
+    return isinstance(obj,UG) or isinstance(obj,Grad)</pre>
 </ul>
 As Python has no concept of private variables, leading underscores are used to indicate variables that must not be accessed 
 from outside the class. So using local variable names beginning with an underscore is discouraged.
@@ -505,7 +505,7 @@ StopIteration Exception
 
 1
 2
-```<br>
+```
 <pre class="prettyprint">
 def genFib():
     fibn_1 = 1 #fib(n-1)
@@ -520,12 +520,12 @@ for i in range(5):
     print fib.next()</pre>
 ```python
 1 2 3 5 8
-```<br>
-<b>Generator Expressions</b> (alternative of list comprehention to save memory)<br>
-The first example above can be written as follows<br>
+```
+<b>Generator Expressions</b> (alternative of list comprehention to save memory)
+The first example above can be written as follows
 <pre class="prettyprint">
 foo = (i for i in xrange(2))
-</pre><br>
+</pre>
 
 <pre class="prettyprint">
 a = xrange(3)
@@ -542,7 +542,7 @@ set([0, 1, 2])
 
 {0: 'a', 1: 'b', 2: 'c'}
 
-```<br>
+```
     </div>
 </details>
 
@@ -565,7 +565,7 @@ for index, item in enumerate(a):
 0. a
 1. b
 2. c
-```<br>
+```
 
 <pre class="prettyprint">
 first_name ='John'
@@ -574,10 +574,10 @@ print "Full name is {} {}".format(first_name, last_name)
 </pre>
 ```python
 Full name is John Doe
-```<br>
-* in Python 3.6+ we can use F-Strings insted: <samp>print(f"Full name is {first_name} {last_name}")</samp><br>
-<br>
-For printing members of <samp>myList</samp> line by line: <samp>print(*myList, sep='\n')</samp><br><br>	
+```
+* in Python 3.6+ we can use F-Strings insted: <samp>print(f"Full name is {first_name} {last_name}")</samp>
+
+For printing members of <samp>myList</samp> line by line: <samp>print(*myList, sep='\n')</samp>	
 </div>
 </details>
 
@@ -590,13 +590,13 @@ with open('pathToFile', [option]) as f:
   fl = f.readlines()
 data = [ eval(line.rstrip('\n')) for line in fl ]
 X1, ..., Xn = zip(*data) 
-</pre><br>
-[option] can be <samp>'r'</samp> (read) [default], <samp>'w'</samp> (write), <samp>'r+'</samp> (read and write) and <samp>'a'</samp> (append).<br>
-<br>
-<kbd>fl = f.readlines()</kbd> turns f into a list of strings, each item of list is one line of f (defined by '\n')<br>
-<kbd>fs = f.read()</kbd> turns f into one string<br>
-<kbd>l = f.readline()</kbd> reads the first line as a string<br>
-<br>
+</pre>
+[option] can be <samp>'r'</samp> (read) [default], <samp>'w'</samp> (write), <samp>'r+'</samp> (read and write) and <samp>'a'</samp> (append).
+
+<kbd>fl = f.readlines()</kbd> turns f into a list of strings, each item of list is one line of f (defined by '\n')
+<kbd>fs = f.read()</kbd> turns f into one string
+<kbd>l = f.readline()</kbd> reads the first line as a string
+
 <pre class=prettyprint>guess = 50
 x = raw_input('Is your number ' + str(guess) + '?' + '\n Enter \'Yes\' or \'No\': ')
 
@@ -604,20 +604,20 @@ x = raw_input('Is your number ' + str(guess) + '?' + '\n Enter \'Yes\' or \'No\'
 ```python
 Is your number 50?
 Enter 'Yes' or 'No':
-```<br>
+```
 </div>
 </details>
 
 <details class="details">
     <summary><div class="wrapper"><b>copying</b></div></summary>
     <div class="content">
-<a href="https://stackoverflow.com/a/3975388/2445273">This</a> explains the difference between reference assignment, shallow copying and deep copying.<br>
+<a href="https://stackoverflow.com/a/3975388/2445273">This</a> explains the difference between reference assignment, shallow copying and deep copying.
 <kbd>[:]</kbd> makes a shallow copy of a string or list.
-<kbd>dic.copy()</kbd> do the same for dictionaries.<br>
-If our list is a list of lists or list of objects (similar for dictionaries), then we need to do deep copying so that altering the copy doesn't alter the original:<br>
+<kbd>dic.copy()</kbd> do the same for dictionaries.
+If our list is a list of lists or list of objects (similar for dictionaries), then we need to do deep copying so that altering the copy doesn't alter the original:
 <pre class="prettyprint">
 import copy
-list2 = copy.deepcopy(list1)</pre><br>
+list2 = copy.deepcopy(list1)</pre>
 </div>
 </details>
 
@@ -639,7 +639,7 @@ list2 = copy.deepcopy(list1)</pre><br>
 4.5
 4.5
 4.5
-```<br>
+```
 *In Python 3.x 9/2 = 4.5. We can achieve this in Python 2.2+ with <kbd>from __future__ import division;</kbd>
 </div>
 </details>
@@ -654,8 +654,8 @@ l.sort(key=lambda x: (-x[0], x[1]))
 ```
 ```python
 [(4, 'mouse'), (3, 'cow'), (3, 'horse'), (2, 'dog'), (2, 'pog'), (1, 'cat')]
-```<br>
-If an element is a calss instance, we need to use dot notation. E.x.<br>
+```
+If an element is a calss instance, we need to use dot notation. E.x.
 ```python
 l.sort(key=lambda x: (x[0].name, x[1].age))
 ```
@@ -671,11 +671,11 @@ start = time.time()
 [body]
 end = time.time()
 print end - start
-</pre><br>
-Another way is from shell: <kbd>time python [py file]</kbd><br>
-<br>
-For small bits of Python code we can use <samp>timeit</samp> (it can be run from <a href="https://docs.python.org/2/library/timeit.html#python-interface">python interface</a> as well): <br>
-<kbd>python -m timeit [-n N] [-r N] [statement ...]</kbd><br>
+</pre>
+Another way is from shell: <kbd>time python [py file]</kbd>
+
+For small bits of Python code we can use <samp>timeit</samp> (it can be run from <a href="https://docs.python.org/2/library/timeit.html#python-interface">python interface</a> as well): 
+<kbd>python -m timeit [-n N] [-r N] [statement ...]</kbd>
 where 
 <samp>-n N, (--number=N)</samp> denotes how many times to execute ‘statement’, and <samp>-r N, (--repeat=N)</samp> denotes how many times to repeat the timer (default 3).
 </div>
@@ -720,7 +720,7 @@ random.seed(5)
 print random.random()  # 0.62290169489
 random.seed(5)
 print random.random()  # 0.62290169489
-</pre><br>
+</pre>
 </div>
 </details>
 
@@ -732,7 +732,7 @@ zip(['a', 'b', 'c'], [1, 2, 3])  # [('a', 1), ('b', 2), ('c', 3)]
 zip(('a', 1), ('b', 2), ('c', 3))  # [('a', 'b', 'c'), (1, 2, 3)]
 data = [('a', 1), ('b', 2), ('c', 3)]
 zip(*data)  # [('a', 'b', 'c'), (1, 2, 3)]
-</pre><br>
+</pre>
 </div>
 </details>
 
@@ -742,16 +742,16 @@ zip(*data)  # [('a', 'b', 'c'), (1, 2, 3)]
 <pre class="prettyprint">
 import subprocess
 subprocess.call("BASH Command", SHELL=True)
-</pre><br>    
+</pre>    
 </div>
 </details>
 	    
 <details class="details">
     <summary><div class="wrapper"><b>*args and **kwargs</b></div></summary>
     <div class="content">
-The general use of these is to produce higher-order functions whose inputs can accept arbitrary arguments.<br>
+The general use of these is to produce higher-order functions whose inputs can accept arbitrary arguments.
 When we define a function using *args and **kwargs, args is a tuple of its unnamed arguments
-and kwargs is a dict of its named arguments:<br>
+and kwargs is a dict of its named arguments:
 <pre class="prettyprint">
 def test(*args, **kwargs):
     print "unnamed args:", args
@@ -759,8 +759,8 @@ def test(*args, **kwargs):
 
 test(1, 2, key="word", key2="word2")  # unnamed args: (1, 2)
                                       # keyword args: {'key2': 'word2', 'key': 'word'}
-</pre><br>
-It works the other way too:<br>
+</pre>
+It works the other way too:
 <pre class="prettyprint">
 def test2(x, y, z):
     return x + y + z
@@ -770,7 +770,7 @@ print(test2(*list123))  # 6
 dict123 = {'a': 1, 'b': 2, 'c': 3}
 print(test2(*dict123))  # 'abc'
 print(test2(**dict123))	# 6
-</pre><br>
+</pre>
 </div></details>
 <details class="details">
     <summary><div class="wrapper"><b>matplotlib</b></div></summary>
@@ -786,9 +786,9 @@ plt.title("Title")
 plt.legend(loc=9)  # assuming 'label' is defined. 9 means top-center
 plt.grid(True)  # more options: plt.grid(color='r', linestyle='-.', linewidth=2)
 plt.show()
-</pre><br>
+</pre>
 
-<b>Types of plots</b><br>
+<b>Types of plots</b>
 <pre class="prettyprint">
 #--- Line Chart ---
 plt.plot(x_list, y_list, color='green', marker='o', linestyle='solid', label='my_label', linewidth=2)  
@@ -804,9 +804,9 @@ plt.scatter(x_list, y_list,
 		s=30, 		# marker size 
 		alpha=.65,  	# alpha helps to show overlapping data
 		color='b')
-</pre><br>
+</pre>
 
-<b>Annotation</b><br>
+<b>Annotation</b>
 <pre class="prettyprint">
 x_list = [...]
 y_list = [...]
@@ -822,14 +822,14 @@ for label, x_item, y_item in zip(labels, x_list, y_list):
         textcoords='offset points')
 
 # full list of arguments can be found <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.annotate.html">here</a>.
-</pre><br>
-<b>Misc.</b><br>
+</pre>
+<b>Misc.</b>
 <pre class="prettyprint">
 plt.axis("scaled")  # Equal scaling by changing box dimensions
 # full list of arguments can be found <a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.axis.html#matplotlib.axes.Axes.axis">here</a>.
-</pre><br>
+</pre>
 
-<b>Contours</b> are used to visualize 3D plot in 2D<br>
+<b>Contours</b> are used to visualize 3D plot in 2D
 <pre class="prettyprint">
 x = np.arange(0, 1, 0.1)
 y = np.arange(0, 1, 0.1)
@@ -864,10 +864,10 @@ try:
     extracted_pattern = re.search('AAA(.+?)ZZZ', text).group(1)  # equivalent of perl -pe 's/AAA(.+?)ZZZ/\1/' test
 except AttributeError:
     extracted_pattern = ''
-</pre><br>
+</pre>
 Matching the part that starts with an space followed by / (without including the space in the result) until a space 
-(without including the space):<br>
-<samp>re.findall('(?&lt;=\s)/[^\s]*', log_msg)[0]  # ?&lt;=</samp>  is called 'lookahead'<br>
+(without including the space):
+<samp>re.findall('(?&lt;=\s)/[^\s]*', log_msg)[0]  # ?&lt;=</samp>  is called 'lookahead'
     </div>
 </details>
 
@@ -900,7 +900,7 @@ def get_all_urls(soup):
 
 tag_elements = [tag_element for tag_element in soup.find_all('a')]
 all_urls = [url + tag_element.get('href') for tag_element in soup.find_all('a')]
-all_urls_texts = [tag_element.contents[0] for tag_element in soup.find_all('a')]</pre><br>
+all_urls_texts = [tag_element.contents[0] for tag_element in soup.find_all('a')]</pre>
 The package <a href="https://newspaper.readthedocs.io/en/latest/" > newspaper </a> is practical and useful.
     </div>
 </details>
@@ -909,30 +909,30 @@ The package <a href="https://newspaper.readthedocs.io/en/latest/" > newspaper </
 	
 	
 <ul>
-	<li> <b>Difference between <kbd>==</kbd> and <kbd>is</kbd></b><br>
+	<li> <b>Difference between <kbd>==</kbd> and <kbd>is</kbd></b>
     The equality operator (<kbd>x == y</kbd>) tests the values of x and y for equality, while the identity operators (<kbd>is</kbd>) tests two objects to see whether they refer to the same object in memory. 
-    In general, it may be the case that <kbd>x == y</kbd>, but <kbd>x is not y</kbd>.<br>
+    In general, it may be the case that <kbd>x == y</kbd>, but <kbd>x is not y</kbd>.
 <code>
->>> a = [1, 2, 3]<br>
->>> b = a<br>
->>> b is a <br>
-<span style="color:blue">True</span><br>
->>> b == a<br>
-<span style="color:blue">True</span><br>
+>>> a = [1, 2, 3]
+>>> b = a
+>>> b is a 
+<span style="color:blue">True</span>
+>>> b == a
+<span style="color:blue">True</span>
 </code>
 <code>
->>> a = [1, 2, 3]<br>
->>> b = a[:]<br>
->>> b is a<br>
-<span style="color:blue">False</span><br>
->>> b == a<br>
+>>> a = [1, 2, 3]
+>>> b = a[:]
+>>> b is a
+<span style="color:blue">False</span>
+>>> b == a
 <span style="color:blue">True</span>
 </code></li>
 	<li><kbd>dir</kbd> lists attributes of an object. E.g. <sampl>dit("hi")</samp> lists all strng methods.
-	<li><b>Prettyprint</b>ing structured data: <br>
+	<li><b>Prettyprint</b>ing structured data: 
 		<pre class=prettyprint>
 import pprint
-pprint.pprint(structuredData)</pre><br>
+pprint.pprint(structuredData)</pre>
 		
 <pre class=prettyprint>
 import pprint
@@ -942,20 +942,20 @@ import json
 response = requests.get("URL")
 pprint.pprint(json.loads(response.text))</pre>
 
-	<li><kbd>inspect</kbd> is handy for looking at source code modules:<br>
+	<li><kbd>inspect</kbd> is handy for looking at source code modules:
 
 <pre class=prettyprint>
 import inspect
 import queue	# Python 3
 print(inspect.getsource(queue))</pre>
-	<li><kbd>sh</kbd> module makes it easy to work with standard os and subprocess libraries:<br>
+	<li><kbd>sh</kbd> module makes it easy to work with standard os and subprocess libraries:
 		<pre class=prettyprint>
 import sh
 sh.pwd()
 sh.mkdir('newDir')
 sh.touch('newFile.txt')
 sh.whoami()
-sh.echo('This is cool!')</pre><br>
+sh.echo('This is cool!')</pre>
 <kbd>pythonpy</kbd> is the opposite. Uses python is command-line.
 </ul>
 	    
