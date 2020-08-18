@@ -5,7 +5,7 @@ def insertChar(char, array):
   for string in array:
     for i in range(len(string) + 1):
       out.append(string[:i] + char + string[i:])
-  return out
+  return list(set(out))
     
 def perm(string):
   if len(string) <= 1:
