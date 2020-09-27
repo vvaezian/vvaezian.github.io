@@ -25,6 +25,7 @@ bcp [database_name].[dbo].[table_name] in "C:\path\to\file" -S server_name -U us
 - We can use -T (Trusted Connection) for windows Authentication instead of providing user/pass
 - If `^M$` at the end it should work fine without -r option. If line ending is `$`, use `-r "0x0a"`.
 - `-F` option indicates which line to start. So to exclude header use `-F 2` .
+- The column type need to have enough space for the value in csv. E.g. if the column type is numeric(10,2) and the value in the csv file for that column has more than two digits in the fractional part, the operation fails.
 - Speed test: ~6 MB/s from local. ~3 MB/s from EC2
 - To run from Python
 ```python
