@@ -195,6 +195,7 @@ def __len__(self):
     return count
 ```
 If we don't use underscores, we have to get the length using `s.len()`</li>
+
 ### Inheritance
 ```python
 class Person(object):
@@ -322,7 +323,7 @@ where
 <samp>-n N, (--number=N)</samp> denotes how many times to execute ‘statement’, and <samp>-r N, (--repeat=N)</samp> denotes how many times to repeat the timer (default 3).
 	    
 	    
-### Random Numbers
+## Random Numbers
 ```python
 import random
 
@@ -343,7 +344,7 @@ random.seed(5)
 print random.random()  # 0.62290169489
 ```
 
-### zip
+## zip
 ```python
 zip(['a', 'b', 'c'], [1, 2, 3])  # [('a', 1), ('b', 2), ('c', 3)]
 zip(('a', 1), ('b', 2), ('c', 3))  # [('a', 'b', 'c'), (1, 2, 3)]
@@ -351,9 +352,9 @@ data = [('a', 1), ('b', 2), ('c', 3)]
 zip(*data)  # [('a', 'b', 'c'), (1, 2, 3)]
 ```
    
-### *args and **kwargs
+## `*args` and `**kwargs`
 The general use of these is to produce higher-order functions whose inputs can accept arbitrary arguments.
-When we define a function using *args and **kwargs, args is a tuple of its unnamed arguments
+When we define a function using `*args` and `**kwargs`, args is a tuple of its unnamed arguments
 and kwargs is a dict of its named arguments:
 ```python
 def test(*args, **kwargs):
@@ -374,7 +375,6 @@ dict123 = {'a': 1, 'b': 2, 'c': 3}
 print(test2(*dict123))  # 'abc'
 print(test2(**dict123))	# 6
 ```
-
 ### Regular Expressions
 ```python
 import re
@@ -396,7 +396,6 @@ Matching the part that starts with an space followed by / (without including the
 <samp>re.findall('(?&lt;=\s)/[^\s]*', log_msg)[0]  # ?&lt;=</samp>  is called 'lookahead'
 
 ## Web Scraping
-
 ```python
 import requests
 from bs4 import BeautifulSoup
@@ -411,7 +410,6 @@ The package <a href="https://newspaper.readthedocs.io/en/latest/" > newspaper </
 	
 	
 ## Misc
-	
 - <b>Difference between `==` and `is`</b>
     The equality operator (`x == y`) tests the values of x and y for equality, while the identity operators (`is`) tests two objects to see whether they refer to the same object in memory. 
     In general, it may be the case that `x == y`, but `x is not y`.
