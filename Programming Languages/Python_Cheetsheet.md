@@ -26,7 +26,7 @@ def arbit_replace(s, i, c):
 print arbit_replace('foo', 2, 'z')  # foz
 ```
 
-<b>F-Strings</b> (Python 3.6+)
+#### F-Strings (Python 3.6+)
 ```python
 name = 'John'
 print(f"name is {name}.")
@@ -78,7 +78,7 @@ Sort a dictionary by values:
 sorted(myDict.items(), key=lambda item: item[1], reverse=True)
 ```
 	    
-### defaultdict
+#### defaultdict
 A defaultdict is like a regular dictionary, except that when you try to look up a key it doesn't contain, it first adds a value for it using a zero-argument function you provided when you created it.
 
 ```python
@@ -102,7 +102,7 @@ print(f[1])  # {}
 print(g[1])  # [5, 8]
 print(g.items())  # [(1, [5, 8]), (2, [5, 1])]
 ```
-### Counter
+#### Counter
 A `Counter` turns a sequence of values into a defaultdict(int)-like object, mapping keys to counts.
 ```python
 from collections import Counter
