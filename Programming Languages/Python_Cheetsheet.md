@@ -141,7 +141,7 @@ Set is like list but repetition doesn't matter. {1,1,2} = {1,2}
 
 Adding two sets a and b: <samp>a.union(b)</samp> 
 
-### Exceptions
+## Exceptions
 ```python
 try:
   ...
@@ -151,7 +151,7 @@ except Exception as e: #For all other kinds of exceptions
   ...
 ```
 
-### Classes
+## Classes
 ```python
 class Coordinate(object):
     def __init__(self, x0, y0):
