@@ -26,7 +26,7 @@ def arbit_replace(s, i, c):
 
 print arbit_replace('foo', 2, 'z')  # foz
 ```
-	    
+
 <b>F-Strings</b> (Python 3.6+)
 ```python
 name = 'John'
@@ -56,6 +56,7 @@ list2 = [(x, y) for x in range(10)
 list3 = [(x, y) for x in range(10)
                 for y in range(x + 1, 10)]
 ```
+
 ## Tuples (1, 2, 3)
 Tuples are lists' immutable cousins. 
 ```python
