@@ -47,7 +47,7 @@ list1.insert(1,63)
 list1.extend(['d', 'e'])  # to not modify the original list use addition (list1 + ['d', 'e'])
 ```
 
-### List Comprehension
+#### List Comprehension
 ```python
 list1 = [i for i in range(100) if i not in range(30, 50)]
 list2 = [(x, y) for x in range(10)
@@ -375,7 +375,7 @@ dict123 = {'a': 1, 'b': 2, 'c': 3}
 print(test2(*dict123))  # 'abc'
 print(test2(**dict123))	# 6
 ```
-### Regular Expressions
+## Regular Expressions
 ```python
 import re
 msg = "hi, this is a test"
