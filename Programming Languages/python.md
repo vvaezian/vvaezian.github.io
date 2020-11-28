@@ -1,5 +1,4 @@
 
-<img src="/vvaezian.github.io/Pic/Python-logo.png" alt="Logo" height="200">
 <em>* Sources: <a href="https://courses.edx.org/courses/course-v1:MITx+6.00.1x_9+2T2016/info" target="_blank">this</a> online course, 
 	<a href="https://www.amazon.com/Data-Science-Scratch-Principles-Python/dp/149190142X" target="_blank">this</a> book, and <a href="https://medium.freecodecamp.org/an-a-z-of-useful-python-tricks-b467524ee747"> this </a> post.</em>
 
