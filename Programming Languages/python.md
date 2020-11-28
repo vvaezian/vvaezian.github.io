@@ -16,7 +16,7 @@ s.count('c')  # 2
 s = s.replace('b', 'z')  # "azcazc"
 s = s.replace('b', 'z', 1)  # "azcabc"
 ```
-While <kbd>index</kbd> works for both strings and lists, <kbd>find</kbd> works only with strings.
+While `index` works for both strings and lists, `find` works only with strings.
 
 Since strings are immutable, there is no method to replace an arbitrary character of a string 
 (e.x. replacing the second 'o' in 'foo'). But we can use the following function
@@ -173,11 +173,11 @@ class Coordinate(object):
     def xDifference(self,other):
         return (self.x - other.x)
 ```
-The <kbd>__init__()</kbd> method (AKA initialization method or class constructor) is called immediately after an instance of the class is created.</br>
+The `__init__()` method (AKA initialization method or class constructor) is called immediately after an instance of the class is created.</br>
 
-In all class methods, <kbd>self</kbd> refers to the instance whose method was called. But in the specific case of the <kbd>__init__()</kbd> method, the instance whose method was called is also the newly created object.
+In all class methods, `self` refers to the instance whose method was called. But in the specific case of the `__init__()` method, the instance whose method was called is also the newly created object.
 
-Python interpreter translates <kbd>obj1 < obj2</kbd> into a method call on <kbd>obj1</kbd> (namely <kbd>obj1.__lt__(obj2)</kbd>). 
+Python interpreter translates `obj1 < obj2` into a method call on `obj1` (namely `obj1.__lt__(obj2)`). 
 To enable sort operation on instances of a class we should implement the <em>__lt__</em> special method. e.x.:
 ```python
 def __lt__(self, other):
@@ -187,7 +187,7 @@ def __lt__(self, other):
         return self.name < other.name
     return self.lastName < other.lastName
 ```
-Assume we have a class which defines operations on a set. If we want <kbd>len(s)</kbd> return the number of members of s, then we need to define <em>len</em> using underscores:
+Assume we have a class which defines operations on a set. If we want `len(s)` return the number of members of s, then we need to define <em>len</em> using underscores:
 ```python
 def __len__(self):
     count = 0
@@ -195,7 +195,7 @@ def __len__(self):
         count += 1
     return count
 ```
-If we don't use underscores, we have to get the length using <kbd>s.len()</kbd></li>
+If we don't use underscores, we have to get the length using `s.len()`</li>
 ### Inheritance
 ```python
 class Person(object):
@@ -273,9 +273,9 @@ X1, ..., Xn = zip(*data)
 ```
 [option] can be <samp>'r'</samp> (read) [default], <samp>'w'</samp> (write), <samp>'r+'</samp> (read and write) and <samp>'a'</samp> (append).
 
-<kbd>f.readlines()</kbd> turns f into a list of strings, each item of list is one line of f (defined by '\n')  
-<kbd>f.read()</kbd> turns f into one string  
-<kbd>f.readline()</kbd> reads the first line as a string
+`f.readlines()` turns f into a list of strings, each item of list is one line of f (defined by '\n')  
+`f.read()` turns f into one string  
+`f.readline()` reads the first line as a string
 
 ```pythonguess = 50
 x = raw_input('Is your number ' + str(guess) + '?' + '\n Enter \'Yes\' or \'No\': ')
@@ -283,8 +283,8 @@ x = raw_input('Is your number ' + str(guess) + '?' + '\n Enter \'Yes\' or \'No\'
 
 ## Copy
 <a href="https://stackoverflow.com/a/3975388/2445273">This</a> explains the difference between reference assignment, shallow copying and deep copying.  
-<kbd>[:]</kbd> makes a shallow copy of a string or list.  
-<kbd>dic.copy()</kbd> do the same for dictionaries.  
+`[:]` makes a shallow copy of a string or list.  
+`dic.copy()` do the same for dictionaries.  
 If our list is a list of lists or list of objects (similar for dictionaries), then we need to do deep copying so that altering the copy doesn't alter the original:
 ```python
 import copy
@@ -318,7 +318,7 @@ import time
 start = time.time()
 ```
 For small bits of Python code we can use <samp>timeit</samp> (it can be run from <a href="https://docs.python.org/2/library/timeit.html#python-interface">python interface</a> as well): 
-<kbd>python -m timeit [-n N] [-r N] [statement ...]</kbd>
+`python -m timeit [-n N] [-r N] [statement ...]`
 where 
 <samp>-n N, (--number=N)</samp> denotes how many times to execute ‘statement’, and <samp>-r N, (--repeat=N)</samp> denotes how many times to repeat the timer (default 3).
 	    
@@ -413,9 +413,9 @@ The package <a href="https://newspaper.readthedocs.io/en/latest/" > newspaper </
 	
 ## Misc
 	
-- <b>Difference between <kbd>==</kbd> and <kbd>is</kbd></b>
-    The equality operator (<kbd>x == y</kbd>) tests the values of x and y for equality, while the identity operators (<kbd>is</kbd>) tests two objects to see whether they refer to the same object in memory. 
-    In general, it may be the case that <kbd>x == y</kbd>, but <kbd>x is not y</kbd>.
+- <b>Difference between `==` and `is`</b>
+    The equality operator (`x == y`) tests the values of x and y for equality, while the identity operators (`is`) tests two objects to see whether they refer to the same object in memory. 
+    In general, it may be the case that `x == y`, but `x is not y`.
 ```python
 a = [1, 2, 3]
 b = a
@@ -426,15 +426,15 @@ c = a[:]
 c is a  # False
 c == a  # True
 ```
-- <kbd>dir</kbd> lists attributes of an object. E.g. <sampl>dit("hi")</samp> lists all strng methods.
-- <kbd>inspect</kbd> is handy for looking at source code modules:
+- `dir` lists attributes of an object. E.g. <sampl>dit("hi")</samp> lists all strng methods.
+- `inspect` is handy for looking at source code modules:
 
 ```python
 import inspect
 import queue	# Python 3
 print(inspect.getsource(queue))
 ```
-- <kbd>sh</kbd> module makes it easy to work with standard os and subprocess libraries:
+- `sh` module makes it easy to work with standard os and subprocess libraries:
 ```python
 import sh
 sh.pwd()
@@ -443,7 +443,7 @@ sh.touch('newFile.txt')
 sh.whoami()
 sh.echo('This is cool!')
 ```
-<kbd>pythonpy</kbd> is the opposite. Uses python is command-line.
+`pythonpy` is the opposite. Uses python is command-line.
 
 - Command-line arguments
-<kbd>sys.argv</kbd> is the list of command-line arguments. So <samp>sys.argv[0]</samp> is the name of the program itself.
+`sys.argv` is the list of command-line arguments. So <samp>sys.argv[0]</samp> is the name of the program itself.
