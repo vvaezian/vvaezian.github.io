@@ -134,7 +134,7 @@ end $$;
 - If the file is in utf16 format (e.g. exported from SQL Server), use the following to convert it to utf8:  
 `iconv -f UTF-16LE -t UTF-8 file.csv -o file_utf8.csv`
 
-### Transfer from SQL Server to Postgres
+### Create Table in Postgres Based on Table or View in SQL Server
 ```sql
 def create_postgres_table_from_mssql_object(source_object_name, source_object_type='table', destination_table_name=None):
   if not destination_table_name:
