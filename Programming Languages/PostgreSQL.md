@@ -134,3 +134,47 @@ end $$;
 - If the file is in utf16 format (e.g. exported from SQL Server), use the following to convert it to utf8:  
 `iconv -f UTF-16LE -t UTF-8 file.csv -o file_utf8.csv`
 
+### Transfer from SQL Server to Postgres
+```sql
+def create_postgres_table_from_mssql_object(source_object_name, source_object_type='table', destination_table_name=None):
+  if not destination_table_name:
+    destination_table_name = source_object_name
+    
+  cursor_mssql.execute('''
+    select schema_name(t.schema_id) as schema_name,
+           object_name(c.object_id) as object_name,
+           c.column_id,
+           c.name as column_name,
+           type_name(user_type_id) as data_type,
+           max_length = case when type_name(user_type_id) = 'nvarchar' then c.max_length/2
+                             else c.max_length
+                        end,
+           c.precision,
+           c.scale,
+           data_type_full = case when type_name(user_type_id) in ('varchar', 'nvarchar') then case when c.max_length != -1 then 'VARCHAR(' + cast(c.max_length as varchar) + ')'
+                                                                                                   else 'VARCHAR' end
+                                 when type_name(user_type_id) in ('char', 'nchar') then 'CHAR(' + cast(c.max_length as varchar) + ')'
+                                 when type_name(user_type_id) = 'numeric' then 'numeric(' + cast(c.precision as varchar) + ',' + cast(c.scale as varchar) + ')'
+                                 when type_name(user_type_id) in ('datetime', 'smalldatetime') then 'TIMESTAMP'
+                                 when type_name(user_type_id) = 'tinyint' then 'SMALLINT'
+                                 when type_name(user_type_id) = 'bit' then 'VARCHAR(5)'
+                                 else type_name(user_type_id)
+                            end
+    from sys.columns c join sys.{}s t on t.object_id = c.object_id
+    where t.name = '{}'
+    order by column_id;
+    '''.format(source_object_type, source_object_name))
+  res = cursor_mssql.fetchall()
+  
+  table_def = []
+  for record in res:
+    col_name, col_type = record[3], record[-1]
+    table_def.append([col_name, col_type])
+
+  create_table_query = 'CREATE TABLE "{}" ('.format(destination_table_name)
+  for col_name, col_type in table_def:
+    create_table_query += '"' + col_name + '" ' + col_type + ', '
+  create_table_query = create_table_query[:-2] + ')'
+  
+  engine_pgsql.execute(create_table_query)
+```
