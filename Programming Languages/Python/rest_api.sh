@@ -9,3 +9,6 @@ python3 -m venv virtual_env_rest_api
 
 # install django (it will be installed in virtual_env_rest_api/lib/python3.6/dist-packages)
 pip3 install django
+
+# start a new django project
+django-admin startproject rest_api
