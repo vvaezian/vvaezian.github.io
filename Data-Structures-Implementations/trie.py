@@ -1,6 +1,5 @@
 class TrieNode:
   def __init__(self):
-    #Dict: Key = letter, Item = TrieNode
     self.children = {}
     self.end = False
     
